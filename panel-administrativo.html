@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | Productos Globales del Campo</title>
+  <style>
+    :root {
+      --verde-principal: #1b382b;
+      --verde-suave: #2a523e;
+      --dorado: #c8963e;
+      --rojo: #d32f2f;
+      --fondo-claro: #f4f4f6;
+      --texto-oscuro: #2c2c2c;
+      --blanco: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: var(--fondo-claro);
+      color: var(--texto-oscuro);
+      padding: 16px;
+    }
+
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    header {
+      background: var(--verde-principal);
+      color: var(--blanco);
+      padding: 16px 20px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    header h1 { font-size: 18px; }
+    header a { color: var(--dorado); text-decoration: none; font-weight: bold; font-size: 13px; }
+
+    /* TARJETAS DE ANALÍTICA / FINANZAS */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: var(--blanco);
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-left: 5px solid var(--verde-principal);
+    }
+    .kpi-card.gold { border-left-color: var(--dorado); }
+    .kpi-card.red { border-left-color: var(--rojo); }
+
+    .kpi-title { font-size: 11px; font-weight: bold; color: #666; text-transform: uppercase; margin-bottom: 6px; }
+    .kpi-value { font-size: 20px; font-weight: bold; color: var(--verde-principal); }
+    .kpi-sub { font-size: 11px; color: #888; margin-top: 4px; }
+
+    /* SECCIONES PRINCIPALES */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--blanco);
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid #eef0ef;
+      margin-bottom: 20px;
+    }
+
+    .card h2 {
+      font-size: 15px;
+      color: var(--verde-principal);
+      border-bottom: 2px solid var(--verde-principal);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* FORMULARIOS Y TABLAS */
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .form-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px; color: #444; }
+    .form-group input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+
+    .btn {
+      background: var(--verde-principal);
+      color: var(--blanco);
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: var(--verde-suave); }
+    .btn-gold { background: var(--dorado); color: #000; font-weight: bold; }
+    .btn-secondary { background: #666; }
+
+    .table-responsive { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { background: #eef2f0; color: var(--verde-principal); text-align: left; padding: 10px; font-size: 11px; }
+    td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+
+    /* ETIQUETAS Y BADGES */
+    .badge-fidelidad {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #f59e0b;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 11px;
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .badge-stock { padding: 3px 8px; border-radius: 10px; font-weight: bold; font-size: 11px; }
+    .stock-ok { background: #d4edda; color: #155724; }
+    .stock-low { background: #fff3cd; color: #856404; }
+    .stock-out { background: #f8d7da; color: #721c24; }
+
+    .action-btn { padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; margin-right: 4px; }
+    .btn-edit { background: #e0f2fe; color: #0369a1; }
+    .btn-del { background: #fee2e2; color: #991b1b; }
+
+    /* AVISO DE CONFIGURACIÓN (agregado para el artifact) */
+    .config-warning {
+      background: #fff3cd;
+      border: 1px solid #f59e0b;
+      color: #856404;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div>
+        <h1>Panel Administrativo & Métricas</h1>
+        <span style="font-size: 11px; opacity: 0.8;">Productos Globales del Campo · RUC 0452907730000U · Carazo/Jinotepe, Nicaragua</span>
+      </div>
+      <a href="tienda-pg-del-campo.html">🛒 Ir a la Tienda</a>
+    </header>
+
+    <div class="config-warning" id="config-warning">
+      ⚠️ <strong>const firebaseConfig = {
+  apiKey: "AIzaSyDKL6pw6lMLzF-3jBlQ8_2_56j1PK51nsU",
+  authDomain: "productos-globales-campo.firebaseapp.com",
+  databaseURL: "https://productos-globales-campo-default-rtdb.firebaseio.com",
+  projectId: "productos-globales-campo",
+  storageBucket: "productos-globales-campo.firebasestorage.app",
+  messagingSenderId: "938958452862",
+  appId: "1:938958452862:web:b779b73f13a6d69db7c02f",
+  measurementId: "G-5RQ31HC3KM"
+};
+    </div>
+
+    <!-- METRICAS DE ANALÍTICA Y FINANZAS -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-title">Valor Monetario (Venta)</div>
+        <div class="kpi-value" id="kpi-valor-venta">C$ 0.00</div>
+        <div class="kpi-sub">Ingreso potencial bruto</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Inversión (Costo Stock)</div>
+        <div class="kpi-value" id="kpi-valor-costo">C$ 0.00</div>
+        <div class="kpi-sub">Capital retenido en bodega</div>
+      </div>
+      <div class="kpi-card gold">
+        <div class="kpi-title">Ganancia Estimada</div>
+        <div class="kpi-value" id="kpi-ganancia-estimada">C$ 0.00</div>
+        <div class="kpi-sub">Margen proyectado global</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-title">Existencia Total</div>
+        <div class="kpi-value" id="kpi-unidades-totales">0 uds</div>
+        <div class="kpi-sub" id="kpi-alertas-stock">Sin alertas de stock</div>
+      </div>
+    </div>
+
+    <!-- MÓDULO 1: HISTORIAL DE CLIENTES Y FIDELIDAD (5ª COMPRA = 2% DESC) -->
+    <div class="card">
+      <h2>
+        <span>👥 Clientes y Programa de Fidelidad</span>
+        <span style="font-size: 11px; font-weight: normal; color: #666;">Regla: 5ª Compra obtiene 2% Adicional</span>
+      </h2>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Teléfono / Cliente</th>
+              <th>Nombre</th>
+              <th>Compras Acumuladas</th>
+              <th>Total Invertido</th>
+              <th>Estado de Fidelidad</th>
+            </tr>
+          </thead>
+          <tbody id="clientes-table-body">
+            <tr><td colspan="5" style="text-align: center; color: #888;">Cargando historial de clientes...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MÓDULO 2: GESTIÓN DE INVENTARIO Y COSTOS -->
+    <div class="card">
+      <h2>
+        <span>📦 Gestión de Inventario y Margen de Ganancia</span>
+        <button class="btn btn-gold" onclick="cargarCatalogoInicial()">⚡ Cargar Catálogo Base</button>
+      </h2>
+
+      <!-- FORMULARIO RÁPIDO PARA AÑADIR/EDITAR PRODUCTO -->
+      <form id="product-form" style="background: #f9fafb; padding: 14px; border-radius: 8px; margin-bottom: 16px;">
+        <input type="hidden" id="prod-id">
+        <div class="form-row">
+          <div class="form-group" style="grid-column: span 2;">
+            <label>Nombre del Producto *</label>
+            <input type="text" id="prod-nombre" placeholder="Ej. Café Clásico 400 gr" required>
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
+            <label>URL de Imagen del Producto</label>
+            <input type="url" id="prod-imagen" placeholder="https://ejemplo.com/foto-producto.jpg">
+          </div>
+          <div class="form-group" style="grid-column: span 2;">
+            <label>Descripción Corta</label>
+            <input type="text" id="prod-desc" placeholder="Ej. Tueste e intensidad balanceada">
+          </div>
+          <div class="form-group">
+            <label>Costo Producción (C$)</label>
+            <input type="number" step="0.50" id="prod-costo" placeholder="0.00" value="0">
+          </div>
+          <div class="form-group">
+            <label>Precio Venta (C$) *</label>
+            <input type="number" step="0.50" id="prod-precio" placeholder="0.00" required>
+          </div>
+          <div class="form-group">
+            <label>Stock Físico *</label>
+            <input type="number" id="prod-stock" placeholder="0" value="50" required>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="submit" class="btn" id="btn-save">💾 Guardar Producto</button>
+          <button type="button" class="btn btn-secondary" id="btn-cancel" style="display:none;" onclick="resetForm()">Cancelar</button>
+        </div>
+      </form>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Producto</th>
+              <th>Costo Est.</th>
+              <th>Precio Venta</th>
+              <th>Margen Unit.</th>
+              <th>Stock Físico</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-table-body">
+            <tr><td colspan="6" style="text-align: center; color: #888;">Cargando inventario desde Firebase...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MÓDULO 3: REGISTRO / SIMULADOR DE VENTA -->
+    <div class="card">
+      <h2>🛒 Registrar Venta Directa (Descuenta Stock y Suma Fidelidad)</h2>
+      <form id="venta-form" class="form-row">
+        <div class="form-group">
+          <label>Teléfono Cliente *</label>
+          <input type="text" id="venta-telefono" placeholder="Ej. 88888888" required>
+        </div>
+        <div class="form-group">
+          <label>Nombre Cliente</label>
+          <input type="text" id="venta-nombre" placeholder="Ej. Juan Pérez">
+        </div>
+        <div class="form-group">
+          <label>Monto Venta Total (C$) *</label>
+          <input type="number" step="0.50" id="venta-monto" placeholder="0.00" required>
+        </div>
+        <div class="form-group" style="align-self: end;">
+          <button type="submit" class="btn btn-gold" style="width: 100%;">✅ Procesar Venta</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- CONEXIÓN Y LÓGICA CON FIREBASE REALTIME DATABASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, set, update, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    // ⚙️ CONFIGURA TUS CREDENCIALES DE FIREBASE AQUÍ
+    const firebaseConfig = {
+      apiKey: "AIzaSyBfPmfE6axd_W0Z80b0L-Jbjy6q7l9_NTk",
+  authDomain: "productos-globales-campo.firebaseapp.com",
+  databaseURL: "https://productos-globales-campo-default-rtdb.firebaseio.com",
+  projectId: "productos-globales-campo",
+  storageBucket: "productos-globales-campo.firebasestorage.app",
+  messagingSenderId: "938958452862",
+  appId: "1:938958452862:web:3b618567dae9aa01b7c02f",
+  measurementId: "G-MKD9T10DP3"
+};
+
+    let productosData = {};
+    let clientesData = {};
+
+    // Detecta si las credenciales siguen siendo el placeholder
+    const esConfigPlaceholder = firebaseConfig.apiKey === "TU_API_KEY";
+
+    if (esConfigPlaceholder) {
+      document.getElementById('config-warning').style.display = 'block';
+      document.getElementById('clientes-table-body').innerHTML =
+        '<tr><td colspan="5" style="text-align: center; color: #888;">Configura Firebase para ver los datos de clientes.</td></tr>';
+      document.getElementById('inventory-table-body').innerHTML =
+        '<tr><td colspan="6" style="text-align: center; color: #888;">Configura Firebase para ver el inventario.</td></tr>';
+    } else {
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+
+      // 1. ESCUCHAR PRODUCTOS Y RECALCULAR MÉTRICAS
+      onValue(ref(db, 'productos'), (snapshot) => {
+        productosData = snapshot.val() || {};
+        renderInventario();
+        calcularMetricas();
+      });
+
+      // 2. ESCUCHAR CLIENTES Y PROGRAMA DE FIDELIDAD
+      onValue(ref(db, 'clientes'), (snapshot) => {
+        clientesData = snapshot.val() || {};
+        renderClientes();
+      });
+
+      // REGISTRAR VENTA MANUAL
+      document.getElementById('venta-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const tel = document.getElementById('venta-telefono').value.trim();
+        const nombre = document.getElementById('venta-nombre').value.trim();
+        const monto = parseFloat(document.getElementById('venta-monto').value);
+
+        const clienteRef = ref(db, 'clientes/' + tel);
+        const clienteActual = clientesData[tel] || { total_compras: 0, monto_total: 0, nombre: nombre };
+
+        const nuevasCompras = (clienteActual.total_compras || 0) + 1;
+        const nuevoMonto = (clienteActual.monto_total || 0) + monto;
+
+        set(clienteRef, {
+          nombre: nombre || clienteActual.nombre || 'Cliente General',
+          total_compras: nuevasCompras,
+          monto_total: nuevoMonto,
+          ultima_compra: new Date().toISOString()
+        }).then(() => {
+          alert(`Venta registrada. El cliente ahora tiene ${nuevasCompras} compra(s) acumulada(s).`);
+          document.getElementById('venta-form').reset();
+        });
+      });
+
+      // GUARDAR / EDITAR PRODUCTO
+      document.getElementById('product-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const id = document.getElementById('prod-id').value || 'prod_' + Date.now();
+        const nombre = document.getElementById('prod-nombre').value;
+        const imagen = document.getElementById('prod-imagen').value.trim();
+        const desc = document.getElementById('prod-desc').value.trim();
+        const costo = parseFloat(document.getElementById('prod-costo').value || 0);
+        const precio = parseFloat(document.getElementById('prod-precio').value);
+        const stock = parseInt(document.getElementById('prod-stock').value);
+
+        set(ref(db, 'productos/' + id), { nombre, imagen, desc, costo, precio, stock }).then(() => {
+          resetForm();
+        });
+      });
+
+      window.eliminarProducto = function(key) {
+        if (confirm('¿Eliminar este producto?')) remove(ref(db, 'productos/' + key));
+      };
+
+      // CATÁLOGO BASE
+      window.cargarCatalogoInicial = function() {
+        if (!confirm('¿Cargar el catálogo inicial?')) return;
+        const catalogoInicial = {
+          "prod_1": { nombre: "Café Clásico del Campo 100 gr", desc: "Tueste e intensidad balanceada", imagen: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=500&q=80", costo: 25.00, precio: 45.50, stock: 50 },
+          "prod_2": { nombre: "Café Clásico del Campo 200 gr", desc: "Tueste e intensidad balanceada", imagen: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=500&q=80", costo: 40.00, precio: 72.30, stock: 50 },
+          "prod_3": { nombre: "Café Clásico del Campo 400 gr", desc: "Tueste e intensidad balanceada", imagen: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=500&q=80", costo: 95.00, precio: 173.00, stock: 50 },
+          "prod_4": { nombre: "Café Clásico Toledo 400 gr", desc: "Grano seleccionado tradicional", imagen: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=500&q=80", costo: 95.00, precio: 170.00, stock: 40 },
+          "prod_5": { nombre: "Café Especial Toledo 400 gr", desc: "Tueste especial de la casa", imagen: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=500&q=80", costo: 110.00, precio: 190.00, stock: 30 },
+          "prod_6": { nombre: "Café Guormets Toledo", desc: "Selección premium de la casa", imagen: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=500&q=80", costo: 130.00, precio: 240.00, stock: 20 },
+          "prod_7": { nombre: "Café Premium del Campo 400 gr", desc: "Edición especial grano seleccionado", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 95.00, precio: 165.00, stock: 35 },
+          "prod_8": { nombre: "Café Tradicional Bolsa Trans 400 gr", desc: "Presentación artesanal", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 65.00, precio: 117.00, stock: 40 },
+          "prod_9": { nombre: "Café del Campo Bolsón (16 x 25 gr)", desc: "Empaque familiar dosificado", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 80.00, precio: 145.00, stock: 25 },
+          "prod_10": { nombre: "Café del Campo 200 gr", desc: "Aroma y sabor tradicional", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 35.00, precio: 63.50, stock: 50 },
+          "prod_11": { nombre: "Café del Campo 400 gr", desc: "Aroma y sabor tradicional", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 75.00, precio: 130.00, stock: 50 },
+          "prod_12": { nombre: "Pinolillo del Campo 400 gr", desc: "Bebida tradicional refinada", imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=500&q=80", costo: 22.00, precio: 45.00, stock: 60 },
+          "prod_13": { nombre: "Pinolillo del Campo 200 gr", desc: "Bebida tradicional refinada", imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=500&q=80", costo: 11.00, precio: 23.00, stock: 60 },
+          "prod_14": { nombre: "Pinol Tradicional del Campo 200 gr", desc: "Maíz tostado molido artesanal", imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=500&q=80", costo: 10.00, precio: 20.00, stock: 60 },
+          "prod_15": { nombre: "Pinol Tradicional del Campo 400 gr", desc: "Maíz tostado molido artesanal", imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=500&q=80", costo: 22.00, precio: 45.00, stock: 60 },
+          "prod_16": { nombre: "Humus Orgánico de Lombriz 11 lb", desc: "Abono orgánico natural", imagen: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=500&q=80", costo: 90.00, precio: 150.00, stock: 20 }
+        };
+        set(ref(db, 'productos'), catalogoInicial);
+      };
+    }
+
+    // RENDERIZAR TABLA DE CLIENTES Y FIDELIDAD
+    function renderClientes() {
+      const tbody = document.getElementById('clientes-table-body');
+      tbody.innerHTML = '';
+      const keys = Object.keys(clientesData);
+
+      if (keys.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #888;">No hay clientes registrados aún.</td></tr>`;
+        return;
+      }
+
+      keys.forEach(tel => {
+        const c = clientesData[tel];
+        const compras = c.total_compras || 0;
+        const montoTotal = c.monto_total || 0;
+
+        // Regla: Si alcanza múltiplos de 5 compras (5, 10, 15...) activa la alerta de 2% adicional
+        let estadoFidelidad = `<span style="color:#666;">Estándar (${compras} compras)</span>`;
+        if (compras > 0 && compras % 5 === 0) {
+          estadoFidelidad = `<span class="badge-fidelidad">🎉 ¡5ª Compra! Aplicar 2% Adicional</span>`;
+        } else if (compras % 5 === 4) {
+          estadoFidelidad = `<span style="color:#d97706; font-weight:bold;">⏳ Próxima compra recibe 2% adicional</span>`;
+        }
+
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${tel}</strong></td>
+            <td>${c.nombre || 'Cliente General'}</td>
+            <td><strong>${compras}</strong> pedido(s)</td>
+            <td>C$ ${parseFloat(montoTotal).toFixed(2)}</td>
+            <td>${estadoFidelidad}</td>
+          </tr>
+        `;
+      });
+    }
+
+    // RENDERIZAR TABLA DE INVENTARIO
+    function renderInventario() {
+      const tbody = document.getElementById('inventory-table-body');
+      tbody.innerHTML = '';
+      const keys = Object.keys(productosData);
+
+      if (keys.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #888;">Sin productos. Carga el catálogo base.</td></tr>`;
+        return;
+      }
+
+      keys.forEach(key => {
+        const p = productosData[key];
+        const costo = parseFloat(p.costo || 0);
+        const precio = parseFloat(p.precio || 0);
+        const margen = precio - costo;
+        const stockClass = p.stock > 15 ? 'stock-ok' : (p.stock > 0 ? 'stock-low' : 'stock-out');
+
+        const imgSrc = p.imagen && p.imagen.trim() !== '' ? p.imagen : '';
+        tbody.innerHTML += `
+          <tr>
+            <td>${imgSrc ? `<img src="${imgSrc}" alt="${p.nombre}" style="width:40px;height:40px;object-fit:cover;border-radius:6px;" onerror="this.style.display='none'">` : '<span style="color:#bbb;font-size:10px;">Sin foto</span>'}</td>
+            <td><strong>${p.nombre}</strong></td>
+            <td>C$ ${costo.toFixed(2)}</td>
+            <td>C$ ${precio.toFixed(2)}</td>
+            <td style="color: ${margen >= 0 ? '#16a34a' : '#dc2626'}; font-weight: bold;">
+              C$ ${margen.toFixed(2)}
+            </td>
+            <td><span class="badge-stock ${stockClass}">${p.stock} uds</span></td>
+            <td>
+              <button class="action-btn btn-edit" onclick="prepararEdicion('${key}')">✏️ Edit</button>
+              <button class="action-btn btn-del" onclick="eliminarProducto('${key}')">🗑️</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    // CALCULAR BALANCES Y MÉTRICAS MONETARIAS
+    function calcularMetricas() {
+      let valorVentaTotal = 0;
+      let valorCostoTotal = 0;
+      let unidadesTotales = 0;
+      let productosStockBajo = 0;
+
+      Object.keys(productosData).forEach(key => {
+        const p = productosData[key];
+        const qty = parseInt(p.stock || 0);
+        const precio = parseFloat(p.precio || 0);
+        const costo = parseFloat(p.costo || 0);
+
+        unidadesTotales += qty;
+        valorVentaTotal += (qty * precio);
+        valorCostoTotal += (qty * costo);
+
+        if (qty <= 10) productosStockBajo++;
+      });
+
+      const gananciaEstimada = valorVentaTotal - valorCostoTotal;
+
+      document.getElementById('kpi-valor-venta').innerText = `C$ ${valorVentaTotal.toFixed(2)}`;
+      document.getElementById('kpi-valor-costo').innerText = `C$ ${valorCostoTotal.toFixed(2)}`;
+      document.getElementById('kpi-ganancia-estimada').innerText = `C$ ${gananciaEstimada.toFixed(2)}`;
+      document.getElementById('kpi-unidades-totales').innerText = `${unidadesTotales} uds`;
+      document.getElementById('kpi-alertas-stock').innerText = `${productosStockBajo} producto(s) con stock bajo (<=10)`;
+    }
+
+    window.prepararEdicion = function(key) {
+      const p = productosData[key];
+      if (!p) return;
+      document.getElementById('prod-id').value = key;
+      document.getElementById('prod-nombre').value = p.nombre;
+      document.getElementById('prod-imagen').value = p.imagen || '';
+      document.getElementById('prod-desc').value = p.desc || '';
+      document.getElementById('prod-costo').value = p.costo || 0;
+      document.getElementById('prod-precio').value = p.precio;
+      document.getElementById('prod-stock').value = p.stock;
+      document.getElementById('btn-save').innerText = '🔄 Actualizar';
+      document.getElementById('btn-cancel').style.display = 'inline-block';
+    };
+
+    window.resetForm = function() {
+      document.getElementById('product-form').reset();
+      document.getElementById('prod-id').value = '';
+      document.getElementById('btn-save').innerText = '💾 Guardar Producto';
+      document.getElementById('btn-cancel').style.display = 'none';
+    };
+  </script>
+</body>
+</html>
