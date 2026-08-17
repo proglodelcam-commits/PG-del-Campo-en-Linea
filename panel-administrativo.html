@@ -214,11 +214,11 @@
       </div>
     </div>
 
-    <!-- MÓDULO 1: HISTORIAL DE CLIENTES Y FIDELIDAD (5ª COMPRA = 2% DESC) -->
+    <!-- MÓDULO 1: HISTORIAL DE CLIENTES Y FIDELIDAD (10ª COMPRA = 2% DESC) -->
     <div class="card">
       <h2>
         <span>👥 Clientes y Programa de Fidelidad</span>
-        <span style="font-size: 11px; font-weight: normal; color: #666;">Regla: 5ª Compra obtiene 2% Adicional</span>
+        <span style="font-size: 11px; font-weight: normal; color: #666;">Regla: 10ª Compra obtiene 2% Adicional</span>
       </h2>
       <div class="table-responsive">
         <table>
@@ -455,11 +455,11 @@
         const compras = c.total_compras || 0;
         const montoTotal = c.monto_total || 0;
 
-        // Regla: Si alcanza múltiplos de 5 compras (5, 10, 15...) activa la alerta de 2% adicional
+        // Regla: Si alcanza múltiplos de 10 compras (5, 10, 15...) activa la alerta de 2% adicional
         let estadoFidelidad = `<span style="color:#666;">Estándar (${compras} compras)</span>`;
-        if (compras > 0 && compras % 5 === 0) {
-          estadoFidelidad = `<span class="badge-fidelidad">🎉 ¡5ª Compra! Aplicar 2% Adicional</span>`;
-        } else if (compras % 5 === 4) {
+        if (compras > 0 && compras % 10 === 0) {
+          estadoFidelidad = `<span class="badge-fidelidad">🎉 ¡10ª Compra! Aplicar 2% Adicional</span>`;
+        } else if (compras % 10 === 4) {
           estadoFidelidad = `<span style="color:#d97706; font-weight:bold;">⏳ Próxima compra recibe 2% adicional</span>`;
         }
 
