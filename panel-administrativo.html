@@ -218,7 +218,7 @@
     <div class="card">
       <h2>
         <span>👥 Clientes y Programa de Fidelidad</span>
-        <span style="font-size: 11px; font-weight: normal; color: #666;">Regla: 10ª Compra obtiene 2% Adicional</span>
+        <span style="font-size: 11px; font-weight: normal; color: #666;">Regla: 10ma Compra obtiene 2% Adicional</span>
       </h2>
       <div class="table-responsive">
         <table>
@@ -458,7 +458,7 @@
         // Regla: Si alcanza múltiplos de 10 compras (5, 10, 15...) activa la alerta de 2% adicional
         let estadoFidelidad = `<span style="color:#666;">Estándar (${compras} compras)</span>`;
         if (compras > 0 && compras % 10 === 0) {
-          estadoFidelidad = `<span class="badge-fidelidad">🎉 ¡10ª Compra! Aplicar 2% Adicional</span>`;
+          estadoFidelidad = `<span class="badge-fidelidad">🎉 ¡10ma Compra! Aplicar 2% Adicional</span>`;
         } else if (compras % 10 === 4) {
           estadoFidelidad = `<span style="color:#d97706; font-weight:bold;">⏳ Próxima compra recibe 2% adicional</span>`;
         }
