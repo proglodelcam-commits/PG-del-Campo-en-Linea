@@ -228,8 +228,8 @@ footer.site-footer a { color: var(--text-muted); }
 
       <div class="qr-payment">
         <span>Pago Directo LAFISE Bancentro</span>
-        <div><img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https%3A%2F%2Fdigital.lafise.com%3FBANK%3DBLNI%26ACCOUNT_NUMBER%3D133031007" alt="QR pago LAFISE"></div>
-        <a href="https://digital.lafise.com?BANK=BLNI&ACCOUNT_NUMBER=133031007" target="_blank" rel="noopener">Pagar desde App LAFISE Bancentro</a>
+        <div><img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https%3A%2F%2Fdigital.lafise.com%3FBANK%3DBLNI%26ACCOUNT_NUMBER%3D140051265" alt="QR pago LAFISE"></div>
+        <a href="https://digital.lafise.com?BANK=BLNI&ACCOUNT_NUMBER=140051265" target="_blank" rel="noopener">Pagar desde App LAFISE Bancentro</a>
       </div>
     </aside>
   </div>
@@ -538,7 +538,7 @@ footer.site-footer a { color: var(--text-muted); }
       ? `*TOTAL (sin envío, a convenir):* C$${(subtotal - montoDescuento).toFixed(2)}%0A`
       : `*TOTAL A PAGAR:* C$${totalPagar.toFixed(2)}%0A`;
     msj += `=============================%0A %0A`;
-    msj += `💳 *Pago Directo LAFISE:* https://digital.lafise.com?BANK=BLNI%26ACCOUNT_NUMBER=133031007`;
+    msj += `💳 *Pago Directo LAFISE:* https://digital.lafise.com?BANK=BLNI%26ACCOUNT_NUMBER=140051265`;
 
     registrarPedidoEnFirebase(totalPagar);
     window.open(`https://wa.me/${NUMERO_WHATSAPP_NEGOCIO}?text=${msj}`, '_blank');

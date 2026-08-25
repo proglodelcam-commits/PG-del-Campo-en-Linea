@@ -283,7 +283,7 @@ function generarUrlLafise(monto, numeroRecibo) {
   const montoFormateado = monto.toFixed(2);
   const referenciaFactura = `REC-${numeroRecibo}`;
   const concepto = encodeURIComponent('Compra Productos PG del Campo');
-  return `https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=133031007&AMOUNT=${montoFormateado}&REFERENCE=${encodeURIComponent(referenciaFactura)}&CONCEPT=${concepto}`;
+  return `https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${montoFormateado}&REFERENCE=${encodeURIComponent(referenciaFactura)}&CONCEPT=${concepto}`;
 }
 
 async function cargarCatalogoProductos() {
@@ -518,14 +518,14 @@ window.procesarPagoWhatsApp = async function() {
   if (metodoPago === 'lafise') {
     msj += '*MÉTODO DE PAGO: Transferencia / LAFISE Digital*\n';
     msj += 'Titular de la Cuenta: *Fernando Martínez* (Representante Legal PG del Campo)\n';
-    msj += 'Cuenta N°: *133031007*\n\n';
+    msj += 'Cuenta N°: *140051265*\n\n';
     msj += 'Puedes realizar tu pago directo haciendo clic en el siguiente enlace:\n';
     msj += `${urlLafiseDinamico}`;
   } else {
     msj += '*MÉTODO DE PAGO: Pago Contra Entrega*\n';
     msj += 'El cliente abonará el monto total en efectivo o mediante transferencia al momento de recibir su pedido.\n\n';
     msj += 'Si deseas pagar por transferencia LAFISE al momento de la entrega:\n';
-    msj += 'Titular: *Fernando Martínez* | Cuenta: *133031007*\n';
+    msj += 'Titular: *Fernando Martínez* | Cuenta: *140051265*\n';
     msj += `Enlace directo: ${urlLafiseDinamico}`;
   }
 
