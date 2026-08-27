@@ -57,12 +57,69 @@
  <div class="container">
  <header>
  <div>
- <h1> PG Del Campo — Panel Administrativo</h1>
+ <h1> PG Del Campo — Control de Fidelidad</h1>
  <p style="font-size: 12px; color: #B0BEC5;">Control de Inventario, Ventas y Tarjetas de Fidelidad (Nicaragua)</p>
  </div>
  <div id="reloj-nic" style="font-weight: bold; font-size: 14px; background: #37474F; padding: 8px 12px; border-radius: 4px;"></div>
  </header>
- 
+     </div>
+     <!-- BOTONES DINÁMICOS INTEGRADOS EN EL ENCABEZADO -->
+      <div class="banner-links">
+        <a href="panel-administrativo.html" class="btn-link btn-admin">⚙️ Panel Admin</a>
+        <a href="https://proglodelcam-commits.github.io/PG-del-Campo-en-Linea/" target="_blank" rel="noopener" class="btn-link btn-sitio">🌐 Ir a la Tienda</a>
+      </div>
+    </div>
+<head>
+<style>
+/* Contenedor alineado horizontalmente */
+.banner-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Estilo base del Botón Dinámico */
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+/* Efecto dinámico al pasar el cursor (Hover) */
+.btn-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Variantes de color para cada botón */
+.btn-admin {
+  background-color: #ffffff;
+  color: #1b382b;
+  border: 1px solid #1b382b;
+}
+.btn-admin:hover {
+  background-color: #f4f4f6;
+}
+
+.btn-sitio {
+  background-color: #c8963e;
+  color: #ffffff;
+  border: 1px solid #c8963e;
+}
+.btn-sitio:hover {
+  background-color: #b38332;
+}
+</style> <!-- 2. CIERRE OBLIGATORIO DE LA SECCIÓN DE ESTILOS -->
+
  <!-- MÉTRICAS KPI -->
  <div class="metrics-grid">
  <div class="metric-card">
@@ -80,6 +137,9 @@
  <div class="metric-card cancelados">
  <div class="metric-title">Ventas Anuladas</div>
  <div class="metric-value" id="kpi-cancelados">0</div>
+ 
+  </tbody>
+ </table>
  </div>
  </div>
  
