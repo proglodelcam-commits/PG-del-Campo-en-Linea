@@ -67,9 +67,16 @@ h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 600; color: va
   display: flex;
   align-items: center;
 }
-.marquee-track { display: flex; width: max-content; animation: scroll-right 12s linear infinite; }
+.marquee-track { 
+    display: flex; 
+    width: max-content; 
+    animation: scroll-left 12s linear infinite; 
+}
 .marquee-text { font-size: 11px; font-weight: 500; color: #ffffff; padding-right: 50px; font-family: 'Plus Jakarta Sans', sans-serif; }
-@keyframes scroll-right { 0% { transform: translateX(-50%); } 100% { transform: translateX(0%); } }
+@keyframes scroll-left { 
+    0% { transform: translateX(0%); } 
+    100% { transform: translateX(-50%); } 
+}
 
 /* Header App */
 header { background-color: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
@@ -468,8 +475,8 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
             <i class="fas fa-clock"></i>
             <div>
               <strong>Horario de Operación:</strong><br>
-              Lunes a Sábado: 7:00 AM - 6:00 PM<br>
-              Domingo: 8:00 AM - 12:00 PM
+              Lunes a Viernes: 8:00 AM - 4:00 PM<br>
+              Sábados: 8:00 AM - 12:00 PM
             </div>
           </li>
           <li>
