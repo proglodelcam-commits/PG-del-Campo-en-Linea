@@ -20,7 +20,11 @@
       --border-color: #e5e7eb;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
@@ -29,6 +33,42 @@
       display: flex;
       height: 100vh;
       overflow: hidden;
+    }
+
+    /* BOTÓN HAMBURGUESA Y OVERLAY MÓVIL */
+    .mobile-header {
+      display: none;
+      background: var(--verde-principal);
+      color: var(--blanco);
+      padding: 12px 16px;
+      align-items: center;
+      justify-content: space-between;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+    }
+
+    .menu-toggle-btn {
+      background: transparent;
+      border: none;
+      color: var(--blanco);
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1001;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     /* BARRA LATERAL (SIDEBAR) */
@@ -40,6 +80,8 @@
       flex-direction: column;
       justify-content: space-between;
       flex-shrink: 0;
+      z-index: 1002;
+      transition: transform 0.3s ease;
     }
 
     .brand-header {
@@ -47,7 +89,7 @@
       font-size: 14px;
       font-weight: 600;
       color: #94a3b8;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .menu-list {
@@ -81,7 +123,11 @@
       border-left: 4px solid var(--accent-green);
     }
 
-    .menu-icon { font-size: 16px; width: 20px; text-align: center; }
+    .menu-icon {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
 
     .badge-new {
       background-color: transparent;
@@ -104,8 +150,15 @@
       align-items: center;
     }
 
-    .sidebar-footer h4 { font-size: 14px; margin-bottom: 2px; }
-    .sidebar-footer p { font-size: 11px; opacity: 0.9; }
+    .sidebar-footer h4 {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .sidebar-footer p {
+      font-size: 11px;
+      opacity: 0.9;
+    }
 
     /* ÁREA PRINCIPAL DE CONTENIDO */
     main {
@@ -114,8 +167,13 @@
       padding: 24px;
     }
 
-    .view-section { display: none; }
-    .view-section.active { display: block; }
+    .view-section {
+      display: none;
+    }
+
+    .view-section.active {
+      display: block;
+    }
 
     .header-top {
       display: flex;
@@ -125,10 +183,15 @@
       background: var(--blanco);
       padding: 16px 20px;
       border-radius: 12px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .header-top h2 { font-size: 20px; color: var(--verde-principal); }
+    .header-top h2 {
+      font-size: 20px;
+      color: var(--verde-principal);
+    }
 
     /* TARJETAS DE ANALÍTICA / FINANZAS */
     .kpi-grid {
@@ -142,22 +205,44 @@
       background: var(--blanco);
       padding: 16px;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       border-left: 5px solid var(--verde-principal);
     }
 
-    .kpi-card.gold { border-left-color: var(--dorado); }
-    .kpi-card.red { border-left-color: var(--rojo); }
-    .kpi-title { font-size: 11px; font-weight: bold; color: #6b7280; text-transform: uppercase; margin-bottom: 6px; }
-    .kpi-value { font-size: 20px; font-weight: bold; color: var(--verde-principal); }
-    .kpi-sub { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+    .kpi-card.gold {
+      border-left-color: var(--dorado);
+    }
+
+    .kpi-card.red {
+      border-left-color: var(--rojo);
+    }
+
+    .kpi-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: #6b7280;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--verde-principal);
+    }
+
+    .kpi-sub {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
 
     /* FORMULARIOS Y TABLAS */
     .card {
       background: var(--blanco);
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
       border: 1px solid var(--border-color);
       margin-bottom: 20px;
     }
@@ -171,17 +256,28 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .form-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 12px;
       margin-bottom: 12px;
     }
 
-    .form-group label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px; color: #374151; }
-    .form-group input, .form-group select, .form-group textarea {
+    .form-group label {
+      display: block;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: #374151;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
       width: 100%;
       padding: 9px 12px;
       border: 1px solid #d1d5db;
@@ -201,14 +297,46 @@
       font-size: 13px;
     }
 
-    .btn:hover { background: var(--verde-suave); }
-    .btn-gold { background: var(--dorado); color: #000; font-weight: bold; }
-    .btn-secondary { background: #6b7280; }
+    .btn:hover {
+      background: var(--verde-suave);
+    }
 
-    .table-responsive { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th { background: #f9fafb; color: var(--verde-principal); text-align: left; padding: 12px; font-size: 11px; font-weight: 700; }
-    td { padding: 12px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+    .btn-gold {
+      background: var(--dorado);
+      color: #000;
+      font-weight: bold;
+    }
+
+    .btn-secondary {
+      background: #6b7280;
+    }
+
+    .table-responsive {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 600px;
+    }
+
+    th {
+      background: #f9fafb;
+      color: var(--verde-principal);
+      text-align: left;
+      padding: 12px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: middle;
+    }
 
     .badge-fidelidad {
       background: #fef3c7;
@@ -220,14 +348,46 @@
       font-size: 11px;
     }
 
-    .badge-stock { padding: 3px 8px; border-radius: 10px; font-weight: bold; font-size: 11px; }
-    .stock-ok { background: #d1fae5; color: #065f46; }
-    .stock-low { background: #fef3c7; color: #92400e; }
-    .stock-out { background: #fee2e2; color: #991b1b; }
+    .badge-stock {
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 11px;
+    }
 
-    .action-btn { padding: 4px 8px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; margin-right: 4px; }
-    .btn-edit { background: #e0f2fe; color: #0369a1; }
-    .btn-del { background: #fee2e2; color: #991b1b; }
+    .stock-ok {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .stock-low {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .stock-out {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .action-btn {
+      padding: 4px 8px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      margin-right: 4px;
+    }
+
+    .btn-edit {
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .btn-del {
+      background: #fee2e2;
+      color: #991b1b;
+    }
 
     /* ESTILOS CHAT KAI */
     .chat-container {
@@ -238,6 +398,7 @@
       border-radius: 8px;
       background: #fafafa;
     }
+
     .chat-box {
       flex-grow: 1;
       padding: 12px;
@@ -246,6 +407,7 @@
       flex-direction: column;
       gap: 10px;
     }
+
     .chat-msg {
       max-width: 80%;
       padding: 10px 14px;
@@ -253,16 +415,19 @@
       font-size: 13px;
       line-height: 1.4;
     }
+
     .chat-msg.user {
       align-self: flex-end;
       background: var(--verde-principal);
       color: var(--blanco);
     }
+
     .chat-msg.kai {
       align-self: flex-start;
       background: #e2e8f0;
       color: var(--texto-oscuro);
     }
+
     .chat-input-row {
       display: flex;
       padding: 10px;
@@ -270,63 +435,121 @@
       background: var(--blanco);
       border-top: 1px solid var(--border-color);
     }
+
+    .chat-input-row input {
+      flex-grow: 1;
+      padding: 8px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+    }
+
+    /* RESPONSIVIDAD PARA TABLETS Y MÓVILES */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      .mobile-header {
+        display: flex;
+      }
+
+      sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        transform: translateX(-100%);
+      }
+
+      sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.open {
+        display: block;
+        opacity: 1;
+      }
+
+      main {
+        padding: 16px;
+        margin-top: 50px;
+        height: calc(100vh - 50px);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .span-mobile-2 {
+        grid-column: span 1 !important;
+      }
+    }
   </style>
 </head>
 <body>
 
+  <!-- ENCABEZADO MÓVIL Y OVERLAY -->
+  <header class="mobile-header">
+    <button class="menu-toggle-btn" id="menu-toggle">☰</button>
+    <span style="font-weight: 600; font-size: 15px;">PG del Campo</span>
+    <span style="font-size: 12px; opacity: 0.8;">Jinotepe</span>
+  </header>
+
+  <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
   <!-- NAVEGACIÓN LATERAL -->
-  <sidebar>
+  <sidebar id="sidebar">
     <div>
-      <div class="brand-header">Productos Globales del Campo.</div>
+      <div class="brand-header">Productos Globales del Campo</div>
       <ul class="menu-list">
         <li class="menu-item active" onclick="switchTab('inicio', this)">
-          <span class="menu-icon">🏪</span> Inicio
+          <span class="menu-icon">🏠</span> Inicio
         </li>
         <li class="menu-item" onclick="switchTab('vender', this)">
-          <span class="menu-icon">✔️</span> Vender
+          <span class="menu-icon">🛒</span> Vender
         </li>
         <li class="menu-item" onclick="switchTab('pedidos', this)">
-          <span class="menu-icon">🟢</span> Pedidos
+          <span class="menu-icon">📦</span> Pedidos
         </li>
         <li class="menu-item" onclick="switchTab('productos', this)">
-          <span class="menu-icon">📦</span> Productos
+          <span class="menu-icon">🌱</span> Productos
         </li>
         <li class="menu-item" onclick="switchTab('kai', this)">
-          <span class="menu-icon">🪄</span> Kai
+          <span class="menu-icon">🤖</span> Kai
         </li>
         <a href="https://proglodelcam-commits.github.io/PG-del-Campo-en-Linea/" target="_blank" class="menu-item">
-          <span class="menu-icon">🛒</span> Catálogo Online
+          <span class="menu-icon">🌐</span> Catálogo Online
         </a>
         <li class="menu-item" onclick="switchTab('finanzas', this)">
-          <span class="menu-icon">👛</span> Finanzas
+          <span class="menu-icon">💰</span> Finanzas
         </li>
         <li class="menu-item" onclick="switchTab('cupon', this)">
-          <span class="menu-icon">🎟️</span> Cupón <span class="badge-new">NUEVO</span>
+          <span class="menu-icon">🏷️</span> Cupón <span class="badge-new">NUEVO</span>
         </li>
         <li class="menu-item" onclick="switchTab('clientes', this)">
-          <span class="menu-icon">👤</span> Clientes
+          <span class="menu-icon">👥</span> Clientes
         </li>
         <li class="menu-item" onclick="switchTab('transacciones', this)">
-          <span class="menu-icon">💲</span> Transacciones
+          <span class="menu-icon">📜</span> Transacciones
         </li>
         <li class="menu-item" onclick="switchTab('estadisticas', this)">
           <span class="menu-icon">📊</span> Estadísticas
         </li>
         <li class="menu-item" onclick="switchTab('usuarios', this)">
-          <span class="menu-icon">👥</span> Usuarios
+          <span class="menu-icon">👤</span> Usuarios
         </li>
         <li class="menu-item" onclick="switchTab('configuraciones', this)">
           <span class="menu-icon">⚙️</span> Configuraciones
         </li>
       </ul>
     </div>
-
     <div class="sidebar-footer">
       <div>
         <h4>PG del Campo</h4>
         <p>Recursos exclusivos. Conozca más.</p>
       </div>
-      <span>❯</span>
+      <span>&gt;</span>
     </div>
   </sidebar>
 
@@ -370,7 +593,7 @@
     <!-- SECCIÓN: VENDER -->
     <div id="sec-vender" class="view-section">
       <div class="card">
-        <h3>🛒 Registrar Venta Directa</h3>
+        <h3>Registrar Venta Directa</h3>
         <form id="venta-form" class="form-row">
           <div class="form-group">
             <label>Teléfono Cliente *</label>
@@ -394,7 +617,7 @@
     <!-- SECCIÓN: PEDIDOS -->
     <div id="sec-pedidos" class="view-section">
       <div class="card">
-        <h3>🟢 Pedidos Pendientes</h3>
+        <h3>Pedidos Pendientes</h3>
         <div class="table-responsive">
           <table>
             <thead>
@@ -418,22 +641,21 @@
     <div id="sec-productos" class="view-section">
       <div class="card">
         <h3>
-          <span>📦 Gestión de Inventario</span>
-          <button class="btn btn-gold" onclick="cargarCatalogoInicial()">⚡ Cargar Catálogo Base</button>
+          <span>Gestión de Inventario</span>
+          <button class="btn btn-gold" onclick="cargarCatalogoInicial()">Cargar Catálogo Base</button>
         </h3>
-        
         <form id="product-form" style="background: #f9fafb; padding: 14px; border-radius: 8px; margin-bottom: 16px;">
           <input type="hidden" id="prod-id">
           <div class="form-row">
-            <div class="form-group" style="grid-column: span 2;">
+            <div class="form-group span-mobile-2" style="grid-column: span 2;">
               <label>Nombre del Producto *</label>
               <input type="text" id="prod-nombre" placeholder="Ej. Café Clásico 400 gr" required>
             </div>
-            <div class="form-group" style="grid-column: span 2;">
+            <div class="form-group span-mobile-2" style="grid-column: span 2;">
               <label>URL Imagen</label>
               <input type="url" id="prod-imagen" placeholder="https://ejemplo.com/foto.jpg">
             </div>
-            <div class="form-group" style="grid-column: span 2;">
+            <div class="form-group span-mobile-2" style="grid-column: span 2;">
               <label>Descripción Corta</label>
               <input type="text" id="prod-desc" placeholder="Ej. Tueste e intensidad balanceada">
             </div>
@@ -455,7 +677,6 @@
             <button type="button" class="btn btn-secondary" id="btn-cancel" style="display:none;" onclick="resetForm()">Cancelar</button>
           </div>
         </form>
-
         <div class="table-responsive">
           <table>
             <thead>
@@ -480,10 +701,10 @@
     <!-- SECCIÓN: ASISTENTE KAI -->
     <div id="sec-kai" class="view-section">
       <div class="card">
-        <h3>🪄 Asistente Kai (Asistente Comercial)</h3>
+        <h3>Asistente Kai (Asistente Comercial)</h3>
         <div class="chat-container">
           <div class="chat-box" id="kai-chat-box">
-            <div class="chat-msg kai">Hola, soy Kai. Puedo asistirte en la consulta de inventarios, cálculo de promociones y resumenes operativos. ¿En qué te ayudo hoy?</div>
+            <div class="chat-msg kai">Hola, soy Kai. Puedo asistirte en la consulta de inventarios, cálculo de promociones y resúmenes operativos. ¿En qué te ayudo hoy?</div>
           </div>
           <form id="kai-chat-form" class="chat-input-row">
             <input type="text" id="kai-input" placeholder="Pregunta a Kai sobre el negocio..." required>
@@ -496,7 +717,7 @@
     <!-- SECCIÓN: FINANZAS -->
     <div id="sec-finanzas" class="view-section">
       <div class="card">
-        <h3>👛 Estado Financiero Consolidado</h3>
+        <h3>Estado Financiero Consolidado</h3>
         <div class="kpi-grid">
           <div class="kpi-card">
             <div class="kpi-title">Ventas Brutas Totales</div>
@@ -517,7 +738,7 @@
     <!-- SECCIÓN: CUPÓN -->
     <div id="sec-cupon" class="view-section">
       <div class="card">
-        <h3>🎟️ Generar Cupón de Descuento</h3>
+        <h3>Generar Cupón de Descuento</h3>
         <form id="cupon-form" class="form-row">
           <div class="form-group">
             <label>Código del Cupón *</label>
@@ -555,8 +776,8 @@
     <div id="sec-clientes" class="view-section">
       <div class="card">
         <h3>
-          <span>👤 Programa de Fidelidad</span>
-          <span style="font-size: 11px; font-weight: normal; color: #666;">Regla: 5ta Compra obtiene 2% Adicional</span>
+          <span>Programa de Fidelidad</span>
+          <span style="font-size: 11px; font-weight: normal; color: #666;">Regla: 10ma Compra obtiene 2% Adicional</span>
         </h3>
         <div class="table-responsive">
           <table>
@@ -580,7 +801,7 @@
     <!-- SECCIÓN: TRANSACCIONES -->
     <div id="sec-transacciones" class="view-section">
       <div class="card">
-        <h3>💲 Registro Único de Transacciones</h3>
+        <h3>Registro Único de Transacciones</h3>
         <div class="table-responsive">
           <table>
             <thead>
@@ -602,7 +823,7 @@
     <!-- SECCIÓN: ESTADÍSTICAS -->
     <div id="sec-estadisticas" class="view-section">
       <div class="card">
-        <h3>📊 Reporte Analítico del Negocio</h3>
+        <h3>Reporte Analítico del Negocio</h3>
         <div class="kpi-grid">
           <div class="kpi-card">
             <div class="kpi-title">Clientes Registrados</div>
@@ -623,7 +844,7 @@
     <!-- SECCIÓN: USUARIOS -->
     <div id="sec-usuarios" class="view-section">
       <div class="card">
-        <h3>👥 Roles y Permisos</h3>
+        <h3>Roles y Permisos</h3>
         <div class="table-responsive">
           <table>
             <thead>
@@ -656,9 +877,9 @@
     <!-- SECCIÓN: CONFIGURACIONES -->
     <div id="sec-configuraciones" class="view-section">
       <div class="card">
-        <h3>⚙️ Datos Fiscales del Negocio</h3>
+        <h3>Datos Fiscales del Negocio</h3>
         <form class="form-row" onsubmit="event.preventDefault(); alert('Configuración guardada localmente.');">
-          <div class="form-group" style="grid-column: span 2;">
+          <div class="form-group span-mobile-2" style="grid-column: span 2;">
             <label>Razón Social</label>
             <input type="text" value="Productos Globales del Campo" readonly>
           </div>
@@ -670,7 +891,7 @@
             <label>Régimen Fiscal</label>
             <input type="text" value="Cuota Fija" readonly>
           </div>
-          <div class="form-group" style="grid-column: span 2;">
+          <div class="form-group span-mobile-2" style="grid-column: span 2;">
             <label>Ubicación Principal</label>
             <input type="text" value="Jinotepe, Carazo, Nicaragua">
           </div>
@@ -682,7 +903,7 @@
     </div>
   </main>
 
-  <!-- FIREBASE INTEGRADOR -->
+  <!-- FIREBASE INTEGRADOR Y LÓGICA FRONTEND -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, set, remove, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -704,24 +925,42 @@
     let productosData = {};
     let clientesData = {};
     let cuponesData = {};
-    let transaccionesData = [];
+
+    // GESTIÓN DE MENÚ MÓVIL
+    const menuToggle = document.getElementById('menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    function toggleMenu() {
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('open');
+    }
+
+    menuToggle.addEventListener('click', toggleMenu);
+    overlay.addEventListener('click', toggleMenu);
 
     // NAVEGACIÓN ENTRE SECCIONES
     window.switchTab = function(tabId, element) {
       document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
-
+      
       const selectedSec = document.getElementById('sec-' + tabId);
-      if(selectedSec) selectedSec.classList.add('active');
-      if(element) element.classList.add('active');
+      if (selectedSec) selectedSec.classList.add('active');
+      if (element) element.classList.add('active');
 
       const titleMap = {
-        'inicio': 'Inicio', 'vender': 'Vender', 'pedidos': 'Pedidos', 
-        'productos': 'Productos', 'kai': 'Asistente Kai', 'finanzas': 'Finanzas', 
-        'cupon': 'Cupones', 'clientes': 'Clientes', 'transacciones': 'Transacciones', 
+        'inicio': 'Inicio', 'vender': 'Vender', 'pedidos': 'Pedidos',
+        'productos': 'Productos', 'kai': 'Asistente Kai', 'finanzas': 'Finanzas',
+        'cupon': 'Cupones', 'clientes': 'Clientes', 'transacciones': 'Transacciones',
         'estadisticas': 'Estadísticas', 'usuarios': 'Usuarios', 'configuraciones': 'Configuraciones'
       };
+      
       document.getElementById('view-title').innerText = titleMap[tabId] || 'Panel';
+
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+      }
     };
 
     // ESCUCHA DB PRODUCTOS
@@ -756,7 +995,6 @@
 
       const clienteRef = ref(db, 'clientes/' + tel);
       const clienteActual = clientesData[tel] || { total_compras: 0, monto_total: 0, nombre: nombre };
-      
       const nuevasCompras = (clienteActual.total_compras || 0) + 1;
       const nuevoMonto = (clienteActual.monto_total || 0) + monto;
 
@@ -766,14 +1004,12 @@
         monto_total: nuevoMonto,
         ultima_compra: new Date().toISOString()
       }).then(() => {
-        // Registrar en transacciones
         push(ref(db, 'transacciones'), {
           cliente: nombre || tel,
           monto: monto,
           tipo: 'Venta Directa',
           fecha: new Date().toISOString()
         });
-
         alert(`Venta registrada exitosamente. El cliente acumula ${nuevasCompras} compra(s).`);
         document.getElementById('venta-form').reset();
       });
@@ -817,13 +1053,12 @@
       const chatBox = document.getElementById('kai-chat-box');
       chatBox.innerHTML += `<div class="chat-msg user">${text}</div>`;
 
-      // Respuesta simulada inteligente basada en los datos en tiempo real
       let reply = "Entendido. Estoy analizando tus datos en tiempo real.";
       const query = text.toLowerCase();
 
       if (query.includes("stock") || query.includes("inventario") || query.includes("producto")) {
         const prodCount = Object.keys(productosData).length;
-        reply = `Actualmente tienes ${prodCount} productos registrados en la base de datos de Firebase.`;
+        reply = `Actualmente tienes ${prodCount} productos registrados en la base de datos.`;
       } else if (query.includes("venta") || query.includes("ganancia") || query.includes("finanza")) {
         let ventaTot = 0;
         Object.values(clientesData).forEach(c => ventaTot += (c.monto_total || 0));
@@ -843,37 +1078,37 @@
 
     // RENDERIZAR CLIENTES
     function renderClientes() {
-  const tbody = document.getElementById('clientes-table-body');
-  tbody.innerHTML = '';
-  const keys = Object.keys(clientesData);
-  
-  if (keys.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">No hay clientes registrados aún.</td></tr>';
-    return; // El return debe ir dentro del IF
-  }
+      const tbody = document.getElementById('clientes-table-body');
+      tbody.innerHTML = '';
+      const keys = Object.keys(clientesData);
+      
+      if (keys.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #888;">No hay clientes registrados aún.</td></tr>';
+        return;
+      }
 
-  keys.forEach(tel => {
-    const c = clientesData[tel];
-    const compras = c.total_compras || 0;
-    const montoTotal = c.monto_total || 0;
-    let estadoFidelidad = `<span style="color:#666;">Estándar (${compras} compras)</span>`;
-    
-    if (compras > 0 && compras % 10 === 0) {
-      estadoFidelidad = '<span class="badge-fidelidad">5ta Compra: Aplica 2% Adicional</span>';
-    } else if (compras % 10 === 9) {
-      estadoFidelidad = '<span style="color:#d97706; font-weight:bold;">Próxima compra recibe 2% adicional</span>';
+      keys.forEach(tel => {
+        const c = clientesData[tel];
+        const compras = c.total_compras || 0;
+        const montoTotal = c.monto_total || 0;
+        let estadoFidelidad = `<span style="color:#666;">Estándar (${compras} compras)</span>`;
+
+        if (compras > 0 && compras % 10 === 0) {
+          estadoFidelidad = '<span class="badge-fidelidad">10ma Compra: Aplica 2% Adicional</span>';
+        } else if (compras % 10 === 9) {
+          estadoFidelidad = '<span style="color:#d97706; font-weight:bold;">Próxima compra recibe 2% adicional</span>';
+        }
+
+        tbody.innerHTML += `
+          <tr>
+            <td><strong>${tel}</strong></td>
+            <td>${c.nombre || 'Cliente General'}</td>
+            <td><strong>${compras}</strong> pedido(s)</td>
+            <td>C$ ${parseFloat(montoTotal).toFixed(2)}</td>
+            <td>${estadoFidelidad}</td>
+          </tr>`;
+      });
     }
-
-    tbody.innerHTML += `
-      <tr>
-        <td><strong>${tel}</strong></td>
-        <td>${c.nombre || 'Cliente General'}</td>
-        <td><strong>${compras}</strong> pedido(s)</td>
-        <td>C$ ${parseFloat(montoTotal).toFixed(2)}</td>
-        <td>${estadoFidelidad}</td>
-      </tr>`;
-  });
-}
 
     // RENDERIZAR PEDIDOS
     function renderPedidos() {
@@ -895,8 +1130,7 @@
             <td>C$ ${parseFloat(c.monto_total || 0).toFixed(2)}</td>
             <td><span class="badge-stock stock-ok">Completado</span></td>
             <td><button class="action-btn btn-edit">Detalles</button></td>
-          </tr>
-        `;
+          </tr>`;
       });
     }
 
@@ -918,42 +1152,39 @@
             <td><strong>${code}</strong></td>
             <td>${c.descuento}%</td>
             <td><span class="badge-stock stock-ok">Activo</span></td>
-          </tr>
-        `;
+          </tr>`;
       });
     }
 
     // RENDERIZAR TRANSACCIONES
     function renderTransacciones() {
-  const tbody = document.getElementById('transacciones-table-body');
-  tbody.innerHTML = '';
-  const keys = Object.keys(clientesData);
-  
-  if (keys.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">Sin datos transaccionales.</td></tr>';
-    return; // El return debe ir dentro del IF
-  }
+      const tbody = document.getElementById('transacciones-table-body');
+      tbody.innerHTML = '';
+      const keys = Object.keys(clientesData);
 
-  keys.forEach(tel => {
-    const c = clientesData[tel];
-    const date = c.ultima_compra ? new Date(c.ultima_compra).toLocaleString('es-NI') : 'Reciente';
-    
-    tbody.innerHTML += `
-      <tr>
-        <td>${date}</td>
-        <td>${c.nombre || tel}</td>
-        <td>Ingreso Directo</td>
-        <td style="color:#16a34a; font-weight:bold;">+ C$ ${parseFloat(c.monto_total || 0).toFixed(2)}</td>
-      </tr>`;
-  });
-}
+      if (keys.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; color: #888;">Sin datos transaccionales.</td></tr>';
+        return;
+      }
+
+      keys.forEach(tel => {
+        const c = clientesData[tel];
+        const date = c.ultima_compra ? new Date(c.ultima_compra).toLocaleString('es-NI') : 'Reciente';
+        tbody.innerHTML += `
+          <tr>
+            <td>${date}</td>
+            <td>${c.nombre || tel}</td>
+            <td>Ingreso Directo</td>
+            <td style="color:#16a34a; font-weight:bold;">+ C$ ${parseFloat(c.monto_total || 0).toFixed(2)}</td>
+          </tr>`;
+      });
+    }
 
     // RENDERIZAR ESTADÍSTICAS
     function renderEstadisticas() {
       const numClientes = Object.keys(clientesData).length;
       const numProductos = Object.keys(productosData).length;
       let stockTotal = 0;
-
       Object.values(productosData).forEach(p => stockTotal += parseInt(p.stock || 0));
 
       document.getElementById('stat-total-clientes').innerText = numClientes;
@@ -991,11 +1222,10 @@
             </td>
             <td><span class="badge-stock ${stockClass}">${p.stock} uds</span></td>
             <td>
-              <button class="action-btn btn-edit" onclick="prepararEdicion('${key}')">✏️ Edit</button>
-              <button class="action-btn btn-del" onclick="eliminarProducto('${key}')">🗑️ Del</button>
+              <button class="action-btn btn-edit" onclick="prepararEdicion('${key}')">Edit</button>
+              <button class="action-btn btn-del" onclick="eliminarProducto('${key}')">Del</button>
             </td>
-          </tr>
-        `;
+          </tr>`;
       });
     }
 
@@ -1020,22 +1250,21 @@
 
       const gananciaEstimada = valorVentaTotal - valorCostoTotal;
 
-      // Métricas Inicio
       document.getElementById('kpi-valor-venta').innerText = `C$ ${valorVentaTotal.toFixed(2)}`;
       document.getElementById('kpi-valor-costo').innerText = `C$ ${valorCostoTotal.toFixed(2)}`;
       document.getElementById('kpi-ganancia-estimada').innerText = `C$ ${gananciaEstimada.toFixed(2)}`;
       document.getElementById('kpi-unidades-totales').innerText = `${unidadesTotales} uds`;
       document.getElementById('kpi-alertas-stock').innerText = `${productosStockBajo} producto(s) con stock bajo (<=10)`;
 
-      // Métricas Finanzas
       document.getElementById('fin-ventas-totales').innerText = `C$ ${valorVentaTotal.toFixed(2)}`;
       document.getElementById('fin-costo-inventario').innerText = `C$ ${valorCostoTotal.toFixed(2)}`;
       document.getElementById('fin-margen-bruto').innerText = `C$ ${gananciaEstimada.toFixed(2)}`;
     }
 
-    // EXPOSICIÓN DE FUNCIONES GLOBALES
+    // FUNCIONES GLOBALES
     window.cargarCatalogoInicial = function() {
       if (!confirm('¿Desea cargar el catálogo base de Productos Globales del Campo?')) return;
+      
       const catalogoInicial = {
         "prod_1": { nombre: "Café Clásico del Campo 100 gr", desc: "Tueste e intensidad balanceada", imagen: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=500&q=80", costo: 25.00, precio: 45.50, stock: 50 },
         "prod_2": { nombre: "Café Clásico del Campo 200 gr", desc: "Tueste e intensidad balanceada", imagen: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=500&q=80", costo: 40.00, precio: 72.30, stock: 50 },
@@ -1045,7 +1274,7 @@
         "prod_6": { nombre: "Café Gourmet Toledo", desc: "Selección premium de la casa", imagen: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=500&q=80", costo: 130.00, precio: 240.00, stock: 20 },
         "prod_7": { nombre: "Café Premium del Campo 400 gr", desc: "Edición especial grano seleccionado", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 95.00, precio: 165.00, stock: 35 },
         "prod_8": { nombre: "Café Tradicional Bolsa Trans 400 gr", desc: "Presentación artesanal", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 65.00, precio: 117.00, stock: 40 },
-        "prod_9": { nombre: "Café del Campo Bolsón (16 x 25 gr)", desc: "Empaque familiar dosificado", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 80.00, precio: 145.00, stock: 25 },
+        "prod_9": { nombre: "Café del Campo Bolsón (16x25 gr)", desc: "Empaque familiar dosificado", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 80.00, precio: 145.00, stock: 25 },
         "prod_10": { nombre: "Café del Campo 200 gr", desc: "Aroma y sabor tradicional", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 35.00, precio: 63.50, stock: 50 },
         "prod_11": { nombre: "Café del Campo 400 gr", desc: "Aroma y sabor tradicional", imagen: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80", costo: 75.00, precio: 130.00, stock: 50 },
         "prod_12": { nombre: "Pinolillo del Campo 400 gr", desc: "Bebida tradicional refinada", imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=500&q=80", costo: 22.00, precio: 45.00, stock: 60 },
@@ -1054,12 +1283,14 @@
         "prod_15": { nombre: "Pinol Tradicional del Campo 400 gr", desc: "Maíz tostado molido artesanal", imagen: "https://images.unsplash.com/photo-1551754655-cd27e38d2076?auto=format&fit=crop&w=500&q=80", costo: 22.00, precio: 45.00, stock: 60 },
         "prod_16": { nombre: "Humus Orgánico de Lombriz 11 lb", desc: "Abono orgánico natural", imagen: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=500&q=80", costo: 90.00, precio: 150.00, stock: 20 }
       };
+
       set(ref(db, 'productos'), catalogoInicial);
     };
 
     window.prepararEdicion = function(key) {
       const p = productosData[key];
       if (!p) return;
+
       switchTab('productos');
       document.getElementById('prod-id').value = key;
       document.getElementById('prod-nombre').value = p.nombre || '';
