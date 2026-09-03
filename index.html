@@ -2,275 +2,213 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>PG del Campo - Del campo a su mesa</title>
 <meta name="theme-color" content="#2E7D32">
 <meta name="description" content="Productos nicaragüenses de calidad: Café, Pinolillo y Pinol. Directamente del campo a su mesa en Jinotepe, Carazo.">
-<!-- Manifest para PWA -->
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌿</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-/* Estilos Generales y PWA original */
-:root {
-  --primary-color: #2E7D32;
-  --primary-light: #4CAF50;
-  --primary-dark: #1B5E20;
-  --secondary-color: #FF9800;
-  --light-color: #F5F5F5;
-  --dark-color: #333333;
-  --gray-color: #757575;
-  --white: #FFFFFF;
-  --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-  --border-radius: 12px;
-  --primary: #1b382b;
-  --accent: #c8963e;
-  --leaf: #8eb057;
-  --bg-cream: #f4f4f6;
-  --bg-warm: #fdfbf7;
-  --bg-white: #ffffff;
-  --text-dark: #2c2c2c;
-  --text-muted: #6b7c68;
-  --border-color: #e2e8f0;
-  --radius-lg: 16px;
-  --radius-md: 12px;
-  --transition: all 0.25s ease;
+:root{
+  --primary-color:#2E7D32;--primary-light:#4CAF50;--primary-dark:#1B5E20;
+  --secondary-color:#FF9800;--light-color:#F5F5F5;--dark-color:#333333;
+  --gray-color:#757575;--white:#FFFFFF;
+  --shadow:0 2px 10px rgba(0,0,0,0.08);--border-radius:12px;
+  --primary:#1b382b;--accent:#c8963e;--leaf:#8eb057;
+  --bg-cream:#f4f4f6;--bg-warm:#fdfbf7;--bg-white:#ffffff;
+  --text-dark:#2c2c2c;--text-muted:#6b7c68;
+  --border-color:#e2e8e0;--radius-lg:16px;--radius-md:12px;
+  --transition:all 0.25s ease
 }
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{height:100%;overflow-x:hidden}
+body{font-family:'Plus Jakarta Sans','Roboto',sans-serif;line-height:1.6;color:var(--dark-color);background:#f9f9f9;height:100%;overflow-x:hidden;position:relative;padding-bottom:70px}
+h1,h2,h3,h4{font-family:'Poppins',sans-serif;font-weight:600;color:var(--primary-dark)}
+.container{width:100%;max-width:1200px;margin:0 auto;padding:0 16px}
 
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { height: 100%; overflow-x: hidden; }
-body {
-  font-family: 'Plus Jakarta Sans', 'Roboto', sans-serif;
-  line-height: 1.6;
-  color: var(--dark-color);
-  background-color: #f9f9f9;
-  height: 100%;
-  overflow-x: hidden;
-  position: relative;
-  padding-bottom: 70px;
-}
+/* Marquee */
+.marquee-container{width:100%;background-color:var(--primary-dark);overflow:hidden;white-space:nowrap;padding:3px 0;display:flex;align-items:center}
+.marquee-track{display:flex;width:max-content;animation:scroll-left 12s linear infinite}
+.marquee-text{font-size:11px;font-weight:500;color:#fff;padding-right:50px;font-family:'Plus Jakarta Sans',sans-serif}
+@keyframes scroll-left{0%{transform:translateX(0%)}100%{transform:translateX(-50%)}}
 
-h1, h2, h3, h4 { font-family: 'Poppins', sans-serif; font-weight: 600; color: var(--primary-dark); }
-.container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+/* Header */
+header{background-color:var(--white);box-shadow:var(--shadow);position:sticky;top:0;z-index:1000;padding:12px 0}
+.header-container{display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-icon{background-color:var(--primary-color);color:var(--white);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo-text{display:flex;flex-direction:column}
+.logo-text h1{font-size:18px;color:var(--primary-color);line-height:1.2}
+.logo-text span{font-size:11px;color:var(--secondary-color);font-weight:600;letter-spacing:0.3px}
+.header-actions{display:flex;align-items:center;gap:16px}
+.cart-icon{position:relative;cursor:pointer;padding:4px}
+.cart-icon i{font-size:22px;color:var(--primary-color)}
+.cart-count{position:absolute;top:-4px;right:-6px;background-color:var(--secondary-color);color:var(--white);font-size:11px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold}
 
-/* Marquee Superior */
-.marquee-container {
-  width: 100%;
-  background-color: var(--primary-dark);
-  overflow: hidden;
-  white-space: nowrap;
-  padding: 3px 0;
-  display: flex;
-  align-items: center;
-}
-.marquee-track { 
-    display: flex; 
-    width: max-content; 
-    animation: scroll-left 12s linear infinite; 
-}
-.marquee-text { font-size: 11px; font-weight: 500; color: #ffffff; padding-right: 50px; font-family: 'Plus Jakarta Sans', sans-serif; }
-@keyframes scroll-left { 
-    0% { transform: translateX(0%); } 
-    100% { transform: translateX(-50%); } 
-}
+/* Bottom Nav */
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background-color:var(--white);box-shadow:0 -2px 10px rgba(0,0,0,0.08);z-index:1000;display:flex;justify-content:space-around;padding:8px 0}
+.nav-item{display:flex;flex-direction:column;align-items:center;text-decoration:none;color:var(--gray-color);font-size:11px;font-weight:500;flex:1}
+.nav-item i{font-size:19px;margin-bottom:2px}
+.nav-item.active{color:var(--primary-color);font-weight:700}
 
-/* Header App */
-header { background-color: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; padding: 12px 0; }
-.header-container { display: flex; justify-content: space-between; align-items: center; }
-.logo { display: flex; align-items: center; gap: 10px; }
-.logo-icon { background-color: var(--primary-color); color: var(--white); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-.logo-text { display: flex; flex-direction: column; }
-.logo-text h1 { font-size: 18px; color: var(--primary-color); line-height: 1.2; }
-.logo-text span { font-size: 11px; color: var(--secondary-color); font-weight: 600; letter-spacing: 0.3px; }
-.header-actions { display: flex; align-items: center; gap: 16px; }
-.cart-icon { position: relative; cursor: pointer; padding: 4px; }
-.cart-icon i { font-size: 22px; color: var(--primary-color); }
-.cart-count { position: absolute; top: -4px; right: -6px; background-color: var(--secondary-color); color: var(--white); font-size: 11px; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+/* Sections */
+.section{padding:16px 0;display:none}
+.section.active{display:block;animation:fadeIn 0.25s ease-in-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-size:20px;margin-bottom:16px;position:relative;padding-bottom:8px}
+.section-title:after{content:"";display:block;width:48px;height:4px;background-color:var(--secondary-color);position:absolute;bottom:0;left:0;border-radius:2px}
 
-/* Bottom Navigation */
-.bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background-color: var(--white); box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08); z-index: 1000; display: flex; justify-content: space-around; padding: 8px 0; }
-.nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: var(--gray-color); font-size: 11px; font-weight: 500; flex: 1; }
-.nav-item i { font-size: 19px; margin-bottom: 2px; }
-.nav-item.active { color: var(--primary-color); font-weight: 700; }
+/* Hero */
+.hero{background:linear-gradient(rgba(46,125,50,0.9),rgba(46,125,50,0.82));color:var(--white);padding:36px 0;text-align:center;margin-bottom:20px;border-radius:0 0 20px 20px}
+.hero h2{font-size:22px;margin-bottom:8px;color:var(--white)}
+.hero p{font-size:14px;margin-bottom:18px;opacity:0.95}
+.btn-hero{display:inline-block;background-color:var(--secondary-color);color:var(--white);padding:12px 24px;border-radius:var(--border-radius);text-decoration:none;font-weight:600;border:none;cursor:pointer;transition:all 0.3s;font-size:15px;width:100%;text-align:center}
+.btn-hero:hover,.btn-hero:active{background-color:#F57C00;transform:translateY(-1px)}
 
-/* Secciones Generales */
-.hero { background: linear-gradient(rgba(46, 125, 50, 0.9), rgba(46, 125, 50, 0.82)); color: var(--white); padding: 36px 0; text-align: center; margin-bottom: 20px; border-radius: 0 0 20px 20px; }
-.hero h2 { font-size: 22px; margin-bottom: 8px; color: var(--white); }
-.hero p { font-size: 14px; margin-bottom: 18px; opacity: 0.95; }
-.btn { display: inline-block; background-color: var(--secondary-color); color: var(--white); padding: 12px 24px; border-radius: var(--border-radius); text-decoration: none; font-weight: 600; border: none; cursor: pointer; transition: all 0.3s; font-size: 15px; width: 100%; text-align: center; }
-.btn:hover, .btn:active { background-color: #F57C00; transform: translateY(-1px); }
-.section { padding: 16px 0; display: none; }
-.section.active { display: block; animation: fadeIn 0.25s ease-in-out; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
-.section-title { font-size: 20px; margin-bottom: 16px; position: relative; padding-bottom: 8px; }
-.section-title:after { content: ""; display: block; width: 48px; height: 4px; background-color: var(--secondary-color); position: absolute; bottom: 0; left: 0; border-radius: 2px; }
+/* Products Grid */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px;margin-bottom:24px}
+@media(min-width:600px){.products-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:16px}}
+.product-card{background:var(--bg-white);border-radius:var(--radius-lg);border:1px solid rgba(27,56,43,0.08);overflow:hidden;box-shadow:var(--shadow);transition:var(--transition);display:flex;flex-direction:column}
+.product-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(27,56,43,0.1)}
+.product-image-container{width:100%;aspect-ratio:4/3;background-color:#f8faf8;display:flex;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid var(--border-color)}
+.product-image{width:100%;height:100%;object-fit:contain;padding:6px}
+.product-image-fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:30px;color:var(--leaf);background-color:#eef0ee}
+.product-info{padding:10px;display:flex;flex-direction:column;flex-grow:1}
+.product-name{font-size:0.85rem;font-weight:700;margin-bottom:4px;color:var(--text-dark);line-height:1.25;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.product-price{font-size:0.98rem;font-weight:800;color:var(--primary);margin-top:auto;margin-bottom:8px}
+.btn-add{background-color:var(--primary);color:#fff;border:none;padding:8px;border-radius:var(--radius-md);font-weight:700;cursor:pointer;width:100%;transition:var(--transition);display:flex;justify-content:center;align-items:center;gap:4px;font-size:11.5px}
+.btn-add:hover{background-color:var(--primary-dark)}
+.btn-add:disabled{background-color:#cbd5e1;cursor:not-allowed}
 
-/* Grilla de Catálogo */
-.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 12px; margin-bottom: 24px; }
-@media (min-width: 600px) { .products-grid { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 16px; } }
-.product-card { background: var(--bg-white); border-radius: var(--radius-lg); border: 1px solid rgba(27,56,43,0.08); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); display: flex; flex-direction: column; }
-.product-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(27,56,43,0.1); }
-.product-image-container { width: 100%; aspect-ratio: 4/3; background-color: #f8faf8; display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid var(--border-color); }
-.product-image { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
-.product-image-fallback { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 30px; color: var(--leaf); background-color: #eef0ee; }
-.product-info { padding: 10px; display: flex; flex-direction: column; flex-grow: 1; }
-.product-name { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; color: var(--text-dark); line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.product-price { font-size: 0.98rem; font-weight: 800; color: var(--primary); margin-top: auto; margin-bottom: 8px; }
-.btn-add { background-color: var(--primary); color: #fff; border: none; padding: 8px; border-radius: var(--radius-md); font-weight: 700; cursor: pointer; width: 100%; transition: var(--transition); display: flex; justify-content: center; align-items: center; gap: 4px; font-size: 11.5px; }
-.btn-add:hover { background-color: var(--primary-dark); }
-.btn-add:disabled { background-color: #cbd5e1; cursor: not-allowed; }
+/* Cart Panel */
+.cart-panel{background:var(--bg-white);border-radius:var(--radius-lg);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(27,56,43,0.08);margin-bottom:20px}
+.panel-section-title{font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:12px;border-bottom:2px solid var(--bg-cream);padding-bottom:6px;display:flex;align-items:center;gap:8px}
+.cart-items-container{margin-bottom:15px;max-height:260px;overflow-y:auto}
+.cart-item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border-color);font-size:12.5px}
+.cart-item-details h4{font-weight:700;color:var(--text-dark);font-size:13px}
+.cart-item-details p{color:var(--text-muted);font-size:11px}
+.cart-item-actions{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.btn-remove{background:none;border:none;color:#dc3545;font-size:11px;font-weight:600;cursor:pointer;padding:2px 4px}
+.cart-empty{text-align:center;color:var(--text-muted);padding:20px 0;font-size:13px}
 
-/* Carrito y Formulario */
-.cart-panel { background: var(--bg-white); border-radius: var(--radius-lg); padding: 16px; box-shadow: var(--shadow); border: 1px solid rgba(27,56,43,0.08); margin-bottom: 20px; }
-.panel-section-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; border-bottom: 2px solid var(--bg-cream); padding-bottom: 6px; display: flex; align-items: center; gap: 8px; }
-.cart-items-container { margin-bottom: 15px; max-height: 260px; overflow-y: auto; }
-.cart-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border-color); font-size: 12.5px; }
-.cart-item-details h4 { font-weight: 700; color: var(--text-dark); font-size: 13px; }
-.cart-item-details p { color: var(--text-muted); font-size: 11px; }
-.cart-item-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.btn-remove { background: none; border: none; color: #dc3545; font-size: 11px; font-weight: 600; cursor: pointer; padding: 2px 4px; }
-.cart-empty { text-align: center; color: var(--text-muted); padding: 20px 0; font-size: 13px; }
-.form-group { margin-bottom: 10px; }
-.form-group label { display: block; font-size: 11px; font-weight: 600; margin-bottom: 3px; color: var(--text-dark); }
-.form-group input, .form-group select { width: 100%; padding: 9px; border: 1px solid var(--border-color); border-radius: var(--radius-md); font-size: 12.5px; outline: none; }
-.form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+/* Stamps / Loyalty */
+.stamp{background:linear-gradient(135deg,var(--primary-dark),#28523f);color:#fff;border-radius:12px;padding:13px;margin-bottom:13px}
+.stamp h3{margin:0 0 5px;color:var(--accent);font-size:12px}
+.sg{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.sd{aspect-ratio:1;border-radius:50%;border:1px dashed #ffffff77;display:grid;place-items:center;font-size:12px}
+.sd.on{background:#fff;color:#333}
 
-.totals-line { display: flex; justify-content: space-between; font-size: 12.5px; margin-bottom: 6px; }
-.totals-line.total { font-size: 15px; font-weight: 800; color: var(--primary); border-top: 2px dashed var(--border-color); padding-top: 8px; margin-top: 8px; }
-.discount-label { color: #28a745; font-weight: 600; }
-.btn-action { width: 100%; padding: 12px; border: none; border-radius: var(--radius-md); font-weight: 700; font-size: 13.5px; cursor: pointer; transition: var(--transition); display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 8px; text-decoration: none; }
-.btn-whatsapp { background-color: #25d366; color: white; }
-.btn-whatsapp:hover { background-color: #1ebd58; }
-.btn-whatsapp:disabled, .btn-recibo:disabled { background-color: #cbd5e1; color: #94a3b8; cursor: not-allowed; }
-.btn-recibo { background-color: var(--primary); color: white; }
-.btn-recibo:hover { background-color: var(--primary-dark); }
-.btn-lafise-direct { background-color: #005691; color: white; margin-top: 8px; text-align: center; }
-.btn-lafise-direct:hover { background-color: #003d66; }
+/* Form Groups */
+.form-group{margin-bottom:10px}
+.form-group label{display:block;font-size:11px;font-weight:600;margin-bottom:3px;color:var(--text-dark)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:9px;border:1px solid var(--border-color);border-radius:var(--radius-md);font-size:12.5px;outline:none;font-family:inherit}
+.form-group input:focus,.form-group select:focus{border-color:var(--primary)}
+.form-group textarea{resize:vertical}
 
-/* TARJETA ALIAS ACH LAFISE INTEGRADA */
-.lafise-ach-card { background-color: #f8faf8; border: 1px solid #1B5E20; border-radius: 12px; padding: 14px; margin: 12px 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-.ach-header { display: flex; align-items: center; gap: 8px; color: #1B5E20; font-weight: 700; font-size: 13.5px; border-bottom: 1px dashed #c8963e; padding-bottom: 6px; margin-bottom: 10px; }
-.ach-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-size: 12.5px; }
-.ach-label { color: #555555; }
-.ach-value { color: #2c2c2c; font-weight: 600; }
-.ach-value.highlight { color: #1B5E20; font-size: 14px; }
-.ach-copy-group { display: flex; align-items: center; gap: 8px; }
-.btn-copy-alias { background: #1B5E20; color: #ffffff; border: none; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background 0.2s ease; }
-.btn-copy-alias:hover { background: #2E7D32; }
-.ach-footer-note { margin-top: 8px; padding-top: 6px; border-top: 1px solid #e2e8f0; font-size: 10.5px; color: #6b7c68; }
+/* Totals */
+.totals-line{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:6px}
+.totals-line.total{font-size:15px;font-weight:800;color:var(--primary);border-top:2px dashed var(--border-color);padding-top:8px;margin-top:8px}
+.discount-label{color:#28a745;font-weight:600}
 
-.qr-payment { text-align: center; margin-top: 14px; font-size: 11px; }
-.qr-payment img { margin: 6px 0; border: 1px solid var(--border-color); border-radius: 8px; padding: 4px; }
-.qr-payment a { color: #005691; font-weight: bold; text-decoration: none; display: block; }
+/* Notices */
+.notice{margin-top:10px;padding:9px;border-radius:8px;font-size:10px}
+.credit{background:#fff7df;border:1px solid #efd48d;color:#6d520c}
+.cash{background:#e8f6ed;border:1px solid #b9dfc6;color:#176437}
 
-/* Nosotros y Contacto */
-.about-card, .contact-card { background-color: var(--white); border-radius: var(--border-radius); padding: 20px; box-shadow: var(--shadow); margin-bottom: 16px; }
-.about-card h3, .contact-card h3 { margin-bottom: 12px; color: var(--primary-color); }
-.about-card p, .contact-card p { margin-bottom: 12px; line-height: 1.5; font-size: 13.5px; }
-.contact-info { list-style: none; }
-.contact-info li { display: flex; align-items: flex-start; margin-bottom: 14px; font-size: 13px; }
-.contact-info i { color: var(--primary-color); margin-right: 12px; font-size: 16px; margin-top: 3px; }
+/* Action Buttons */
+.btn-action{width:100%;padding:12px;border:none;border-radius:var(--radius-md);font-weight:700;font-size:13.5px;cursor:pointer;transition:var(--transition);display:flex;justify-content:center;align-items:center;gap:8px;margin-top:8px;text-decoration:none}
+.btn-whatsapp{background-color:#25d366;color:white}
+.btn-whatsapp:hover{background-color:#1ebd58}
+.btn-whatsapp:disabled,.btn-recibo:disabled{background-color:#cbd5e1;color:#94a3b8;cursor:not-allowed}
+.btn-recibo{background-color:var(--primary);color:white}
+.btn-recibo:hover{background-color:var(--primary-dark)}
+.btn-lafise-direct{background-color:#005691;color:white;margin-top:8px;text-align:center}
+.btn-lafise-direct:hover{background-color:#003d66}
+
+/* LAFISE ACH Card */
+.lafise-ach-card{background-color:#f8faf8;border:1px solid #1B5E20;border-radius:12px;padding:14px;margin:12px 0;font-family:'Plus Jakarta Sans',sans-serif}
+.ach-header{display:flex;align-items:center;gap:8px;color:#1B5E20;font-weight:700;font-size:13.5px;border-bottom:1px dashed #c8963e;padding-bottom:6px;margin-bottom:10px}
+.ach-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:12.5px}
+.ach-label{color:#555}
+.ach-value{color:#2c2c2c;font-weight:600}
+.ach-value.highlight{color:#1B5E20;font-size:14px}
+.ach-copy-group{display:flex;align-items:center;gap:8px}
+.btn-copy-alias{background:#1B5E20;color:#fff;border:none;padding:4px 8px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:background 0.2s ease}
+.btn-copy-alias:hover{background:#2E7D32}
+.ach-footer-note{margin-top:8px;padding-top:6px;border-top:1px solid #e2e8f0;font-size:10.5px;color:#6b7c68}
+.qr-payment{text-align:center;margin-top:14px;font-size:11px}
+.qr-payment img{margin:6px 0;border:1px solid var(--border-color);border-radius:8px;padding:4px}
+.qr-payment a{color:#005691;font-weight:bold;text-decoration:none;display:block}
+
+/* About / Contact */
+.about-card,.contact-card{background-color:var(--white);border-radius:var(--border-radius);padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.about-card h3,.contact-card h3{margin-bottom:12px;color:var(--primary-color)}
+.about-card p,.contact-card p{margin-bottom:12px;line-height:1.5;font-size:13.5px}
+.contact-info{list-style:none}
+.contact-info li{display:flex;align-items:flex-start;margin-bottom:14px;font-size:13px}
+.contact-info i{color:var(--primary-color);margin-right:12px;font-size:16px;margin-top:3px}
 
 /* Footer */
-footer { background-color: var(--primary-dark); color: var(--white); padding: 24px 0 40px; }
-.footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.footer-logo i { font-size: 20px; }
-.footer-links { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.footer-column h3 { color: var(--white); margin-bottom: 8px; font-size: 14px; }
-.footer-column ul { list-style: none; }
-.footer-column li { margin-bottom: 6px; }
-.footer-column a { color: #ddd; text-decoration: none; font-size: 12.5px; }
-.social-icons { display: flex; gap: 16px; margin-top: 16px; justify-content: center; }
-.social-icons a { color: var(--white); font-size: 18px; display: inline-block; padding: 6px; }
-.copyright { text-align: center; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 12px; color: #ccc; margin-top: 16px; }
+footer{background-color:var(--primary-dark);color:var(--white);padding:24px 0 40px}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-logo i{font-size:20px}
+.footer-links{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.footer-column h3{color:var(--white);margin-bottom:8px;font-size:14px}
+.footer-column ul{list-style:none}
+.footer-column li{margin-bottom:6px}
+.footer-column a{color:#ddd;text-decoration:none;font-size:12.5px}
+.social-icons{display:flex;gap:16px;margin-top:16px;justify-content:center}
+.social-icons a{color:var(--white);font-size:18px;display:inline-block;padding:6px}
+.copyright{text-align:center;padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);font-size:12px;color:#ccc;margin-top:16px}
 
-/* Modal Recibo */
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
-.modal-content { background: white; padding: 20px; border-radius: var(--radius-lg); max-width: 420px; width: 100%; max-height: 90vh; overflow-y: auto; }
-.modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
-.btn-close-modal { background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted); }
+/* Modal */
+.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:2000;justify-content:center;align-items:center;padding:15px}
+.modal-content{background:white;padding:20px;border-radius:var(--radius-lg);max-width:420px;width:100%;max-height:90vh;overflow-y:auto}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid var(--border-color);padding-bottom:6px}
+.btn-close-modal{background:none;border:none;font-size:20px;cursor:pointer;color:var(--text-muted)}
 
-/* Impresión Térmica */
-@page { size: 80mm auto; margin: 0; }
-@media print {
-  body * { visibility: hidden !important; }
-  #receipt-modal, #receipt-modal * { visibility: visible !important; }
-  #receipt-modal { position: absolute !important; left: 0 !important; top: 0 !important; width: 80mm !important; padding: 0 !important; margin: 0 !important; background: none !important; }
-  .modal-content { width: 80mm !important; max-width: 80mm !important; padding: 4mm !important; border: none !important; box-shadow: none !important; margin: 0 !important; border-radius: 0 !important; }
-  .no-print { display: none !important; }
-}
-#rec-lafise-qr { width: 110px !important; height: 110px !important; }
+/* Chatbot */
+#chatbot-launcher{position:fixed;bottom:75px;right:18px;width:56px;height:56px;background-color:var(--primary-color);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 15px rgba(0,0,0,0.2);cursor:pointer;z-index:1050;transition:transform 0.3s ease,background-color 0.3s ease}
+#chatbot-launcher:hover{transform:scale(1.08);background-color:var(--primary-dark)}
+#chatbot-window{position:fixed;bottom:140px;right:18px;width:340px;max-width:calc(100vw - 36px);height:440px;background:#ffffff;border-radius:16px;box-shadow:0 8px 25px rgba(0,0,0,0.18);border:1px solid var(--border-color);display:none;flex-direction:column;z-index:1050;overflow:hidden;animation:popUpBot 0.3s ease}
+@keyframes popUpBot{from{opacity:0;transform:translateY(20px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+#header-bot{display:flex;align-items:center;justify-content:space-between;background:var(--primary-color);color:white;padding:12px 16px}
+.bot-title-area{display:flex;align-items:center;gap:10px}
+#header-bot h3{margin:0;color:white;font-size:15px;display:flex;align-items:center;gap:6px}
+#header-bot span{font-size:10px;color:var(--primary-dark);background:#e2f0d9;padding:2px 6px;border-radius:10px;font-weight:bold}
+.btn-close-bot{background:none;border:none;color:white;font-size:18px;cursor:pointer;opacity:0.8}
+.btn-close-bot:hover{opacity:1}
+#historial{flex:1;overflow-y:auto;padding:12px;background:#fafafa;display:flex;flex-direction:column;gap:8px}
+.mensaje{padding:8px 12px;border-radius:12px;max-width:85%;font-size:13px;line-height:1.4;word-wrap:break-word;white-space:pre-line}
+.usuario{background-color:var(--primary-color);color:white;align-self:flex-end;border-bottom-right-radius:2px}
+.ia{background-color:#eaefe9;color:#233e20;align-self:flex-start;border-bottom-left-radius:2px;border:1px solid #d3ded2}
+#input-area{display:flex;gap:6px;padding:10px;background:#ffffff;border-top:1px solid var(--border-color)}
+#texto{flex-grow:1;padding:8px 12px;border:1px solid #ccc;border-radius:8px;font-size:13px;outline:none}
+#texto:focus{border-color:var(--primary-color)}
+#btn-enviar{background-color:var(--primary-color);color:white;border:none;padding:0 14px;border-radius:8px;cursor:pointer;font-weight:bold;font-size:13px}
+#btn-enviar:disabled{background-color:#a0a0a0;cursor:not-allowed}
 
-/* Banner Instalar PWA */
-.install-banner { position: fixed; bottom: 60px; left: 0; width: 100%; background-color: var(--primary-color); color: white; padding: 12px 16px; display: none; justify-content: space-between; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.15); z-index: 999; }
-.install-banner p { font-size: 13px; flex-grow: 1; }
-.install-banner button { background-color: var(--white); color: var(--primary-color); border: none; padding: 6px 14px; border-radius: 20px; font-weight: 600; font-size: 12px; margin-left: 10px; }
+/* Install Banner */
+.install-banner{position:fixed;bottom:60px;left:0;width:100%;background-color:var(--primary-color);color:white;padding:12px 16px;display:none;justify-content:space-between;align-items:center;box-shadow:0 -2px 10px rgba(0,0,0,0.15);z-index:999}
+.install-banner p{font-size:13px;flex-grow:1}
+.install-banner button{background-color:var(--white);color:var(--primary-color);border:none;padding:6px 14px;border-radius:20px;font-weight:600;font-size:12px;margin-left:10px}
 
-/* ESTILOS DEL CHATBOT INTEGRADO (BOTSPG) */
-#chatbot-launcher {
-  position: fixed;
-  bottom: 75px;
-  right: 18px;
-  width: 56px;
-  height: 56px;
-  background-color: var(--primary-color);
-  color: white;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-  cursor: pointer;
-  z-index: 1050;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+/* Print */
+@page{size:80mm auto;margin:0}
+@media print{
+  body *{visibility:hidden!important}
+  #receipt-modal,#receipt-modal *{visibility:visible!important}
+  #receipt-modal{position:absolute!important;left:0!important;top:0!important;width:80mm!important;padding:0!important;margin:0!important;background:none!important}
+  .modal-content{width:80mm!important;max-width:80mm!important;padding:4mm!important;border:none!important;box-shadow:none!important;margin:0!important;border-radius:0!important}
+  .no-print{display:none!important}
 }
-#chatbot-launcher:hover { transform: scale(1.08); background-color: var(--primary-dark); }
-#chatbot-window {
-  position: fixed;
-  bottom: 140px;
-  right: 18px;
-  width: 340px;
-  max-width: calc(100vw - 36px);
-  height: 440px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.18);
-  border: 1px solid var(--border-color);
-  display: none;
-  flex-direction: column;
-  z-index: 1050;
-  overflow: hidden;
-  animation: popUpBot 0.3s ease;
-}
-@keyframes popUpBot {
-  from { opacity: 0; transform: translateY(20px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-#header-bot { display: flex; align-items: center; justify-content: space-between; background: var(--primary-color); color: white; padding: 12px 16px; }
-.bot-title-area { display: flex; align-items: center; gap: 10px; }
-#header-bot h3 { margin: 0; color: white; font-size: 15px; display: flex; align-items: center; gap: 6px; }
-#header-bot span { font-size: 10px; color: var(--primary-dark); background: #e2f0d9; padding: 2px 6px; border-radius: 10px; font-weight: bold; }
-.btn-close-bot { background: none; border: none; color: white; font-size: 18px; cursor: pointer; opacity: 0.8; }
-.btn-close-bot:hover { opacity: 1; }
-#historial { flex: 1; overflow-y: auto; padding: 12px; background: #fafafa; display: flex; flex-direction: column; gap: 8px; }
-.mensaje { padding: 8px 12px; border-radius: 12px; max-width: 85%; font-size: 13px; line-height: 1.4; word-wrap: break-word; white-space: pre-line; }
-.usuario { background-color: var(--primary-color); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-.ia { background-color: #eaefe9; color: #233e20; align-self: flex-start; border-bottom-left-radius: 2px; border: 1px solid #d3ded2; }
-#input-area { display: flex; gap: 6px; padding: 10px; background: #ffffff; border-top: 1px solid var(--border-color); }
-#texto { flex-grow: 1; padding: 8px 12px; border: 1px solid #cccccc; border-radius: 8px; font-size: 13px; outline: none; }
-#texto:focus { border-color: var(--primary-color); }
-#btn-enviar { background-color: var(--primary-color); color: white; border: none; padding: 0 14px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; }
-#btn-enviar:disabled { background-color: #a0a0a0; cursor: not-allowed; }
 </style>
 </head>
 <body>
 
-<!-- Cintillo Superior Marquee -->
+<!-- Cintillo Marquee -->
 <div class="marquee-container">
   <div class="marquee-track">
     <span class="marquee-text">Con la ayuda del Cielo todo es posible realizar - BS"D</span>
@@ -278,7 +216,7 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
   </div>
 </div>
 
-<!-- Header de Navegación Superior -->
+<!-- Header -->
 <header>
   <div class="container header-container">
     <div class="logo">
@@ -304,7 +242,7 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
       <div class="container">
         <h2>Productos 100% Nicaragüenses</h2>
         <p>Café, Pinolillo y Pinol de la más alta calidad. Cultivados en las montañas de Jinotega y Matagalpa, procesados con mucho cuidado y esmero en Jinotepe, Carazo.</p>
-        <a href="#productos" class="btn nav-link" data-target="productos">Explorar Catálogo</a>
+        <a href="#productos" class="btn-hero nav-link" data-target="productos">Explorar Catálogo</a>
       </div>
     </div>
     <div class="container">
@@ -313,65 +251,90 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
         <p>En PG del Campo nos dedicamos a llevar los auténticos sabores de Nicaragua directamente desde nuestras tierras en Jinotega, Matagalpa y Carazo, hasta tu mesa. Cada producto es cultivado, cosechado y procesado con el mayor cuidado para garantizar su calidad y frescura.</p>
         <p>Trabajamos la tierra con gratitud y respeto. Desde el grano de café que despierta tus mañanas y el sabor tradicional de nuestro pinol y pinolillo, hasta el humus que nutre tus cultivos; cada producto es elaborado con el compromiso de ofrecerte lo mejor de la naturaleza.</p>
         <h3>Nuestra Misión</h3>
-        <p>Es promover los productos tradicionales nicaragüenses, apoyando a los agricultores locales y ofreciéndote lo mejor de nuestra tierra, llevando nuestros productos ¡¡Del Campo a su Mesa!!.</p>
+        <p>Promover los productos tradicionales nicaragüenses, apoyando a los agricultores locales y ofreciéndote lo mejor de nuestra tierra, llevando nuestros productos ¡¡Del Campo a su Mesa!!.</p>
         <h3>Nuestra Esencia</h3>
         <p>Creemos firmemente que cada cosecha y cada proyecto prosperan con la ayuda del Cielo y el esfuerzo de manos dedicadas. Llevamos el campo a tu hogar, cuidando la vida desde la raíz.</p>
       </div>
     </div>
   </section>
 
-  <!-- Vista: Catálogo de Productos -->
+  <!-- Vista: Catálogo -->
   <section id="productos" class="section">
     <div class="container">
       <h2 class="section-title">Catálogo</h2>
       <div id="products-grid" class="products-grid">
-        <p style="padding: 20px; color: var(--text-muted); text-align: center;">Cargando productos...</p>
+        <p style="padding:20px;color:var(--text-muted);text-align:center">Cargando productos...</p>
       </div>
     </div>
   </section>
 
-  <!-- Vista: Carrito y Check-out -->
+  <!-- Vista: Pedido -->
   <section id="pedido" class="section">
     <div class="container">
       <h2 class="section-title">Mi Pedido</h2>
       <aside class="cart-panel">
+        <!-- Fidelidad -->
+        <div class="stamp">
+          <h3>CLIENTE</h3>
+          <div id="clientInfo">Ingresa tu WhatsApp para consultar tu historial.</div>
+          <div id="stamps" class="sg"></div>
+        </div>
+
+        <!-- Productos en carrito -->
         <div class="panel-section-title">
-          Resumen de Productos <span id="cart-count" style="font-size: 11px; font-weight:normal; margin-left:auto;">0 Items</span>
+          Resumen de Productos <span id="cart-count" style="font-size:11px;font-weight:normal;margin-left:auto">0 Items</span>
         </div>
         <div id="cart-items" class="cart-items-container">
           <div class="cart-empty">El carrito está vacío</div>
         </div>
-        
-        <div class="panel-section-title" style="margin-top: 16px;">Datos de Envío y Pago</div>
+
+        <!-- Datos de envío y pago -->
+        <div class="panel-section-title" style="margin-top:16px">Datos de Envío y Pago</div>
+
         <div class="form-group">
-          <label>Nombre Completo / Razón Social:</label>
+          <label>WhatsApp / Código de cliente *</label>
+          <input type="tel" id="cliente-tel" maxlength="15" placeholder="88888888" oninput="cliente()">
+        </div>
+        <div class="form-group">
+          <label>Nombre Completo / Razón Social *</label>
           <input type="text" id="cliente-nombre" placeholder="Ej: José Gutiérrez">
         </div>
         <div class="form-group">
-          <label>Número Telefónico (WhatsApp):</label>
-          <input type="tel" id="cliente-tel" placeholder="Ej: 88888888">
+          <label>Dirección Física de Destino</label>
+          <textarea id="cliente-dir" rows="2" placeholder="Ej: Costado sur de Iglesia San Antonio"></textarea>
         </div>
         <div class="form-group">
-          <label>Dirección Física de Destino:</label>
-          <input type="text" id="cliente-dir" placeholder="Ej: Costado sur de Iglesia San Antonio">
-        </div>
-        <div class="form-group">
-          <label>Zona / Modalidad de Despacho:</label>
-          <select id="zona-envio" onchange="calcularTotales()">
-            <option value="0" data-nombre="Comercios y Distribuidores">Comercios y Distribuidores (Sin Costo)</option>
-            <option value="20" data-nombre="Envío a Domicilio / Jinotepe">Envío a Domicilio - Jinotepe, Dolores, Diriamba, San Marcos (C$ 20.00)</option>
-            <option value="-1" data-nombre="Envío a Convenir (Departamentos)">Departamentos - A Convenir</option>
+          <label>Tipo de cliente</label>
+          <select id="tipo" onchange="calc()">
+            <option value="particular">Particular</option>
+            <option value="distribuidor">Comercio / Distribuidor</option>
+            <option value="juridica">Empresa / Retenedor</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Método de Pago Preferido:</label>
+          <label>Modalidad de compra *</label>
+          <select id="modo" onchange="calc()">
+            <option value="contado">Compra al Contado</option>
+            <option value="credito">Compra a Crédito</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Zona / Modalidad de Despacho</label>
+          <select id="zona-envio" onchange="calc()">
+            <option value="20" data-nombre="Envío a Domicilio / Jinotepe">Envío a Domicilio - Jinotepe, Dolores, Diriamba, San Marcos (C$ 20.00)</option>
+            <option value="0" data-nombre="Retiro en Local">Retiro en local — Sin costo</option>
+            <option value="-1" data-nombre="Envío a Convenir (Departamentos)">Departamentos - A Convenir</option>
+          </select>
+        </div>
+        <div class="form-group" id="paymentWrap">
+          <label>Método de Pago</label>
           <select id="metodo-pago">
             <option value="lafise">Transferencia / QR LAFISE Bancentro</option>
             <option value="contra_entrega">Pago Contra Entrega (Efectivo / Transferencia al recibir)</option>
           </select>
         </div>
 
-        <!-- TARJETA INTEGRADAMENTE UBICADA DE ALIAS ACH LAFISE -->
+        <!-- Tarjeta LAFISE ACH -->
         <div class="lafise-ach-card">
           <div class="ach-header">
             <i class="fas fa-university"></i>
@@ -386,7 +349,7 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
               <span class="ach-label">Alias ACH / Móvil:</span>
               <div class="ach-copy-group">
                 <strong id="alias-ach-num" class="ach-value highlight">57973097</strong>
-                <button class="btn-copy-alias" onclick="copiarAliasACH()" title="Copiar número de teléfono">
+                <button class="btn-copy-alias" onclick="copiarAliasACH()" title="Copiar número">
                   <i class="far fa-copy"></i> Copiar
                 </button>
               </div>
@@ -401,44 +364,48 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
           </div>
         </div>
 
-        <div class="panel-section-title" style="margin-top: 16px;">Desglose de Cuenta</div>
+        <!-- Desglose -->
+        <div class="panel-section-title" style="margin-top:16px">Desglose de Cuenta</div>
         <div class="totals-line"><span>Subtotal Neto:</span><strong id="subtotal">C$ 0.00</strong></div>
-        <div class="totals-line" id="linea-desc-aplicado" style="display:none;">
+        <div class="totals-line" id="linea-desc-aplicado" style="display:none">
           <span id="label-porcentaje-desc" class="discount-label">Descuento Aplicado:</span>
           <strong id="monto-desc-aplicado" class="discount-label">- C$ 0.00</strong>
         </div>
         <div class="totals-line"><span>Costo de Despacho:</span><strong id="costo-envio">C$ 0.00</strong></div>
-        <div class="totals-line total"><span>TOTAL NETO A PAGAR:</span><strong id="total-pagar">C$ 0.00</strong></div>
-        
-        <button id="btn-whatsapp" class="btn-action btn-whatsapp" onclick="procesarPagoWhatsApp()" disabled>
+        <div class="totals-line total"><span id="totalLabel">TOTAL NETO A PAGAR:</span><strong id="total-pagar">C$ 0.00</strong></div>
+
+        <div id="ret" class="notice credit" style="display:none">Cliente jurídico: revise la retención del 2% I.R. cuando corresponda.</div>
+        <div id="modeNotice" class="notice cash"><b>CONTADO:</b> la transacción queda registrada como pagada con el método seleccionado.</div>
+
+        <button id="btn-whatsapp" class="btn-action btn-whatsapp" onclick="procesar()" disabled>
           <i class="fab fa-whatsapp"></i> Confirmar Pedido por WhatsApp
         </button>
-        <button id="btn-recibo" class="btn-action btn-recibo" onclick="generarEImprimirRecibo()" disabled>
+        <button id="btn-recibo" class="btn-action btn-recibo" onclick="generarRecibo()" disabled>
           <i class="fas fa-print"></i> Generar e Imprimir Recibo
         </button>
-        
+
         <div class="qr-payment">
           <span>Pago Directo LAFISE Bancentro</span>
           <div>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https%3A%2F%2Fdigital.lafise.com%3FBANK%3DBLNI%26ACCOUNT_NUMBER%3D140051265" alt="QR pago LAFISE">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=110x110&data=https%3A%2F%2Fdigital.lafise.com%3FBANK%3DBLLNI%26ACCOUNT_NUMBER%3D140051265" alt="QR pago LAFISE">
           </div>
-          <a href="https://digital.lafise.com?BANK_BLNI&ACCOUNT_NUMBER=140051265" target="_blank" rel="noopener">Pagar desde App LAFISE Bancentro</a>
+          <a href="https://digital.lafise.com?BANK=BLNI&ACCOUNT_NUMBER=140051265" target="_blank" rel="noopener">Pagar desde App LAFISE Bancentro</a>
         </div>
       </aside>
     </div>
   </section>
 
-  <!-- Vista: Sobre Nosotros -->
+  <!-- Vista: Nosotros -->
   <section id="nosotros" class="section">
     <div class="container">
       <h2 class="section-title">Sobre Nosotros</h2>
       <div class="about-card">
         <h3>Nuestra Filosofía</h3>
         <p>En PG del Campo creemos en la autenticidad de los productos nicaragüenses. Nos especializamos en:</p>
-        <ul style="padding-left: 20px; margin: 12px 0; font-size:13px;">
-          <li style="margin-bottom: 6px;">Café de altura tostado artesanalmente</li>
-          <li style="margin-bottom: 6px;">Pinolillo 100% natural sin conservantes</li>
-          <li style="margin-bottom: 6px;">Pinol tradicional molido fino</li>
+        <ul style="padding-left:20px;margin:12px 0;font-size:13px">
+          <li style="margin-bottom:6px">Café de altura tostado artesanalmente</li>
+          <li style="margin-bottom:6px">Pinolillo 100% natural sin conservantes</li>
+          <li style="margin-bottom:6px">Pinol tradicional molido fino</li>
         </ul>
         <p>Todos nuestros productos son procesados manteniendo las recetas tradicionales que han pasado de generación en generación.</p>
       </div>
@@ -457,42 +424,26 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
       <div class="contact-card">
         <h3>Información de Atención</h3>
         <ul class="contact-info">
-          <li>
-            <i class="fas fa-map-marker-alt"></i>
-            <div>
-              <strong>Ubicación Principal:</strong><br>
-              Jinotepe, Carazo, Nicaragua
-            </div>
-          </li>
-          <li>
-            <i class="fas fa-phone"></i>
-            <div>
-              <strong>Línea de Atención / WhatsApp:</strong><br>
-              +505 5797 3097
-            </div>
-          </li>
-          <li>
-            <i class="fas fa-clock"></i>
-            <div>
-              <strong>Horario de Operación:</strong><br>
-              Lunes a Viernes: 8:00 AM - 4:00 PM<br>
-              Sábados: 8:00 AM - 12:00 PM
-            </div>
-          </li>
-          <li>
-            <i class="fas fa-truck"></i>
-            <div>
-              <strong>Cobertura de Envíos:</strong><br>
-              Entregas locales en Jinotepe, Diriamba, Dolores y San Marcos. Envíos nacionales a convenir.
-            </div>
-          </li>
+          <li><i class="fas fa-map-marker-alt"></i><div><strong>Ubicación Principal:</strong><br>Jinotepe, Carazo, Nicaragua</div></li>
+          <li><i class="fas fa-phone"></i><div><strong>Línea de Atención / WhatsApp:</strong><br>+505 5797 3097</div></li>
+          <li><i class="fas fa-clock"></i><div><strong>Horario de Operación:</strong><br>Lunes a Viernes: 8:00 AM - 4:00 PM<br>Sábados: 8:00 AM - 12:00 PM</div></li>
+          <li><i class="fas fa-truck"></i><div><strong>Cobertura de Envíos:</strong><br>Entregas locales en Jinotepe, Diriamba, Dolores y San Marcos. Envíos nacionales a convenir.</div></li>
         </ul>
       </div>
     </div>
   </section>
 </main>
 
-<!-- COMPONENTE INTERACTIVO CHATBOT BOTSPG -->
+<!-- Barra Inferior de Navegación -->
+<nav class="bottom-nav">
+  <a href="#inicio" class="nav-item active nav-link" data-target="inicio"><i class="fas fa-home"></i><span>Inicio</span></a>
+  <a href="#productos" class="nav-item nav-link" data-target="productos"><i class="fas fa-coffee"></i><span>Catálogo</span></a>
+  <a href="#pedido" class="nav-item nav-link" data-target="pedido"><i class="fas fa-shopping-bag"></i><span>Pedido</span></a>
+  <a href="#nosotros" class="nav-item nav-link" data-target="nosotros"><i class="fas fa-info-circle"></i><span>Nosotros</span></a>
+  <a href="#contacto" class="nav-item nav-link" data-target="contacto"><i class="fas fa-phone"></i><span>Contacto</span></a>
+</nav>
+
+<!-- Chatbot -->
 <div id="chatbot-launcher" onclick="toggleChatBot()" title="Consultar a BotsPG">
   <i class="fas fa-robot"></i>
 </div>
@@ -522,37 +473,13 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
   </div>
 </div>
 
-<!-- Barra Inferior de Navegación Tipo App -->
-<nav class="bottom-nav">
-  <a href="#inicio" class="nav-item active nav-link" data-target="inicio">
-    <i class="fas fa-home"></i>
-    <span>Inicio</span>
-  </a>
-  <a href="#productos" class="nav-item nav-link" data-target="productos">
-    <i class="fas fa-coffee"></i>
-    <span>Catálogo</span>
-  </a>
-  <a href="#pedido" class="nav-item nav-link" data-target="pedido">
-    <i class="fas fa-shopping-bag"></i>
-    <span>Pedido</span>
-  </a>
-  <a href="#nosotros" class="nav-item nav-link" data-target="nosotros">
-    <i class="fas fa-info-circle"></i>
-    <span>Nosotros</span>
-  </a>
-  <a href="#contacto" class="nav-item nav-link" data-target="contacto">
-    <i class="fas fa-phone"></i>
-    <span>Contacto</span>
-  </a>
-</nav>
-
-<!-- Banner de Instalación Móvil -->
+<!-- Banner Instalar PWA -->
 <div class="install-banner" id="installBanner">
   <p>Instala PG del Campo en tu celular</p>
   <button id="installBtn">Instalar</button>
 </div>
 
-<!-- Footer General -->
+<!-- Footer -->
 <footer>
   <div class="container">
     <div class="footer-logo">
@@ -589,525 +516,407 @@ footer { background-color: var(--primary-dark); color: var(--white); padding: 24
   </div>
 </footer>
 
-<!-- Modal Recibo Digital -->
+<!-- Modal Recibo -->
 <div id="receipt-modal" class="modal">
   <div class="modal-content">
     <div class="modal-header no-print">
-      <h3 style="font-family: 'Fraunces', serif; color:var(--primary); font-size:16px;">Recibo Oficial de Orden</h3>
-      <button class="btn-close-modal" onclick="cerrarModalRecibo()">X</button>
+      <h3 style="font-family:'Fraunces',serif;color:var(--primary);font-size:16px">Recibo Oficial de Orden</h3>
+      <button class="btn-close-modal" onclick="closeReceipt()">X</button>
     </div>
-    <div id="rec-body" style="font-size: 12px; font-family:monospace; color:#333; line-height:1.4;">
-      <div style="text-align:center; font-weight:bold; margin-bottom:2px;">PG DEL CAMPO</div>
-      <div style="text-align:center; font-size:10px;">RÚC: 0452907730000U</div>
-      <div style="text-align:center; font-size:9.5px; font-weight:bold; margin-bottom:2px;">Régimen de Cuota Fija</div>
-      <div style="text-align:center; font-size:10px; margin-bottom:8px;">Jinotepe, Carazo, Nicaragua</div>
-      <div style="margin-bottom:3px;"><strong>No. Recibo:</strong> <span id="rec-num">0000000</span></div>
-      <div style="margin-bottom:6px;"><strong>Fecha Emisión:</strong> <span id="rec-date">--/--/----</span></div>
-      <hr style="border:none; border-top:1px dashed #ccc; margin:6px 0;">
-      <div id="rec-cliente-info" style="margin-bottom:6px;"></div>
-      <hr style="border:none; border-top:1px dashed #ccc; margin:6px 0;">
-      <div style="font-weight:bold; margin-bottom:4px;">ITEMS COMPRADOS:</div>
-      <div id="rec-items-list"></div>
-      <hr style="border:none; border-top:1px dashed #ccc; margin:6px 0;">
-      <div style="display: flex; justify-content:space-between;"><span>SUBTOTAL:</span><span id="rec-subtotal">C$ 0.00</span></div>
-      <div style="display: flex; justify-content:space-between; display:none;" id="rec-linea-desc"><span id="rec-desc-label">DESCUENTO:</span><span id="rec-desc-monto">- C$ 0.00</span></div>
-      <div style="display: flex; justify-content:space-between;"><span>ENVÍO:</span><span id="rec-envio">C$ 0.00</span></div>
-      <div style="display: flex; justify-content:space-between; font-weight:bold; font-size:13px; margin-top:6px;"><span>TOTAL COMPRA:</span><span id="rec-total-monto">C$ 0.00</span></div>
-      <hr style="border:none; border-top:1px dashed #ccc; margin:6px 0;">
-      <div style="background:#f4f4f6; padding:8px; border-radius: 6px; margin:6px 0; font-size:10.5px; text-align:center;">
-        <p style="font-size:10px; color:#444; margin-bottom: 4px;">
-          <strong>Titular:</strong> Fernando Martínez<br>
-          <em>Representante Legal PG del Campo</em>
-        </p>
-        <div class="no-print">
-          <strong>Pago Directo LAFISE:</strong><br>
-          <a id="rec-lafise-link" href="#" target="_blank" style="color:var(--primary); font-weight:bold; word-break:break-all; display:inline-block; margin-top:2px;">---</a>
-          <a id="rec-lafise-btn" href="#" target="_blank" class="btn-action btn-lafise-direct" style="padding: 8px; font-size:12px;">Pagar Ahora con LAFISE</a>
-        </div>
-        <div style="margin-top:8px;">
-          <p style="font-size: 9.5px; font-weight:bold; color: #555; margin-bottom:3px;">Escanea para pagar el monto exacto:</p>
-          <img id="rec-lafise-qr" src="" alt="QR Pago LAFISE" style="width:120px; height: 120px; border:1px solid #ddd; padding: 4px; background:#fff; border-radius:6px;">
-        </div>
-      </div>
-      <hr style="border:none; border-top:1px dashed #ccc; margin:6px 0;">
-      <p style="text-align:center; font-size:10.5px; font-weight:bold; color:var(--primary); margin-top:6px;">¡Gracias por preferirnos e impulsar el campo!</p>
-    </div>
-    <button class="btn-action btn-recibo no-print" style="margin-top:12px;" onclick="window.print()">Imprimir Ticket</button>
+    <div id="rec-body" style="font-size:12px;font-family:monospace;color:#333;line-height:1.4"></div>
+    <button class="btn-action btn-recibo no-print" style="margin-top:12px" onclick="window.print()">Imprimir Ticket</button>
   </div>
 </div>
 
-<!-- Lógica para Copiar Alias ACH -->
+<!-- Script: Copiar Alias ACH -->
 <script>
-function copiarAliasACH() {
-  const numeroAlias = document.getElementById("alias-ach-num").innerText;
-  navigator.clipboard.writeText(numeroAlias).then(() => {
-    alert("¡Alias ACH (" + numeroAlias + ") copiado al portapapeles!");
-  }).catch(err => {
-    console.error("Error al copiar el Alias ACH: ", err);
+function copiarAliasACH(){
+  var numeroAlias=document.getElementById("alias-ach-num").innerText;
+  navigator.clipboard.writeText(numeroAlias).then(function(){
+    alert("\u00a1Alias ACH ("+numeroAlias+") copiado al portapapeles!");
+  }).catch(function(err){
+    console.error("Error al copiar el Alias ACH: ",err);
   });
 }
+window.copiarAliasACH=copiarAliasACH;
 </script>
 
-<!-- Lógica de Enrutamiento Móvil PWA -->
+<!-- Script: Navegación PWA -->
 <script>
-const navLinks = document.querySelectorAll('.nav-link');
-const sections = document.querySelectorAll('.section');
-const bottomNavItems = document.querySelectorAll('.bottom-nav .nav-item');
-
-function navegarA(target) {
-  sections.forEach(section => {
+var navLinks=document.querySelectorAll('.nav-link');
+var sections=document.querySelectorAll('.section');
+var bottomNavItems=document.querySelectorAll('.bottom-nav .nav-item');
+function navegarA(target){
+  sections.forEach(function(section){
     section.classList.remove('active');
-    if (section.id === target) section.classList.add('active');
+    if(section.id===target) section.classList.add('active');
   });
-  bottomNavItems.forEach(item => {
+  bottomNavItems.forEach(function(item){
     item.classList.remove('active');
-    if (item.dataset.target === target) item.classList.add('active');
+    if(item.dataset.target===target) item.classList.add('active');
   });
-  window.scrollTo(0, 0);
+  window.scrollTo(0,0);
 }
-
-navLinks.forEach(link => {
-  link.addEventListener('click', (e) => {
+navLinks.forEach(function(link){
+  link.addEventListener('click',function(e){
     e.preventDefault();
     navegarA(link.dataset.target);
   });
 });
+function irAPedido(){ navegarA('pedido'); }
+window.irAPedido=irAPedido;
+window.navegarA=navegarA;
 
-function irAPedido() { navegarA('pedido'); }
-
-let deferredPrompt;
-const installBanner = document.getElementById('installBanner');
-const installBtn = document.getElementById('installBtn');
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(err => console.log('SW Error: ', err));
+var deferredPrompt;
+var installBanner=document.getElementById('installBanner');
+var installBtn=document.getElementById('installBtn');
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('/sw.js').catch(function(err){console.log('SW Error: ',err);});
   });
 }
-
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener('beforeinstallprompt',function(e){
   e.preventDefault();
-  deferredPrompt = e;
-  setTimeout(() => {
-    if (!window.matchMedia('(display-mode: standalone)').matches) {
-      installBanner.style.display = 'flex';
+  deferredPrompt=e;
+  setTimeout(function(){
+    if(!window.matchMedia('(display-mode: standalone)').matches){
+      installBanner.style.display='flex';
     }
-  }, 4000);
+  },4000);
 });
-
-installBtn.addEventListener('click', async () => {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if (outcome === 'accepted') {
-    installBanner.style.display = 'none';
-    deferredPrompt = null;
-  }
-});
+if(installBtn){
+  installBtn.addEventListener('click',async function(){
+    if(!deferredPrompt) return;
+    deferredPrompt.prompt();
+    var outcome=await deferredPrompt.userChoice;
+    if(outcome==='accepted'){
+      installBanner.style.display='none';
+      deferredPrompt=null;
+    }
+  });
+}
 </script>
 
-<!-- Lógica del ChatBot BotsPG -->
+<!-- Script: ChatBot BotsPG -->
 <script>
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwoyfQoI6a92QGt5BXlERybT7ujEa9kzolKbcSdIIvGehlbVWtK0ftq240xEzsuqEbs/exec";
-
-function toggleChatBot() {
-  const win = document.getElementById('chatbot-window');
-  win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
+var WEB_APP_URL="https://script.google.com/macros/s/AKfycbwoyfQoI6a92QGt5BXlERybT7ujEa9kzolKbcSdIIvGehlbVWtK0ftq240xEzsuqEbs/exec";
+function toggleChatBot(){
+  var win=document.getElementById('chatbot-window');
+  win.style.display=(win.style.display==='flex')?'none':'flex';
 }
+window.toggleChatBot=toggleChatBot;
 
-async function enviarMensaje() {
-  const input = document.getElementById("texto");
-  const historial = document.getElementById("historial");
-  const btn = document.getElementById("btn-enviar");
-  const mensaje = input.value.trim();
-  if (!mensaje) return;
-
-  historial.innerHTML += `<div class="mensaje usuario">${mensaje}</div>`;
-  input.value = "";
-  historial.scrollTop = historial.scrollHeight;
-  btn.disabled = true;
-
-  const msgCarga = document.createElement("div");
-  msgCarga.className = "mensaje ia";
-  msgCarga.innerHTML = "<i>Analizando solicitud central...</i>";
+async function enviarMensaje(){
+  var input=document.getElementById("texto");
+  var historial=document.getElementById("historial");
+  var btn=document.getElementById("btn-enviar");
+  var mensaje=input.value.trim();
+  if(!mensaje) return;
+  historial.innerHTML+='<div class="mensaje usuario">'+mensaje+'</div>';
+  input.value="";
+  historial.scrollTop=historial.scrollHeight;
+  btn.disabled=true;
+  var msgCarga=document.createElement("div");
+  msgCarga.className="mensaje ia";
+  msgCarga.innerHTML="<i>Analizando solicitud central...</i>";
   historial.appendChild(msgCarga);
-  historial.scrollTop = historial.scrollHeight;
-
-  try {
-    const response = await fetch(WEB_APP_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ mensaje: mensaje })
+  historial.scrollTop=historial.scrollHeight;
+  try{
+    var response=await fetch(WEB_APP_URL,{
+      method:"POST",
+      headers:{"Content-Type":"text/plain"},
+      body:JSON.stringify({mensaje:mensaje})
     });
-    const datos = await response.json();
-    if (datos && datos.respuesta) {
-      msgCarga.innerHTML = datos.respuesta;
-    } else {
-      msgCarga.innerHTML = "Disculpa, tuvimos un inconveniente al procesar la respuesta. Por favor, intenta de nuevo.";
+    var datos=await response.json();
+    if(datos&&datos.respuesta){
+      msgCarga.innerHTML=datos.respuesta;
+    }else{
+      msgCarga.innerHTML="Disculpa, tuvimos un inconveniente al procesar la respuesta. Por favor, intenta de nuevo.";
     }
-  } catch (error) {
-    msgCarga.innerHTML = "<b>Aviso de conexión:</b> No se logró enlazar con el puente de Jinotepe. Por favor verifica la publicación.";
+  }catch(error){
+    msgCarga.innerHTML="<b>Aviso de conexi\u00f3n:</b> No se logr\u00f3 enlazar con el puente de Jinotepe. Por favor verifica la publicaci\u00f3n.";
   }
-  btn.disabled = false;
-  historial.scrollTop = historial.scrollHeight;
+  btn.disabled=false;
+  historial.scrollTop=historial.scrollHeight;
 }
+window.enviarMensaje=enviarMensaje;
 
-function evaluarTecla(e) {
-  if (e.key === 'Enter') enviarMensaje();
+function evaluarTecla(e){
+  if(e.key==='Enter') enviarMensaje();
 }
+window.evaluarTecla=evaluarTecla;
 </script>
 
-<!-- Lógica Firebase e Inventario -->
+<!-- Script: Firebase + Lógica de negocio -->
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, get, child, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import{getDatabase,ref,onValue,get,set,update}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-const firebaseConfig = {
-  apiKey: "AlzaSyBfPmfE6axd_WOZ80b0L-Jbjy6q719_NTk",
-  authDomain: "productos-globales-campo.firebaseapp.com",
-  databaseURL: "https://productos-globales-campo-default-rtdb.firebaseio.com",
-  projectId: "productos-globales-campo",
-  storageBucket: "productos-globales-campo.firebasestorage.app",
-  messagingSenderId: "938958452862",
-  appId: "1:938958452862:web:3b618567dae9aa01b7c02f",
-  measurementId: "G-MKD9T10DP3"
+const cfg={
+  apiKey:'AIzaSyBfPmfE6axd_W0Z80b0L-Jbjy6q7l9_NTk',
+  authDomain:'productos-globales-campo.firebaseapp.com',
+  databaseURL:'https://productos-globales-campo-default-rtdb.firebaseio.com',
+  projectId:'productos-globales-campo',
+  storageBucket:'productos-globales-campo.firebasestorage.app',
+  messagingSenderId:'938958452862',
+  appId:'1:938958452862:web:3b618567dae9aa01b7c02f',
+  measurementId:'G-MKD9T10DP3'
 };
+const db=getDatabase(initializeApp(cfg));
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+let productos={},clientes={},carrito=[],cActual=null;
+const WA='50557973097';
 
-let carrito = [];
-let productosData = {};
-let clienteTotalComprasHistorial = 0;
-let clienteMontoTotalHistorial = 0;
-const numeroDestinoWhatsApp = "50557973097";
+const $=id=>document.getElementById(id),
+      M=n=>'C$ '+Number(n||0).toLocaleString('es-NI',{minimumFractionDigits:2,maximumFractionDigits:2}),
+      E=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[x]));
 
-function generarUrlLafise(monto, numeroRecibo) {
-  const montoFormateado = monto.toFixed(2);
-  const referenciaFactura = `REC-${numeroRecibo}`;
-  const concepto = encodeURIComponent('Compra Productos PG del Campo');
-  return `https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${montoFormateado}&REFERENCE=${encodeURIComponent(referenciaFactura)}&CONCEPT=${concepto}`;
-}
+/* ── Listeners de Firebase (tiempo real) ── */
+onValue(ref(db,'productos'),s=>{productos=s.val()||{};render()});
+onValue(ref(db,'clientes'),s=>{clientes=s.val()||{};cliente()});
 
-async function cargarCatalogoProductos() {
-  const grid = document.getElementById("products-grid");
-  try {
-    const snapshot = await get(child(ref(db), "productos"));
-    if (snapshot.exists()) {
-      productosData = snapshot.val();
-      grid.innerHTML = "";
-      Object.keys(productosData).forEach(key => {
-        const item = productosData[key];
-        const stock = parseInt(item.stock || 0);
-        const precio = parseFloat(item.precio || 0);
-        grid.innerHTML += `
-        <div class="product-card">
-          <div class="product-image-container">
-            ${item.imagen
-              ? `<img class="product-image" src="${item.imagen}" alt="${item.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="product-image-fallback" style="display:none;"><i class="fas fa-leaf"></i></div>`
-              : `<div class="product-image-fallback"><i class="fas fa-leaf"></i></div>`}
-          </div>
-          <div class="product-info">
-            <h4 class="product-name" title="${item.nombre}">${item.nombre}</h4>
-            <p style="font-size: 10px; color:var(--text-muted); margin-bottom:4px;">Disponibles: ${stock} unids</p>
-            <div class="product-price">C$ ${precio.toFixed(2)}</div>
-            <button class="btn-add" ${stock <= 0 ? 'disabled' : ''} onclick="agregarAlCarrito('${key}')">
-              ${stock <= 0 ? 'Agotado' : '+ Agregar'}
-            </button>
-          </div>
-        </div>`;
-      });
-    } else {
-      grid.innerHTML = "<p style='padding:20px; color:var(--text-muted); text-align:center;'>No hay productos disponibles en este momento.</p>";
-    }
-  } catch (err) {
-    console.error("Error cargando inventario:", err);
-    grid.innerHTML = "<p style='padding:20px; color:#dc3545; text-align:center;'>Error al sincronizar inventario</p>";
-  }
-}
-
-cargarCatalogoProductos();
-
-window.agregarAlCarrito = function(key) {
-  const p = productosData[key];
-  if (!p) return;
-  const stock = parseInt(p.stock || 0);
-  const existing = carrito.find(i => i.key === key);
-  const cantidadActual = existing ? existing.cant : 0;
-  
-  if (cantidadActual + 1 > stock) {
-    alert('Ha alcanzado el límite de existencias disponibles para este producto.');
-    return;
-  }
-  
-  if (existing) {
-    existing.cant += 1;
-  } else {
-    carrito.push({ key, nombre: p.nombre, precio: parseFloat(p.precio || 0), cant: 1 });
-  }
-  calcularTotales();
-};
-
-window.quitarDelCarrito = function(key) {
-  carrito = carrito.filter(i => i.key !== key);
-  calcularTotales();
-};
-
-window.calcularTotales = function() {
-  const cartContainer = document.getElementById('cart-items');
-  const totalItemsCount = carrito.reduce((acc, i) => acc + i.cant, 0);
-  
-  document.getElementById('cart-count').innerText = `${totalItemsCount} Items`;
-  document.getElementById('cart-count-badge').innerText = totalItemsCount;
-  
-  if (carrito.length === 0) {
-    cartContainer.innerHTML = '<div class="cart-empty">El carrito está vacío</div>';
-    document.getElementById('btn-whatsapp').disabled = true;
-    document.getElementById('btn-recibo').disabled = true;
-    document.getElementById('subtotal').innerText = 'C$ 0.00';
-    document.getElementById('costo-envio').innerText = 'C$ 0.00';
-    document.getElementById('total-pagar').innerText = 'C$ 0.00';
-    document.getElementById('linea-desc-aplicado').style.display = 'none';
-  } else {
-    document.getElementById('btn-whatsapp').disabled = false;
-    document.getElementById('btn-recibo').disabled = false;
-    cartContainer.innerHTML = "";
-    
-    carrito.forEach(i => {
-      cartContainer.innerHTML += `
-      <div class="cart-item">
-        <div class="cart-item-details">
-          <h4>${i.nombre}</h4>
-          <p>C$ ${i.precio.toFixed(2)} x ${i.cant}</p>
-        </div>
-        <div class="cart-item-actions">
-          <strong>C$ ${(i.precio * i.cant).toFixed(2)}</strong>
-          <button class="btn-remove" onclick="quitarDelCarrito('${i.key}')">Quitar</button>
-        </div>
-      </div>`;
-    });
-    
-    const subtotal = carrito.reduce((acc, i) => acc + (i.precio * i.cant), 0);
-    const selectEnvio = document.getElementById('zona-envio');
-    const envioValor = parseFloat(selectEnvio.value);
-    const esAConvenir = envioValor === -1;
-    const envio = (esAConvenir || subtotal === 0) ? 0 : envioValor;
-    
-    let porcVolumen = subtotal > 1800 ? 0.03 : (subtotal > 1200 ? 0.02 : (subtotal > 600 ? 0.01 : 0));
-    let esDistribuidor = (envioValor === 0);
-    let porcVolumenEfectivo = esDistribuidor ? 0 : porcVolumen;
-    let porcTotal = porcVolumenEfectivo;
-    let montoDescuento = subtotal * porcTotal;
-    let totalPagar = (subtotal - montoDescuento) + envio;
-    
-    document.getElementById('subtotal').innerText = `C$ ${subtotal.toFixed(2)}`;
-    document.getElementById('costo-envio').innerText = esAConvenir && subtotal > 0 ? 'A convenir' : `C$ ${envio.toFixed(2)}`;
-    
-    if (porcTotal > 0 && subtotal > 0) {
-      document.getElementById('linea-desc-aplicado').style.display = 'flex';
-      document.getElementById('label-porcentaje-desc').innerText = `Descuento Aplicado (${(porcTotal * 100).toFixed(0)}%):`;
-      document.getElementById('monto-desc-aplicado').innerText = `- C$ ${montoDescuento.toFixed(2)}`;
-    } else {
-      document.getElementById('linea-desc-aplicado').style.display = 'none';
-    }
-    
-    document.getElementById('total-pagar').innerText = esAConvenir && subtotal > 0 
-      ? `C$ ${(subtotal - montoDescuento).toFixed(2)} + envío a convenir`
-      : `C$ ${totalPagar.toFixed(2)}`;
-  }
-};
-
-async function registrarPedidoEnFirebase(totalPagar, numeroReciboFormateado) {
-  const tel = document.getElementById('cliente-tel').value.trim();
-  const nombre = document.getElementById('cliente-nombre').value.trim() || 'Cliente General';
-  if (!tel || carrito.length === 0) return;
-  
-  try {
-    const nuevasCompras = clienteTotalComprasHistorial + 1;
-    const nuevoMonto = clienteMontoTotalHistorial + totalPagar;
-    await set(ref(db, 'clientes/' + tel), {
-      nombre: nombre,
-      total_compras: nuevasCompras,
-      monto_total: nuevoMonto,
-      ultima_compra: new Date().toISOString()
-    });
-    
-    for (let item of carrito) {
-      const currentProd = productosData[item.key];
-      if (currentProd) {
-        const nuevoStock = Math.max(0, parseInt(currentProd.stock || 0) - item.cant);
-        await set(ref(db, 'productos/' + item.key), { ...currentProd, stock: nuevoStock });
-      }
-    }
-    
-    const compraId = 'recibo_' + numeroReciboFormateado;
-    const items = {};
-    carrito.forEach(item => { items[item.key] = item.cant; });
-    
-    await set(ref(db, 'compras_registro/' + compraId), {
-      id: numeroReciboFormateado,
-      fecha: new Date().toLocaleString('es-NI', { timeZone: 'America/Managua' }),
-      whatsapp_cliente: tel,
-      cliente_nombre: nombre,
-      items: items,
-      monto_revertir: totalPagar
-    });
-  } catch (e) {
-    console.error("Error al asentar transacciones:", e);
-  }
-}
-
-async function obtenerSiguienteRecibo() {
-  try {
-    const contadorRef = ref(db, 'secuencia_recibos');
-    const snapContador = await get(contadorRef);
-    let ultimoNumero = snapContador.exists() ? parseInt(snapContador.val() || 0) : 1000;
-    let nuevoNumeroRecibo = ultimoNumero + 1;
-    await set(contadorRef, nuevoNumeroRecibo);
-    return String(nuevoNumeroRecibo).padStart(7, '0');
-  } catch (e) {
-    console.warn("Generando número alternativo de recibo:", e);
-  }
-  return String(Date.now()).slice(-7);
-}
-
-window.procesarPagoWhatsApp = async function() {
-  if (carrito.length === 0) return alert('El carrito de compras está vacío.');
-  const cliente = document.getElementById('cliente-nombre').value.trim();
-  const telf = document.getElementById('cliente-tel').value.trim();
-  const dir = document.getElementById('cliente-dir').value.trim();
-  const selectEnvio = document.getElementById('zona-envio');
-  const nombreZona = selectEnvio.options[selectEnvio.selectedIndex].getAttribute('data-nombre');
-  const envioValor = parseFloat(selectEnvio.value);
-  const esAConvenir = envioValor === -1;
-  const esDistribuidor = (envioValor === 0);
-  const metodoPago = document.getElementById('metodo-pago').value;
-  
-  if (!cliente || !telf) return alert('Ingresa tu Nombre y Teléfono para procesar el pedido.');
-  
-  const subtotal = carrito.reduce((acc, i) => acc + (i.precio * i.cant), 0);
-  const envio = esAConvenir ? 0 : envioValor;
-  let porcVolumen = subtotal > 1800 ? 0.03 : (subtotal > 1200 ? 0.02 : (subtotal > 600 ? 0.01 : 0));
-  let porcVolumenEfectivo = esDistribuidor ? 0 : porcVolumen;
-  let porcTotal = porcVolumenEfectivo;
-  let montoDescuento = subtotal * porcTotal;
-  let totalPagar = (subtotal - montoDescuento) + envio;
-  
-  const numeroReciboFormateado = await obtenerSiguienteRecibo();
-  const urlLafiseDinamico = generarUrlLafise(totalPagar, numeroReciboFormateado);
-  
-  let msj = '*PRODUCTOS GLOBALES DEL CAMPO*\n';
-  msj += 'RUC: 0452907730000U\n';
-  msj += '_Régimen de Cuota Fija_\n';
-  msj += '=============================\n';
-  msj += `*Recibo N°:* ${numeroReciboFormateado}\n`;
-  msj += `*Cliente:* ${cliente}\n`;
-  msj += `*Teléfono:* ${telf}\n`;
-  msj += '=============================\n\n';
-  msj += '*DETALLE DE PRODUCTOS:*\n';
-  
-  carrito.forEach(i => {
-    msj += `${i.nombre}\n`;
-    msj += `Cantidad: ${i.cant} | Subtotal: C$ ${(i.precio * i.cant).toFixed(2)}\n`;
+/* ── Render catálogo (nuevas tarjetas PWA) ── */
+function render(){
+  const c=$('products-grid');
+  let html='';
+  Object.entries(productos).forEach(function([id,p]){
+    let st=+p.stock||0;
+    let imgHtml=p.imagen
+      ?'<img class="product-image" src="'+p.imagen+'" alt="'+E(p.nombre)+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="product-image-fallback" style="display:none"><i class="fas fa-leaf"></i></div>'
+      :'<div class="product-image-fallback"><i class="fas fa-leaf"></i></div>';
+    html+='<div class="product-card"><div class="product-image-container">'+imgHtml+'</div><div class="product-info"><h4 class="product-name" title="'+E(p.nombre)+'">'+E(p.nombre)+'</h4><p style="font-size:10px;color:var(--text-muted);margin-bottom:4px">'+(st?st+' disponibles':'Agotado')+'</p><div class="product-price">'+M(p.precio)+'</div><button class="btn-add" '+(st?'':'disabled')+' onclick="add(\''+id+'\')">'+(st?'+ Agregar':'Agotado')+'</button></div></div>';
   });
-  
-  msj += '\n=============================\n';
-  msj += `*Subtotal:* C$ ${subtotal.toFixed(2)}\n`;
-  if (porcTotal > 0) msj += `*Descuento (${(porcTotal * 100).toFixed(0)}%):* -C$ ${montoDescuento.toFixed(2)}\n`;
-  msj += `*Modalidad Despacho:* ${nombreZona}\n`;
-  msj += `*Dirección:* ${dir || 'Retiro en Sucursal'}\n\n`;
-  
-  msj += esAConvenir
-    ? `*TOTAL (Envío por definir):* C$ ${(subtotal - montoDescuento).toFixed(2)}\n`
-    : `*TOTAL COMPRA NETO:* C$ ${totalPagar.toFixed(2)}\n`;
-    
-  msj += '=============================\n\n';
-  
-  if (metodoPago === 'lafise') {
-    msj += '*MÉTODO DE PAGO: Transferencia / LAFISE Digital*\n';
-    msj += 'Titular de Cuenta: *Fernando Martínez* (Representante Legal PG del Campo)\n';
-    msj += 'Alias ACH / Celular: *57973097*\n';
-    msj += 'Cuenta N°: *140051265*\n\n';
-    msj += 'Enlace para pago directo:\n';
-    msj += `${urlLafiseDinamico}`;
-  } else {
-    msj += '*MÉTODO DE PAGO: Pago Contra Entrega*\n';
-    msj += 'Abono en efectivo o transferencia al recibir el producto.\n\n';
-    msj += 'Titular LAFISE: *Fernando Martínez* | Alias ACH: *57973097* | Cuenta: *140051265*\n';
-    msj += `Enlace directo: ${urlLafiseDinamico}`;
+  c.innerHTML=html||'<p style="padding:20px;color:var(--text-muted);text-align:center">No hay productos disponibles.</p>';
+}
+
+/* ── Carrito ── */
+window.add=function(id){
+  let p=productos[id];
+  if(!p)return;
+  let stock=+p.stock||0;
+  let x=carrito.find(function(i){return i.id===id});
+  if(x){
+    if(x.q+1>stock)return alert('Stock insuficiente. Solo quedan '+stock+' unidades.');
+    x.q++;
+  }else{
+    if(stock<1)return alert('Producto agotado.');
+    carrito.push({id,n:p.nombre,price:+p.precio||0,q:1});
   }
-  
-  await registrarPedidoEnFirebase(totalPagar, numeroReciboFormateado);
-  window.open(`https://wa.me/${numeroDestinoWhatsApp}?text=${encodeURIComponent(msj)}`, '_blank');
-  
-  carrito = [];
-  document.getElementById('cliente-dir').value = '';
-  calcularTotales();
+  calc();
 };
 
-window.generarEImprimirRecibo = async function() {
-  if (carrito.length === 0) return alert('No hay artículos agregados.');
-  const cliente = document.getElementById('cliente-nombre').value.trim() || 'Cliente General';
-  const telf = document.getElementById('cliente-tel').value.trim() || 'N/A';
-  const dir = document.getElementById('cliente-dir').value.trim() || 'Despacho Convencional';
-  const selectEnvio = document.getElementById('zona-envio');
-  const envioValor = parseFloat(selectEnvio.value);
-  const esAConvenir = envioValor === -1;
-  const esDistribuidor = (envioValor === 0);
-  
-  const subtotal = carrito.reduce((acc, i) => acc + (i.precio * i.cant), 0);
-  const envio = esAConvenir ? 0 : envioValor;
-  let porcVolumen = subtotal > 1800 ? 0.03 : (subtotal > 1200 ? 0.02 : (subtotal > 600 ? 0.01 : 0));
-  let porcVolumenEfectivo = esDistribuidor ? 0 : porcVolumen;
-  let porcTotal = porcVolumenEfectivo;
-  let montoDescuento = subtotal * porcTotal;
-  let totalPagar = (subtotal - montoDescuento) + envio;
-  
-  const numeroReciboFormateado = await obtenerSiguienteRecibo();
-  const urlLafiseDinamico = generarUrlLafise(totalPagar, numeroReciboFormateado);
-  
-  document.getElementById('rec-num').innerText = numeroReciboFormateado;
-  document.getElementById('rec-date').innerText = new Date().toLocaleDateString('es-NI');
-  document.getElementById('rec-cliente-info').innerHTML = `<strong>Cliente:</strong> ${cliente}<br><strong>Teléfono:</strong> ${telf}<br><strong>Dirección:</strong> ${dir}`;
-  
-  const recItems = document.getElementById('rec-items-list');
-  recItems.innerHTML = "";
-  carrito.forEach(i => {
-    recItems.innerHTML += `<div style="display: flex; justify-content:space-between; margin-bottom:4px;"><span>${i.cant}x ${i.nombre}</span><span>C$ ${(i.precio * i.cant).toFixed(2)}</span></div>`;
-  });
-  
-  document.getElementById('rec-subtotal').innerText = `C$ ${subtotal.toFixed(2)}`;
-  document.getElementById('rec-envio').innerText = esAConvenir ? 'A convenir' : `C$ ${envio.toFixed(2)}`;
-  
-  if (porcTotal > 0) {
-    document.getElementById('rec-linea-desc').style.display = 'flex';
-    document.getElementById('rec-desc-label').innerText = `Descuento (${(porcTotal * 100).toFixed(0)}%):`;
-    document.getElementById('rec-desc-monto').innerText = `- C$ ${montoDescuento.toFixed(2)}`;
-  } else {
-    document.getElementById('rec-linea-desc').style.display = 'none';
-  }
-  
-  document.getElementById('rec-total-monto').innerText = esAConvenir
-    ? `C$ ${(subtotal - montoDescuento).toFixed(2)} + envío a convenir`
-    : `C$ ${totalPagar.toFixed(2)}`;
-    
-  const linkModal = document.getElementById('rec-lafise-link');
-  linkModal.href = urlLafiseDinamico;
-  linkModal.innerText = urlLafiseDinamico;
-  document.getElementById('rec-lafise-btn').href = urlLafiseDinamico;
-  document.getElementById('rec-lafise-qr').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(urlLafiseDinamico)}`;
-  
-  await registrarPedidoEnFirebase(totalPagar, numeroReciboFormateado);
-  document.getElementById('receipt-modal').style.display = 'flex';
-  
-  carrito = [];
-  document.getElementById('cliente-dir').value = "";
-  calcularTotales();
+window.removeItem=function(id){carrito=carrito.filter(function(x){return x.id!==id});calc()};
+
+/* ── Cliente ── */
+window.cliente=function(){
+  let t=$('cliente-tel').value.trim();
+  cActual=clientes[t]||null;
+  if(cActual&&!$('cliente-nombre').value)$('cliente-nombre').value=cActual.nombre||'';
+  let n=+(cActual&&cActual.total_compras||0),s=n%10;
+  $('clientInfo').innerHTML=cActual
+    ?'<b>'+E(cActual.nombre||'Cliente')+'</b><br>C\u00f3digo: '+E(t)+' \u00b7 '+n+' compras hist\u00f3ricas'
+    :'Ingresa tu WhatsApp para consultar tu historial.';
+  $('stamps').innerHTML=Array.from({length:10},function(_,i){return '<div class="sd '+(i<s?'on':'')+'">'+(i<s?'\u2605':i+1)+'</div>'}).join('');
+  calc();
 };
 
-window.cerrarModalRecibo = function() {
-  document.getElementById('receipt-modal').style.display = 'none';
+/* ── Descuento por volumen ── */
+function pct(sub){
+  if($('tipo').value==='distribuidor')return 0;
+  return sub>1800?0.03:sub>1200?0.02:sub>600?0.01:0;
+}
+
+function totals(){
+  let sub=carrito.reduce(function(a,i){return a+i.q*i.price},0),
+      p=pct(sub),
+      d=sub*p,
+      z=+$('zona-envio').value,
+      conv=z===-1,
+      ship=conv?0:z,
+      total=sub-d+ship;
+  return{sub,p,d,z,conv,ship,total,modo:$('modo').value,metodo:$('metodo-pago').value};
+}
+
+/* ── Calcular y renderizar carrito ── */
+window.calc=calc;function calc(){
+  let q=carrito.reduce(function(a,i){return a+i.q},0),t=totals();
+  $('cart-count').textContent=q+' Items';
+  $('cart-count-badge').textContent=q;
+  $('cart-items').innerHTML=carrito.map(function(i){return '<div class="cart-item"><div class="cart-item-details"><h4>'+E(i.n)+'</h4><p>C$ '+i.price.toFixed(2)+' \u00d7 '+i.q+'</p></div><div class="cart-item-actions"><strong>C$ '+(i.price*i.q).toFixed(2)+'</strong><button class="btn-remove" onclick="removeItem(\''+i.id+'\')">Quitar</button></div></div>'}).join('')||'<div class="cart-empty">El carrito est\u00e1 vac\u00edo</div>';
+  $('subtotal').textContent=M(t.sub);
+  $('costo-envio').textContent=t.conv&&t.sub?'A convenir':M(t.ship);
+  $('total-pagar').textContent=t.conv&&t.sub?M(t.sub-t.d)+' + env\u00edo':M(t.total);
+  $('linea-desc-aplicado').style.display=t.p?'flex':'none';
+  $('label-porcentaje-desc').textContent='Descuento por volumen ('+t.p*100+'%)';
+  $('monto-desc-aplicado').textContent='-'+M(t.d);
+  $('ret').style.display=$('tipo').value==='juridica'&&t.sub>1000?'block':'none';
+  $('paymentWrap').style.display=t.modo==='contado'?'block':'none';
+  $('totalLabel').textContent=t.modo==='credito'?'SALDO A CR\u00c9DITO':'TOTAL NETO A PAGAR';
+  $('modeNotice').className='notice '+(t.modo==='credito'?'credit':'cash');
+  $('modeNotice').innerHTML=t.modo==='credito'
+    ?'<b>CR\u00c9DITO:</b> la compra queda pendiente y alimenta autom\u00e1ticamente Cuentas por Cobrar.'
+    :'<b>CONTADO:</b> la transacci\u00f3n queda registrada como pagada con el m\u00e9todo seleccionado.';
+  $('btn-whatsapp').disabled=!q||!$('cliente-tel').value.trim()||!$('cliente-nombre').value.trim();
+  $('btn-recibo').disabled=!q||!$('cliente-tel').value.trim();
+}
+
+/* ── Contador de recibos ── */
+async function nextReceipt(){
+  let r=ref(db,'meta/contador_recibo'),s=await get(r),n=s.exists()?+s.val():1001;
+  await set(r,n+1);
+  return String(n).padStart(7,'0');
+}
+
+/* ── Guardar transacción en Firebase (update con leaf-paths) ── */
+async function saveTransaction(num){
+  let t=totals(),
+      tel=$('cliente-tel').value.trim(),
+      name=$('cliente-nombre').value.trim()||'Cliente General';
+  if(!tel)throw Error('Falta el c\u00f3digo de cliente (WhatsApp).');
+  let id=(t.modo==='credito'?'credito_':'contado_')+Date.now(),
+      now=new Date().toISOString(),
+      old=clientes[tel]||{},
+      items={};
+  carrito.forEach(function(i){items[i.id]={cantidad:i.q,nombre:i.n,precio:i.price}});
+  let paid=t.modo==='contado'?t.total:0,
+      status=t.modo==='contado'?'pagada':'pendiente',
+      u={};
+  u['clientes/'+tel+'/nombre']=name||old.nombre||'';
+  u['clientes/'+tel+'/total_compras']=(+old.total_compras||0)+1;
+  u['clientes/'+tel+'/monto_total']=(+old.monto_total||0)+t.total;
+  u['clientes/'+tel+'/ultima_compra']=now;
+  u['clientes/'+tel+'/ultima_compra_id']=id;
+  u['clientes/'+tel+'/compras/'+id]={
+    id,fecha:now,numero_recibo:num,
+    tipo:t.modo==='credito'?'Venta a cr\u00e9dito':'Venta al contado',
+    estado:status,subtotal:t.sub,porcentaje_descuento:t.p,
+    monto_descuento:t.d,envio:t.ship,total:t.total,
+    monto_pagado:paid,saldo_pendiente:t.modo==='credito'?t.total:0,
+    metodo_pago:t.modo==='contado'?t.metodo:'N/A',items
+  };
+  u['compras_registro/'+id]={
+    id,fecha:now,whatsapp_cliente:tel,nombre_cliente:name,
+    numero_recibo:num,tipo:t.modo,estado:status,
+    items:Object.fromEntries(carrito.map(function(i){return[i.id,i.q]})),
+    monto_revertir:t.total,subtotal:t.sub,descuento:t.d,
+    envio:t.ship,total:t.total,
+    monto_pagado:paid,saldo_pendiente:t.modo==='credito'?t.total:0,
+    metodo_pago:t.modo==='contado'?t.metodo:'N/A'
+  };
+  u['transacciones/'+id]={
+    id,fecha:now,cliente:name,whatsapp:tel,
+    tipo:t.modo==='credito'?'Venta a cr\u00e9dito':'Venta al contado',
+    monto:t.total,monto_pagado:paid,
+    saldo_pendiente:t.modo==='credito'?t.total:0,
+    estado:status,numero_recibo:num,
+    metodo_pago:t.modo==='contado'?t.metodo:'N/A'
+  };
+  if(t.modo==='credito'){
+    u['cuentas_por_cobrar/'+id]={
+      id,fecha:now,whatsapp_cliente:tel,nombre_cliente:name,
+      numero_recibo:num,monto_original:t.total,
+      monto_pagado:0,saldo_pendiente:t.total,
+      estado:'pendiente',tipo:'Venta a cr\u00e9dito',items,
+      metodo_pago:'N/A'
+    };
+  }
+  for(let i of carrito){
+    let pdt=productos[i.id];
+    if(pdt)u['productos/'+i.id]={...pdt,stock:Math.max(0,+pdt.stock-i.q)};
+  }
+  await update(ref(db),u);
+  return{id,num,t};
+}
+
+/* ── Mensaje WhatsApp (con datos LAFISE) ── */
+function msg(d){
+  let t=d.t,
+      selZona=$('zona-envio'),
+      nombreZona=selZona.options[selZona.selectedIndex].getAttribute('data-nombre')||'',
+      dir=$('cliente-dir').value.trim()||'Retiro en Sucursal',
+      m='*PRODUCTOS GLOBALES DEL CAMPO*%0A====================%0A*RECIBO:* '+d.num+'%0A*CLIENTE:* '+d.name+'%0A*C\u00d3DIGO:* '+d.tel+'%0A*MODALIDAD:* '+(t.modo==='credito'?'VENTA A CR\u00c9DITO':'VENTA AL CONTADO')+'%0A';
+  if(t.modo==='contado')m+='*M\u00c9TODO DE PAGO:* '+(t.metodo==='lafise'?'Transferencia / QR LAFISE Bancentro':'Pago Contra Entrega (Efectivo / Transferencia al recibir)')+'%0A';
+  m+='%0A*PRODUCTOS:*%0A';
+  carrito.forEach(function(i){m+='\u2022 '+i.n+' \u2014 '+i.q+' \u00d7 C$'+i.price.toFixed(2)+'%0A'});
+  m+='%0A*SUBTOTAL:* C$'+t.sub.toFixed(2)+'%0A*DESCUENTO VOLUMEN ('+t.p*100+'%):* -C$'+t.d.toFixed(2)+'%0A*ENV\u00cdO:* '+(t.conv?'A convenir':'C$'+t.ship.toFixed(2))+'%0A*MODALIDAD DESPACHO:* '+nombreZona+'%0A*DIRECCI\u00d3N:* '+dir+'%0A*'+(t.modo==='credito'?'SALDO A CR\u00c9DITO':'TOTAL PAGADO')+':* C$'+t.total.toFixed(2)+'%0A*ESTADO:* '+(t.modo==='credito'?'PENDIENTE DE PAGO':'PAGADO');
+  m+='%0A%0A*DATOS DE PAGO*%0A====================%0A*M\u00c9TODO DE PAGO:* Transferencia / LAFISE Digital%0A*Titular:* Fernando Mart\u00ednez (Representante Legal PG del Campo)%0A*Cuenta N\u00b0:* 140051265%0A*Alias ACH/M\u00f3vil LAFISE:* 5797 3097%0A%0APuedes realizar tu pago directo haciendo clic en el siguiente enlace:%0Ahttps://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT='+t.total.toFixed(2)+'&REFERENCE=REC-'+d.num+'&CONCEPT=Compra%20Productos%20PG%20del%20Campo';
+m+='%0A%0A*BS*D%0ATodo lo Bueno viene de Dios, con su ayuda todo es posible realizar';
+  return m;
+}
+
+/* ── Procesar venta ── */
+window.procesar=async function(){
+  if(!carrito.length)return;
+  let name=$('cliente-nombre').value.trim(),tel=$('cliente-tel').value.trim();
+  if(!name||!tel)return alert('Completa nombre y WhatsApp.');
+  try{
+    let num=await nextReceipt(),d=await saveTransaction(num);
+    window.open('https://wa.me/'+WA+'?text='+msg({name:name,tel:tel,num:d.num,t:d.t}),'_blank');
+    carrito=[];calc();
+    alert('Transacci\u00f3n '+num+' registrada correctamente.');
+  }catch(e){
+    console.error(e);
+    alert('No se pudo registrar la transacci\u00f3n: '+e.message);
+  }
 };
+
+/* ── Generar recibo (con QR LAFISE) ── */
+window.generarRecibo=async function(){
+  if(!carrito.length)return;
+  let name=$('cliente-nombre').value.trim()||'Cliente',tel=$('cliente-tel').value.trim();
+  if(!tel)return alert('Completa el c\u00f3digo de cliente.');
+  try{
+    let num=await nextReceipt(),d=await saveTransaction(num),t=d.t;
+    let lafiseUrl='https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT='+t.total.toFixed(2)+'&REFERENCE=REC-'+E(num)+'&CONCEPT=Compra%20Productos%20PG%20del%20Campo';
+    let qrUrl='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data='+encodeURIComponent(lafiseUrl);
+    let selZona=$('zona-envio'),nombreZona=selZona.options[selZona.selectedIndex].getAttribute('data-nombre')||'';
+    let dir=$('cliente-dir').value.trim()||'Despacho Convencional';
+    $('rec-body').innerHTML=
+      '<div style="text-align:center;font-weight:bold;margin-bottom:2px">PG DEL CAMPO</div>'+
+      '<div style="text-align:center;font-size:10px">R\u00daC: 0452907730000U</div>'+
+      '<div style="text-align:center;font-size:9.5px;font-weight:bold;margin-bottom:2px">R\u00e9gimen de Cuota Fija</div>'+
+      '<div style="text-align:center;font-size:10px;margin-bottom:8px">Jinotepe, Carazo, Nicaragua</div>'+
+      '<div style="margin-bottom:3px"><strong>No. Recibo:</strong> '+num+'</div>'+
+      '<div style="margin-bottom:6px"><strong>Fecha Emisi\u00f3n:</strong> '+new Date().toLocaleDateString('es-NI')+'</div>'+
+      '<hr style="border:none;border-top:1px dashed #ccc;margin:6px 0">'+
+      '<div style="margin-bottom:6px"><strong>Cliente:</strong> '+E(name)+'<br><strong>Tel\u00e9fono:</strong> '+E(tel)+'<br><strong>Direcci\u00f3n:</strong> '+E(dir)+'<br><strong>Despacho:</strong> '+E(nombreZona)+'</div>'+
+      '<hr style="border:none;border-top:1px dashed #ccc;margin:6px 0">'+
+      '<div style="font-weight:bold;margin-bottom:4px">ITEMS COMPRADOS:</div>'+
+      carrito.map(function(i){return '<div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>'+i.q+'x '+E(i.n)+'</span><span>C$ '+(i.price*i.q).toFixed(2)+'</span></div>'}).join('')+
+      '<hr style="border:none;border-top:1px dashed #ccc;margin:6px 0">'+
+      '<div style="display:flex;justify-content:space-between"><span>SUBTOTAL:</span><span>C$ '+t.sub.toFixed(2)+'</span></div>'+
+      (t.p>0?'<div style="display:flex;justify-content:space-between"><span>Descuento ('+t.p*100+'%):</span><span>- C$ '+t.d.toFixed(2)+'</span></div>':'')+
+      '<div style="display:flex;justify-content:space-between"><span>ENV\u00cdO:</span><span>'+(t.conv?'A convenir':'C$ '+t.ship.toFixed(2))+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between;font-weight:bold;font-size:13px;margin-top:6px"><span>TOTAL COMPRA:</span><span>C$ '+t.total.toFixed(2)+'</span></div>'+
+      '<hr style="border:none;border-top:1px dashed #ccc;margin:6px 0">'+
+      '<div style="background:#f4f4f6;padding:8px;border-radius:6px;margin:6px 0;font-size:10.5px;text-align:center">'+
+        '<p style="font-size:10px;color:#444;margin-bottom:4px"><strong>Titular:</strong> Fernando Mart\u00ednez<br><em>Representante Legal PG del Campo</em></p>'+
+        '<div class="no-print"><strong>Pago Directo LAFISE:</strong><br>'+
+          '<a href="'+lafiseUrl+'" target="_blank" style="color:var(--primary);font-weight:bold;word-break:break-all;display:inline-block;margin-top:2px">'+lafiseUrl+'</a>'+
+          '<a href="'+lafiseUrl+'" target="_blank" class="btn-action btn-lafise-direct" style="padding:8px;font-size:12px">Pagar Ahora con LAFISE</a>'+
+        '</div>'+
+        '<div style="margin-top:8px">'+
+          '<p style="font-size:9.5px;font-weight:bold;color:#555;margin-bottom:3px">Escanea para pagar el monto exacto:</p>'+
+          '<img src="'+qrUrl+'" alt="QR Pago LAFISE" style="width:120px;height:120px;border:1px solid #ddd;padding:4px;background:#fff;border-radius:6px">'+
+        '</div>'+
+      '</div>'+
+      '<hr style="border:none;border-top:1px dashed #ccc;margin:6px 0">'+
+      '<p style="text-align:center;font-size:10.5px;font-weight:bold;color:var(--primary);margin-top:6px">\u00a1Gracias por preferirnos e impulsar el campo!</p>'+
+      '<hr style="border:none;border-top:1px dashed #ccc;margin:6px 0">'+
+      '<p style="text-align:center;font-size:11px;font-weight:bold;color:var(--primary);margin-top:4px">*BS*D</p>'+
+      '<p style="text-align:center;font-size:10px;font-style:italic;color:#555">Todo lo Bueno viene de Dios, con su ayuda todo es posible realizar</p>';
+    $('receipt-modal').style.display='flex';
+    carrito=[];
+    $('cliente-dir').value='';
+    calc();
+  }catch(e){
+    alert('No se pudo generar el recibo: '+e.message);
+  }
+};
+
+window.closeReceipt=function(){$('receipt-modal').style.display='none'};
+
+calc();
 </script>
 </body>
 </html>
