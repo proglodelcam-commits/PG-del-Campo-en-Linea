@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Panel Integral PG del Campo</title>
+<meta name="theme-color" content="#1b382b">
+<meta name="description" content="Panel de administración integral de Productos Globales del Campo">
+<link rel="manifest" href="manifest-panel.json">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="PG Admin">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700,800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 <style>
@@ -763,12 +773,12 @@ function renderReceipt(x){
     <hr>
     <div style="background:#f0f4ff;padding:10px;border-radius:6px">
       <b style="color:var(--p)"> DATOS DE PAGO</b><br><br>
+      <a href="https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${total.toFixed(2)}&REFERENCE=${E(x.numero_recibo||'')}" target="_blank" rel="noopener" style="display:inline-block;background:#005691;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:11px;font-weight:bold;margin-bottom:8px">🔗 Pagar con LAFISE Digital</a><br>
       <b>Método de Pago:</b> Transferencia / LAFISE Digital<br>
       <b>Titular:</b> Fernando Martínez (Representante Legal PG del Campo)<br>
       <b>Cuenta N°:</b> 140051265<br>
       <b>Alias ACH/Móvil LAFISE:</b> 5797 3097<br><br>
-      Puedes realizar tu pago directo haciendo clic en el siguiente enlace:<br>
-      <a href="https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${total.toFixed(2)}&REFERENCE=REC-${E(x.numero_recibo||'')}&CONCEPT=Compra%20Productos%20PG%20del%20Campo" style="color:var(--p);word-break:break-all">https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${total.toFixed(2)}&REFERENCE=REC-${E(x.numero_recibo||'')}&CONCEPT=Compra%20Productos%20PG%20del%20Campo</a>
+      Toca el botón de pago o realiza tu pago desde la app LAFISE Digital usando el Alias ACH/Móvil o el número de cuenta, con el monto exacto de C$ ${total.toFixed(2)}
     </div>
     <hr>
     <div style="text-align:center;font-size:9px;color:var(--m)">*BS*D<br>Todo lo Bueno viene de Dios, con su ayuda todo es posible realizar</div>
