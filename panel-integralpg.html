@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Panel Integral PG del Campo</title>
+<title>Panel Integral PG del Campo — Powered by PGdelCampo</title>
 <meta name="theme-color" content="#1b382b">
-<meta name="description" content="Panel de administración integral de Productos Globales del Campo">
+<meta name="description" content="Panel de administración integral de Productos Globales del Campo con funciones PG">
 <link rel="manifest" href="./manifest-panel.json">
 <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="./favicon-16.png">
@@ -16,55 +16,112 @@
 <meta name="apple-mobile-web-app-title" content="PG Admin">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Fraunces:opsz,wght@9..144,700,800&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
 <style>
-:root{--p:#1b382b;--pd:#10241c;--a:#c8963e;--l:#8eb057;--bg:#f4f5f7;--w:#fff;--m:#68776c;--b:#e1e7e3}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#26332b;font:12px 'Plus Jakarta Sans',sans-serif;display:flex}
-aside{width:245px;background:var(--pd);color:#dce8df;position:fixed;inset:0 auto 0 0}
+:root{
+  --p:#1b382b;--pd:#10241c;--a:#c8963e;--l:#8eb057;
+  --bg:#f4f5f7;--w:#fff;--m:#68776c;--b:#e1e7e3;
+  --danger:#9b1c1c;--danger-bg:#fee2e2;
+  --success:#146a35;--success-bg:#dcf5e5;
+  --info:#17577f;--info-bg:#e0effa;
+  --warn:#765500;--warn-bg:#fff1c7;
+  --purple:#6b21a8;--purple-bg:#f3e8ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:#26332b;font:12px 'Plus Jakarta Sans',sans-serif;display:flex;min-height:100vh}
+
+/* ── Sidebar ── */
+aside{width:260px;background:var(--pd);color:#dce8df;position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;z-index:10}
 .brand{padding:20px;font:800 19px Fraunces,serif;color:#fff;border-bottom:1px solid #ffffff12}
 .brand small{display:block;font:9px 'Plus Jakarta Sans';opacity:.6}
-.nav button{display:block;width:100%;padding:12px 18px;background:none;border:0;color:#cbd8cf;text-align:left;cursor:pointer;font-size:11px}
+.brand .kyte-badge{display:inline-block;background:var(--a);color:#111;padding:2px 7px;border-radius:4px;font-size:8px;font-weight:800;margin-left:6px;vertical-align:middle}
+.nav{flex:1;overflow-y:auto;padding:6px 0}
+.nav button{display:block;width:100%;padding:11px 18px;background:none;border:0;color:#cbd8cf;text-align:left;cursor:pointer;font-size:11px;transition:all .15s}
 .nav button:hover,.nav button.active{background:#28523f;color:#fff;border-left:4px solid var(--a);padding-left:14px}
-.foot{position:absolute;bottom:0;width:100%;padding:15px;background:var(--a);color:#17231c;font-size:9px}
-main{margin-left:245px;padding:18px;flex:1;min-width:0}
-.top{background:#fff;border-radius:13px;padding:13px 16px;margin-bottom:16px;display:flex;justify-content:space-between}
+.nav button .nav-icon{margin-right:8px;font-size:13px}
+.nav .nav-sep{padding:4px 18px;font-size:8px;text-transform:uppercase;letter-spacing:1.5px;color:#5a7a66;pointer-events:none}
+.foot{position:sticky;bottom:0;width:100%;padding:15px;background:var(--a);color:#17231c;font-size:9px}
+
+/* ── Main ── */
+main{margin-left:260px;padding:18px;flex:1;min-width:0}
+.top{background:#fff;border-radius:13px;padding:13px 16px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
 .top h1{font:800 23px Fraunces,serif;color:var(--p);margin:0}
-.sec{display:none}
-.sec.active{display:block}
+.top .sync-badge{font-size:9px;color:var(--l);background:#f0f7ee;padding:4px 10px;border-radius:6px}
+
+.sec{display:none}.sec.active{display:block}
+
+/* ── Hero ── */
 .hero{background:linear-gradient(135deg,var(--p),#28523f);color:#fff;border-radius:17px;padding:23px;margin-bottom:15px}
-.hero h2{font:800 28px Fraunces,serif;margin:0}
+.hero h2{font:800 28px Fraunces,serif;margin:0 0 4px}
+.hero p{opacity:.85;font-size:11px}
+
+/* ── KPIs ── */
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:15px}
+.kpis6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:15px}
 .kpi,.box{background:#fff;border:1px solid var(--b);border-radius:13px;padding:15px;box-shadow:0 2px 9px #00000008}
-.kpi b{font-size:9px;color:var(--m);text-transform:uppercase}
+.kpi b{font-size:9px;color:var(--m);text-transform:uppercase;letter-spacing:.5px}
 .kpi strong{display:block;color:var(--p);font-size:20px;margin-top:4px}
+.kpi .kpi-icon{float:right;font-size:18px;opacity:.4}
+.kpi .trend{font-size:9px;margin-top:2px}
+.kpi .trend.up{color:var(--success)}
+.kpi .trend.down{color:var(--danger)}
+
+/* ── Grids ── */
 .grid2{display:grid;grid-template-columns:1.4fr 1fr;gap:15px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:15px}
 .chart{height:260px}
 .box h3{color:var(--p);font-size:14px;margin:0 0 12px}
+.box h3 .box-icon{margin-right:6px}
+
+/* ── Forms ── */
 .form{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.field label{display:block;font-size:9px;font-weight:800;margin-bottom:4px}
-.field input,.field select,.field textarea,.search{width:100%;padding:9px;border:1px solid #ccd6cf;border-radius:7px;background:#fff}
-.btn{border:0;border-radius:7px;padding:8px 10px;background:var(--p);color:#fff;font-weight:800;cursor:pointer;font-size:10px}
+.form6{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
+.field label{display:block;font-size:9px;font-weight:800;margin-bottom:4px;color:var(--m)}
+.field input,.field select,.field textarea,.search{width:100%;padding:9px;border:1px solid #ccd6cf;border-radius:7px;background:#fff;font-size:11px}
+.field textarea{resize:vertical;min-height:50px}
+
+/* ── Buttons ── */
+.btn{border:0;border-radius:7px;padding:8px 12px;background:var(--p);color:#fff;font-weight:800;cursor:pointer;font-size:10px;transition:opacity .15s}
+.btn:hover{opacity:.85}
+.btn-sm{padding:5px 8px;font-size:9px}
 .gold{background:var(--a);color:#111}
 .green{background:#dcf5e5;color:#146a35}
 .blue{background:#e0effa;color:#17577f}
 .danger{background:#fee2e2;color:#9b1c1c}
+.purple{background:#f3e8ff;color:#6b21a8}
+.outline{background:transparent;border:1px solid var(--b);color:var(--m)}
+
+/* ── Tables ── */
 .table{overflow:auto}
 table{width:100%;border-collapse:collapse;font-size:10px}
-th{background:#f7f9f8;color:var(--p);padding:9px;text-align:left;font-size:9px;white-space:nowrap}
+th{background:#f7f9f8;color:var(--p);padding:9px;text-align:left;font-size:9px;white-space:nowrap;position:sticky;top:0}
 td{padding:9px;border-bottom:1px solid var(--b);vertical-align:top}
 .money{font-weight:800;color:var(--p)}
+
+/* ── Badges ── */
 .badge{display:inline-block;border-radius:12px;padding:3px 7px;font-size:8px;font-weight:800}
-.pending{background:#fff1c7;color:#765500}
-.paid{background:#dcf5e5;color:#146a35}
-.transit{background:#e0effa;color:#17577f}
+.pending{background:var(--warn-bg);color:var(--warn)}
+.paid{background:var(--success-bg);color:var(--success)}
+.transit{background:var(--info-bg);color:var(--info)}
 .finished{background:#d1e7dd;color:#0a3622}
-.low{background:#fff1c7;color:#765500}
-.out{background:#fee2e2;color:#9b1c1c}
+.low{background:var(--warn-bg);color:var(--warn)}
+.out{background:var(--danger-bg);color:var(--danger)}
+.active-badge{background:var(--success-bg);color:var(--success)}
+.inactive-badge{background:var(--danger-bg);color:var(--danger)}
 .muted{color:var(--m)}
+
+/* ── Actions ── */
 .actions{display:flex;gap:5px;flex-wrap:wrap}
+
+/* ── Modal ── */
 .modal{display:none;position:fixed;inset:0;background:#0009;z-index:20;padding:18px;overflow:auto}
-.modalbox{background:#fff;max-width:900px;margin:3vh auto;padding:18px;border-radius:13px}
+.modalbox{background:#fff;max-width:960px;margin:3vh auto;padding:18px;border-radius:13px}
+.modalbox h3{color:var(--p);font:800 18px Fraunces,serif;margin:0 0 12px}
+
+/* ── Receipt ── */
 .receipt{font-family:monospace;font-size:11px;max-width:520px;margin:auto}
+
+/* ── Statement ── */
 .statement-head{background:#f7f9f8;border-radius:10px;padding:12px;margin-bottom:12px}
 .statement-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .stat{background:#fff;border:1px solid var(--b);border-radius:8px;padding:8px}
@@ -74,206 +131,592 @@ td{padding:9px;border-bottom:1px solid var(--b);vertical-align:top}
 .detail-row table{font-size:9px}
 .detail-row th{font-size:8px;padding:4px 6px}
 .detail-row td{padding:4px 6px}
+
+/* ── Status Select ── */
 .status-select{padding:4px 8px;border:1px solid var(--b);border-radius:6px;font-size:9px;font-weight:800;cursor:pointer;background:#fff}
-.status-select.pendiente{background:#fff1c7;color:#765500;border-color:#e6d4a0}
-.status-select.pagada{background:#dcf5e5;color:#146a35;border-color:#b8e0c8}
-.status-select.en_transito{background:#e0effa;color:#17577f;border-color:#b8d4ea}
+.status-select.pendiente{background:var(--warn-bg);color:var(--warn);border-color:#e6d4a0}
+.status-select.pagada{background:var(--success-bg);color:var(--success);border-color:#b8e0c8}
+.status-select.en_transito{background:var(--info-bg);color:var(--info);border-color:#b8d4ea}
 .status-select.finalizado{background:#d1e7dd;color:#0a3622;border-color:#b0d4be}
-@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,1fr)}.statement-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:700px){aside{width:60px}.brand{font-size:0;padding:15px}.brand:after{content:'PG';font:800 18px Fraunces;color:var(--a)}.nav button{font-size:0;text-align:center}.nav button:first-letter{font-size:18px}main{margin-left:60px;padding:10px}.form{grid-template-columns:1fr}.two{grid-template-columns:1fr}.statement-grid{grid-template-columns:1fr}}
+
+/* ── Cash Flow Card ── */
+.cf-bar{height:8px;border-radius:4px;background:var(--b);overflow:hidden;margin-top:6px}
+.cf-bar .cf-fill{height:100%;border-radius:4px;transition:width .4s}
+.cf-positive .cf-fill{background:var(--success)}
+.cf-negative .cf-fill{background:var(--danger)}
+
+/* ── Seller Card ── */
+.seller-card{background:#fff;border:1px solid var(--b);border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center}
+.seller-avatar{width:36px;height:36px;border-radius:50%;background:var(--p);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+.seller-info{flex:1}
+.seller-info b{display:block;color:var(--p);font-size:12px}
+.seller-info span{font-size:9px;color:var(--m)}
+
+/* ── QR ── */
+.qr-output{display:flex;align-items:center;gap:15px;margin-top:10px}
+.qr-output canvas{border-radius:8px}
+.qr-output .qr-info{font-size:10px;color:var(--m)}
+
+/* ── Kai / Smart Assistant ── */
+.kai-container{background:#f5f8f6;border-radius:10px;padding:12px;height:320px;overflow-y:auto}
+.kai-msg{margin-bottom:8px}
+.kai-msg.user{text-align:right}
+.kai-msg .bubble{display:inline-block;padding:8px 12px;border-radius:10px;font-size:11px;max-width:80%}
+.kai-msg.assistant .bubble{background:#fff;border:1px solid var(--b)}
+.kai-msg.user .bubble{background:var(--p);color:#fff}
+
+/* ── Product Variation ── */
+.variation-row{display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;align-items:end;margin-bottom:6px}
+.variation-row input{padding:6px;border:1px solid var(--b);border-radius:6px;font-size:10px}
+
+/* ── Tab sub-nav ── */
+.sub-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.sub-tab{padding:6px 14px;border-radius:7px;font-size:10px;font-weight:800;cursor:pointer;background:#fff;border:1px solid var(--b);color:var(--m)}
+.sub-tab.active{background:var(--p);color:#fff;border-color:var(--p)}
+
+/* ── Responsive ── */
+@media(max-width:1200px){.kpis6{grid-template-columns:repeat(3,1fr)}.grid3{grid-template-columns:1fr 1fr}}
+@media(max-width:1000px){.kpis{grid-template-columns:repeat(2,1fr)}.kpis6{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}.form{grid-template-columns:repeat(2,1fr)}.form6{grid-template-columns:repeat(3,1fr)}.statement-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){aside{width:60px}.brand{font-size:0;padding:15px}.brand:after{content:'PG';font:800 18px Fraunces;color:var(--a)}.nav button{font-size:0;text-align:center}.nav button .nav-icon{font-size:18px;margin:0}.nav .nav-sep{display:none}main{margin-left:60px;padding:10px}.form,.form6{grid-template-columns:1fr}.grid2,.grid3{grid-template-columns:1fr}.kpis,.kpis6{grid-template-columns:1fr 1fr}.statement-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
+
 <aside>
-  <div class="brand">PG del Campo<small>Panel Integral Administrativo</small></div>
+  <div class="brand">PG del Campo<small>Panel Integral Administrativo</small><span class="kyte-badge">PGdelC</span></div>
   <nav class="nav">
-    <button class="active" onclick="tab('inicio',this)"> Inicio</button>
-    <button onclick="tab('cxc',this)"> Cuentas por Cobrar</button>
-    <button onclick="tab('ventas',this)"> Ventas</button>
-    <button onclick="tab('clientes',this)"> Clientes</button>
-    <button onclick="tab('productos',this)"> Inventario</button>
-    <button onclick="tab('trans',this)"> Transacciones</button>
-    <button onclick="tab('estad',this)"> Estadísticas</button>
-    <button onclick="tab('cupones',this)"> Cupones</button>
-    <button onclick="tab('kai',this)"> Kai</button>
+    <button class="active" onclick="tab('inicio',this)"><span class="nav-icon">🏠</span> Inicio</button>
+    <button onclick="tab('pos',this)"><span class="nav-icon">💳</span> Punto de Venta</button>
+    <button onclick="tab('cxc',this)"><span class="nav-icon">📋</span> Cuentas por Cobrar</button>
+    <button onclick="tab('ventas',this)"><span class="nav-icon">🧾</span> Ventas</button>
+    <button onclick="tab('clientes',this)"><span class="nav-icon">👥</span> Clientes</button>
+    <div class="nav-sep">Gestión Operativa</div>
+    <button onclick="tab('productos',this)"><span class="nav-icon">📦</span> Inventario</button>
+    <button onclick="tab('catalogo',this)"><span class="nav-icon">🌐</span> Catálogo / Órdenes</button>
+    <button onclick="tab('trans',this)"><span class="nav-icon">🔄</span> Transacciones</button>
+    <div class="nav-sep">Finanzas</div>
+    <button onclick="tab('flujo',this)"><span class="nav-icon">💰</span> Flujo de Caja</button>
+    <button onclick="tab('gastos',this)"><span class="nav-icon">📊</span> Gastos</button>
+    <button onclick="tab('proveedores',this)"><span class="nav-icon">🏭</span> Proveedores</button>
+    <div class="nav-sep">Inteligencia</div>
+    <button onclick="tab('estad',this)"><span class="nav-icon">📈</span> Estadísticas</button>
+    <button onclick="tab('kai',this)"><span class="nav-icon">🤖</span> Asistente Kai</button>
+    <div class="nav-sep">Herramientas</div>
+    <button onclick="tab('vendedores',this)"><span class="nav-icon">🧑‍💼</span> Vendedores</button>
+    <button onclick="tab('cupones',this)"><span class="nav-icon">🏷️</span> Cupones</button>
+    <button onclick="tab('qr',this)"><span class="nav-icon">📱</span> Código QR</button>
+    <button onclick="tab('recibos',this)"><span class="nav-icon">🧾</span> Recibos</button>
   </nav>
   <div class="foot">PG DEL CAMPO · Jinotepe, Carazo</div>
 </aside>
+
 <main>
-  <div class="top">
-    <h1 id="title">Inicio</h1>
-    <span>RUC 0452907730000U · Cuota Fija</span>
+<div class="top">
+  <h1 id="title">Inicio</h1>
+  <span>RUC 0452907730000U · Cuota Fija <span class="sync-badge">● Sync OK</span></span>
+</div>
+
+<!-- ═══════════ INICIO ═══════════ -->
+<section id="sec-inicio" class="sec active">
+  <div class="hero">
+    <h2>Centro de Control PG del Campo</h2>
+    <p>Panel integral con todas las funciones PGdelCamp: ventas, cartera, clientes, inventario, flujo de caja, gastos y más.</p>
   </div>
-  <!-- INICIO -->
-  <section id="sec-inicio" class="sec active">
-    <div class="hero">
-      <h2>Centro de Control PG del Campo</h2>
-      <p>Ingresos, cartera, clientes e inventario en una sola pantalla.</p>
-    </div>
-    <div class="kpis">
-      <div class="kpi"><b>Ventas registradas</b><strong id="k1">C$0.00</strong></div>
-      <div class="kpi"><b>Cuentas por cobrar</b><strong id="k2">C$0.00</strong></div>
-      <div class="kpi"><b>Clientes</b><strong id="k3">0</strong></div>
-      <div class="kpi"><b>Inventario</b><strong id="k4">0 uds</strong></div>
-    </div>
-    <div class="grid2">
-      <div class="box"><h3>Ventas mensuales</h3><div class="chart"><canvas id="income"></canvas></div></div>
-      <div class="box"><h3>Cartera</h3><div class="chart"><canvas id="cxcChart"></canvas></div></div>
-    </div>
-    <div class="grid2" style="margin-top:15px">
-      <div class="box"><h3>Stock por producto</h3><div class="chart"><canvas id="stockChart"></canvas></div></div>
-      <div class="box"><h3>Frecuencia de clientes</h3><div class="chart"><canvas id="clientChart"></canvas></div></div>
-    </div>
-  </section>
-  <!-- CUENTAS POR COBRAR -->
-  <section id="sec-cxc" class="sec">
-    <div class="hero">
-      <h2>Cuentas por Cobrar</h2>
-      <p>Las ventas a crédito provenientes de index.html se reciben aquí automáticamente.</p>
-    </div>
+  <div class="kpis6">
+    <div class="kpi"><b>Ventas registradas</b><strong id="k1">C$0.00</strong><span class="trend up" id="k1t"></span></div>
+    <div class="kpi"><b>Cuentas por cobrar</b><strong id="k2">C$0.00</strong></div>
+    <div class="kpi"><b>Clientes</b><strong id="k3">0</strong></div>
+    <div class="kpi"><b>Inventario</b><strong id="k4">0 uds</strong></div>
+    <div class="kpi"><b>Flujo neto</b><strong id="k5">C$0.00</strong></div>
+    <div class="kpi"><b>Gastos del mes</b><strong id="k6">C$0.00</strong></div>
+  </div>
+  <div class="grid2">
+    <div class="box"><h3>Ventas mensuales</h3><div class="chart"><canvas id="income"></canvas></div></div>
+    <div class="box"><h3>Cartera</h3><div class="chart"><canvas id="cxcChart"></canvas></div></div>
+  </div>
+  <div class="grid2" style="margin-top:15px">
+    <div class="box"><h3>Stock por producto</h3><div class="chart"><canvas id="stockChart"></canvas></div></div>
+    <div class="box"><h3>Frecuencia de clientes</h3><div class="chart"><canvas id="clientChart"></canvas></div></div>
+  </div>
+  <div class="grid2" style="margin-top:15px">
+    <div class="box"><h3>Flujo de caja (6 meses)</h3><div class="chart"><canvas id="cashFlowChart"></canvas></div></div>
+    <div class="box"><h3>Gastos vs Ingresos</h3><div class="chart"><canvas id="expenseChart"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ═══════════ PUNTO DE VENTA (POS) ═══════════ -->
+<section id="sec-pos" class="sec">
+  <div class="hero">
+    <h2>Punto de Venta</h2>
+    <p>Registra ventas al momento, contado o crédito, con búsqueda de productos y cliente.</p>
+  </div>
+  <div class="grid2">
     <div class="box">
-      <input id="q" class="search" placeholder="Buscar cliente, teléfono o recibo" oninput="renderCxc()">
+      <h3>🛒 Nueva venta</h3>
+      <div style="margin-bottom:10px">
+        <input id="posProductSearch" class="search" placeholder="Buscar producto por nombre..." oninput="searchPosProducts()">
+      </div>
+      <div id="posProductList" style="max-height:180px;overflow-y:auto;margin-bottom:10px"></div>
       <div class="table">
         <table>
-          <thead>
-            <tr>
-              <th>Fecha</th><th>Cliente / Código</th><th>Recibo</th><th>Original</th>
-              <th>Pagado</th><th>Saldo</th><th>Estado</th><th>Acción</th>
-            </tr>
-          </thead>
-          <tbody id="cxcBody"></tbody>
+          <thead><tr><th>Producto</th><th>Precio</th><th>Cant</th><th>Subtotal</th><th></th></tr></thead>
+          <tbody id="posCartBody"></tbody>
         </table>
       </div>
-    </div>
-  </section>
-  <!-- VENTAS -->
-  <section id="sec-ventas" class="sec">
-    <div class="box">
-      <h3>Registrar venta directa a crédito</h3>
-      <form id="sale" class="form">
-        <div class="field"><label>WhatsApp / Código</label><input id="vt" required></div>
-        <div class="field"><label>Cliente</label><input id="vn"></div>
-        <div class="field"><label>Monto C$</label><input id="vm" type="number" step="0.01" required></div>
-        <div><button class="btn gold" style="width:100%">Registrar crédito</button></div>
+      <div style="display:flex;justify-content:space-between;margin-top:10px;font-weight:800">
+        <span>Total:</span><span id="posTotal" class="money">C$0.00</span>
+      </div>
+      <form id="posForm" style="margin-top:10px">
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div class="field"><label>Cliente / WhatsApp</label><input id="posClient" placeholder="Opcional"></div>
+          <div class="field"><label>Cupón</label><input id="posCoupon" placeholder="Código"></div>
+          <div class="field"><label>Modalidad</label>
+            <select id="posMode">
+              <option value="contado">Contado</option>
+              <option value="credito">Crédito (On Account)</option>
+            </select>
+          </div>
+        </div>
+        <div style="margin-top:8px;display:flex;gap:6px">
+          <div class="field" style="flex:1"><label>Método de pago</label>
+            <select id="posPayMethod">
+              <option value="efectivo">Efectivo</option>
+              <option value="lafise">Transferencia / QR LAFISE</option>
+              <option value="contra_entrega">Pago contra entrega</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:6px;align-items:end">
+            <button type="submit" class="btn gold" style="padding:10px 20px">💰 Cobrar</button>
+          </div>
+        </div>
       </form>
     </div>
     <div class="box">
-      <h3>Últimas ventas</h3>
+      <h3>📋 Productos frecuentes</h3>
+      <div id="posQuick" style="display:grid;grid-template-columns:1fr 1fr;gap:6px;max-height:400px;overflow-y:auto"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CUENTAS POR COBRAR ═══════════ -->
+<section id="sec-cxc" class="sec">
+  <div class="hero">
+    <h2>Cuentas por Cobrar</h2>
+    <p>Las ventas a crédito se reciben aquí automáticamente. Sistema On Account como PGdelCamp.</p>
+  </div>
+  <div class="box">
+    <input id="q" class="search" placeholder="Buscar cliente, teléfono o recibo" oninput="renderCxc()">
+    <div class="table">
+      <table>
+        <thead><tr><th>Fecha</th><th>Cliente / Código</th><th>Recibo</th><th>Original</th><th>Pagado</th><th>Saldo</th><th>Estado</th><th>Acción</th></tr></thead>
+        <tbody id="cxcBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ VENTAS ═══════════ -->
+<section id="sec-ventas" class="sec">
+  <div class="box">
+    <h3>Registrar venta directa a crédito</h3>
+    <form id="sale" class="form">
+      <div class="field"><label>WhatsApp / Código</label><input id="vt" required></div>
+      <div class="field"><label>Cliente</label><input id="vn"></div>
+      <div class="field"><label>Monto C$</label><input id="vm" type="number" step="0.01" required></div>
+      <div><button class="btn gold" style="width:100%">Registrar crédito</button></div>
+    </form>
+  </div>
+  <div class="box">
+    <h3>Últimas ventas</h3>
+    <div class="table">
+      <table>
+        <thead><tr><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Recibo</th><th>Monto</th><th>Acciones</th></tr></thead>
+        <tbody id="salesBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CLIENTES ═══════════ -->
+<section id="sec-clientes" class="sec">
+  <div class="hero">
+    <h2>Clientes</h2>
+    <p>El teléfono es el código único. Consulta historial, estado de cuenta y compradores nuevos (New Buyers).</p>
+  </div>
+  <div class="box">
+    <div style="display:flex;gap:8px;margin-bottom:10px">
+      <input id="clientSearch" class="search" placeholder="Buscar por teléfono o nombre" oninput="renderClients()" style="flex:1">
+      <button class="btn" onclick="showNewBuyers()">🆕 Compradores Nuevos</button>
+    </div>
+    <div class="table">
+      <table>
+        <thead><tr><th>Código / Teléfono</th><th>Cliente</th><th>Compras</th><th>Total acumulado</th><th>Saldo crédito</th><th>Última compra</th><th>Acciones</th></tr></thead>
+        <tbody id="clientsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ INVENTARIO ═══════════ -->
+<section id="sec-productos" class="sec">
+  <div class="box">
+    <h3>Inventario</h3>
+    <form id="prod" class="form">
+      <input type="hidden" id="pid">
+      <div class="field"><label>Nombre</label><input id="pn" required></div>
+      <div class="field"><label>Imagen URL</label><input id="pi"></div>
+      <div class="field"><label>Descripción</label><input id="pd"></div>
+      <div class="field"><label>Costo</label><input id="pc" type="number" step="0.01"></div>
+      <div class="field"><label>Precio</label><input id="pp" type="number" step="0.01" required></div>
+      <div class="field"><label>Stock</label><input id="ps" type="number" required></div>
+      <div class="field"><label>Categoría</label><input id="pcat"></div>
+      <div class="field"><label>Código / SKU</label><input id="psku"></div>
+    </form>
+    <div id="variations" style="margin-top:10px">
+      <label style="font-size:9px;font-weight:800;display:block;margin-bottom:4px">Variaciones (PGdelCamp: hasta 2 por producto)</label>
+      <div id="variationList">
+        <div class="variation-row"><input placeholder="Nombre variación"><input type="number" placeholder="Precio" step="0.01"><input type="number" placeholder="Stock"></div>
+      </div>
+      <button type="button" class="btn-sm btn" onclick="addVariation()" style="margin-top:4px">+ Variación</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px">
+      <button class="btn" style="width:100%" form="prod">Guardar</button>
+      <button type="button" class="btn" style="background:#777;width:100%" onclick="resetProd()">Limpiar</button>
+    </div>
+  </div>
+  <div class="box">
+    <h3>Registro automático <span class="badge active-badge">PGdelC</span></h3>
+    <p style="font-size:10px;color:var(--m);margin-bottom:8px">Productos con bajo stock se marcan automáticamente para reabastecimiento.</p>
+    <div class="table">
+      <table>
+        <thead><tr><th>Producto</th><th>Costo</th><th>Precio</th><th>Margen</th><th>Stock</th><th>Categoría</th><th>Acción</th></tr></thead>
+        <tbody id="prodBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CATÁLOGO / ÓRDENES ONLINE ═══════════ -->
+<section id="sec-catalogo" class="sec">
+  <div class="hero">
+    <h2>Catálogo &amp; Órdenes Online</h2>
+    <p>Vende por WhatsApp, redes sociales y web. Catálogo digital con enlace compartible y menú digital.</p>
+  </div>
+  <div class="grid2">
+    <div class="box">
+      <h3>🌐 Catálogo Digital</h3>
+      <p style="font-size:10px;color:var(--m);margin-bottom:10px">Tu tienda online integrada con el inventario.</p>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <button class="btn" onclick="generateCatalogLink()">Generar enlace del catálogo</button>
+        <button class="btn gold" onclick="shareWhatsApp()">Compartir por WhatsApp</button>
+      </div>
+      <div id="catalogLink" style="display:none;padding:10px;background:#f7f9f8;border-radius:8px;font-size:10px">
+        <b>Enlace:</b> <span id="catalogUrl"></span>
+        <button class="btn-sm btn" style="margin-left:8px" onclick="copyCatalogLink()">Copiar</button>
+      </div>
+      <div id="catalogPreview" style="margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:300px;overflow-y:auto"></div>
+    </div>
+    <div class="box">
+      <h3>📥 Órdenes Online</h3>
+      <p style="font-size:10px;color:var(--m);margin-bottom:10px">Pedidos recibidos desde el catálogo digital y WhatsApp.</p>
       <div class="table">
         <table>
-          <thead>
-            <tr><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Recibo</th><th>Monto</th><th>Acciones</th></tr>
-          </thead>
-          <tbody id="salesBody"></tbody>
+          <thead><tr><th>Fecha</th><th>Cliente</th><th>Canal</th><th>Monto</th><th>Estado</th></tr></thead>
+          <tbody id="ordersBody"></tbody>
         </table>
       </div>
     </div>
-  </section>
-  <!-- CLIENTES -->
-  <section id="sec-clientes" class="sec">
-    <div class="hero">
-      <h2>Clientes</h2>
-      <p>El número telefónico es el código único del cliente. Desde aquí puedes consultar historial y estado de cuenta.</p>
+  </div>
+  <div class="box" style="margin-top:15px">
+    <h3>📱 Venta por WhatsApp</h3>
+    <p style="font-size:10px;color:var(--m);margin-bottom:10px">Genera mensajes de pedido con enlace de pago LAFISE integrado.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="field"><label>Número del cliente</label><input id="waNumber" placeholder="505XXXXXXXX"></div>
+      <div class="field"><label>Mensaje personalizado</label><input id="waMsg" placeholder="Hola, tu pedido está listo..."></div>
+    </div>
+    <button class="btn green" onclick="sendWhatsAppOrder()" style="margin-top:8px">Enviar mensaje WhatsApp</button>
+  </div>
+</section>
+
+<!-- ═══════════ TRANSACCIONES ═══════════ -->
+<section id="sec-trans" class="sec">
+  <div class="box">
+    <h3>Registro Único de Transacciones</h3>
+    <div class="table">
+      <table>
+        <thead><tr><th>Fecha</th><th>Cliente / Código</th><th>Tipo</th><th>Recibo</th><th>Monto</th><th>Estado</th><th>Acciones</th></tr></thead>
+        <tbody id="transBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FLUJO DE CAJA ═══════════ -->
+<section id="sec-flujo" class="sec">
+  <div class="hero">
+    <h2>Flujo de Caja</h2>
+    <p>Monitorea si entra más dinero del que sale. Cash Flow Management como PGdelCamp.</p>
+  </div>
+  <div class="kpis6">
+    <div class="kpi"><b>Ingresos del mes</b><strong id="cf1">C$0.00</strong></div>
+    <div class="kpi"><b>Gastos del mes</b><strong id="cf2">C$0.00</strong></div>
+    <div class="kpi"><b>Flujo neto</b><strong id="cf3">C$0.00</strong><div class="cf-bar cf-positive"><div class="cf-fill" id="cfBar" style="width:50%"></div></div></div>
+    <div class="kpi"><b>Cuentas por pagar</b><strong id="cf4">C$0.00</strong></div>
+    <div class="kpi"><b>Cuentas por cobrar</b><strong id="cf5">C$0.00</strong></div>
+    <div class="kpi"><b>Balance total</b><strong id="cf6">C$0.00</strong></div>
+  </div>
+  <div class="grid2">
+    <div class="box"><h3>Flujo mensual (6 meses)</h3><div class="chart"><canvas id="cfChart"></canvas></div></div>
+    <div class="box"><h3>Desglose de ingresos</h3><div class="chart"><canvas id="cfBreakdown"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ═══════════ GASTOS ═══════════ -->
+<section id="sec-gastos" class="sec">
+  <div class="hero">
+    <h2>Gestión de Gastos</h2>
+    <p>Registra y controla todos los gastos del negocio. Expense Management como PGdelCamp.</p>
+  </div>
+  <div class="grid2">
+    <div class="box">
+      <h3>Registrar gasto</h3>
+      <form id="expenseForm" class="form">
+        <div class="field"><label>Descripción</label><input id="expDesc" required></div>
+        <div class="field"><label>Monto C$</label><input id="expAmount" type="number" step="0.01" required></div>
+        <div class="field"><label>Categoría</label>
+          <select id="expCat">
+            <option value="operativo">Operativo</option>
+            <option value="inventario">Inventario / Compras</option>
+            <option value="servicios">Servicios</option>
+            <option value="alquiler">Alquiler</option>
+            <option value="salarios">Salarios</option>
+            <option value="transporte">Transporte</option>
+            <option value="marketing">Marketing</option>
+            <option value="otro">Otro</option>
+          </select>
+        </div>
+        <div class="field"><label>Proveedor (opcional)</label>
+          <select id="expSupplier"><option value="">— Sin proveedor —</option></select>
+        </div>
+        <div class="field"><label>Recurrente</label>
+          <select id="expRecurring">
+            <option value="no">No</option>
+            <option value="mensual">Mensual</option>
+            <option value="quincenal">Quincenal</option>
+            <option value="semanal">Semanal</option>
+          </select>
+        </div>
+        <div class="field"><label>Fecha</label><input id="expDate" type="date"></div>
+        <div><button class="btn gold" style="width:100%">Registrar gasto</button></div>
+      </form>
     </div>
     <div class="box">
-      <div style="display:flex;gap:8px;margin-bottom:10px">
-        <input id="clientSearch" class="search" placeholder="Buscar por teléfono o nombre" oninput="renderClients()">
-      </div>
+      <h3>Gastos registrados</h3>
       <div class="table">
         <table>
-          <thead>
-            <tr><th>Código / Teléfono</th><th>Cliente</th><th>Compras</th><th>Total acumulado</th><th>Saldo crédito</th><th>Última compra</th><th>Acciones</th></tr>
-          </thead>
-          <tbody id="clientsBody"></tbody>
+          <thead><tr><th>Fecha</th><th>Descripción</th><th>Categoría</th><th>Monto</th><th>Recurrente</th><th>Acción</th></tr></thead>
+          <tbody id="expenseBody"></tbody>
         </table>
       </div>
     </div>
-  </section>
-  <!-- INVENTARIO -->
-  <section id="sec-productos" class="sec">
+  </div>
+</section>
+
+<!-- ═══════════ PROVEEDORES ═══════════ -->
+<section id="sec-proveedores" class="sec">
+  <div class="hero">
+    <h2>Proveedores</h2>
+    <p>Supplier Management como PGdelCamp. Gestiona proveedores y cuentas por pagar.</p>
+  </div>
+  <div class="grid2">
     <div class="box">
-      <h3>Inventario</h3>
-      <form id="prod" class="form">
-        <input type="hidden" id="pid">
-        <div class="field"><label>Nombre</label><input id="pn" required></div>
-        <div class="field"><label>Imagen URL</label><input id="pi"></div>
-        <div class="field"><label>Descripción</label><input id="pd"></div>
-        <div class="field"><label>Costo</label><input id="pc" type="number" step="0.01"></div>
-        <div class="field"><label>Precio</label><input id="pp" type="number" step="0.01" required></div>
-        <div class="field"><label>Stock</label><input id="ps" type="number" required></div>
+      <h3>Registrar proveedor</h3>
+      <form id="supplierForm" class="form">
+        <input type="hidden" id="supId">
+        <div class="field"><label>Nombre</label><input id="supName" required></div>
+        <div class="field"><label>Teléfono</label><input id="supPhone"></div>
+        <div class="field"><label>Email</label><input id="supEmail"></div>
+        <div class="field"><label>Dirección</label><input id="supAddress"></div>
+        <div class="field"><label>Categoría</label><input id="supCategory" placeholder="Alimentos, Empaques..."></div>
+        <div class="field"><label>Notas</label><input id="supNotes"></div>
+        <div><button class="btn" style="width:100%">Guardar proveedor</button></div>
+        <div><button type="button" class="btn" style="background:#777;width:100%" onclick="resetSupplier()">Limpiar</button></div>
+      </form>
+    </div>
+    <div class="box">
+      <h3>Proveedores registrados</h3>
+      <div class="table">
+        <table>
+          <thead><tr><th>Nombre</th><th>Teléfono</th><th>Categoría</th><th>Cuentas por pagar</th><th>Acciones</th></tr></thead>
+          <tbody id="supplierBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ESTADÍSTICAS ═══════════ -->
+<section id="sec-estad" class="sec">
+  <div class="hero">
+    <h2>Estadísticas</h2>
+    <p>Vista analítica completa del negocio con insights PGdelCamp.</p>
+  </div>
+  <div class="grid2">
+    <div class="box"><h3>Ventas</h3><div class="chart"><canvas id="income2"></canvas></div></div>
+    <div class="box"><h3>Inventario</h3><div class="chart"><canvas id="stock2"></canvas></div></div>
+  </div>
+  <div class="grid2" style="margin-top:15px">
+    <div class="box"><h3>Gastos por categoría</h3><div class="chart"><canvas id="expByCat"></canvas></div></div>
+    <div class="box"><h3>Ventas por vendedor</h3><div class="chart"><canvas id="salesBySeller"></canvas></div></div>
+  </div>
+</section>
+
+<!-- ═══════════ KAI / ASISTENTE INTELIGENTE ═══════════ -->
+<section id="sec-kai" class="sec">
+  <div class="box">
+    <h3>🤖 Asistente Kai <span class="badge active-badge">Smart Assistant</span></h3>
+    <p style="font-size:10px;color:var(--m);margin-bottom:8px">Análisis inteligente de datos reales como PGdelCamp Smart Assistant.</p>
+    <div class="kai-container" id="kai"></div>
+    <form id="kaif" style="display:flex;gap:8px;margin-top:8px">
+      <input id="ki" style="flex:1;padding:9px" required placeholder="¿Cuánto debo cobrar? ¿Cuál es mi flujo de caja? ¿Qué productos tienen bajo stock?">
+      <button class="btn gold">Enviar</button>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════ VENDEDORES ═══════════ -->
+<section id="sec-vendedores" class="sec">
+  <div class="hero">
+    <h2>Vendedores / Usuarios</h2>
+    <p>Multi-user system como PGdelCamp. Configura permisos y monitorea ventas por vendedor.</p>
+  </div>
+  <div class="grid2">
+    <div class="box">
+      <h3>Registrar vendedor</h3>
+      <form id="sellerForm" class="form">
+        <input type="hidden" id="sellerEditId">
+        <div class="field"><label>Nombre</label><input id="sellerName" required></div>
+        <div class="field"><label>Teléfono</label><input id="sellerPhone"></div>
+        <div class="field"><label>Rol</label>
+          <select id="sellerRole">
+            <option value="vendedor">Vendedor</option>
+            <option value="supervisor">Supervisor</option>
+            <option value="admin">Administrador</option>
+          </select>
+        </div>
+        <div class="field"><label>Pin de acceso</label><input id="sellerPin" type="password" maxlength=6 placeholder="4-6 dígitos"></div>
         <div><button class="btn" style="width:100%">Guardar</button></div>
-        <div><button type="button" class="btn" style="background:#777;width:100%" onclick="resetProd()">Limpiar</button></div>
       </form>
     </div>
     <div class="box">
+      <h3>Vendedores activos</h3>
+      <div id="sellerList"></div>
+    </div>
+  </div>
+  <div class="box" style="margin-top:15px">
+    <h3>Ventas por vendedor</h3>
+    <div class="table">
+      <table>
+        <thead><tr><th>Vendedor</th><th>Ventas</th><th>Total vendido</th><th>Créditos activos</th><th>Última venta</th></tr></thead>
+        <tbody id="sellerStatsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CUPONES ═══════════ -->
+<section id="sec-cupones" class="sec">
+  <div class="box">
+    <h3>Cupones de descuento</h3>
+    <form id="coupon" class="form">
+      <div class="field"><label>Código</label><input id="cc" required></div>
+      <div class="field"><label>Descuento %</label><input id="cd" type="number" min="1" max="100" required></div>
+      <div class="field"><label>Tipo</label>
+        <select id="ct">
+          <option value="porcentaje">Porcentaje</option>
+          <option value="monto">Monto fijo C$</option>
+        </select>
+      </div>
+      <div><button class="btn gold">Crear cupón</button></div>
+    </form>
+  </div>
+  <div class="box">
+    <div class="table">
+      <table>
+        <thead><tr><th>Código</th><th>Descuento</th><th>Tipo</th><th>Estado</th><th>Acción</th></tr></thead>
+        <tbody id="couponBody"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CÓDIGO QR ═══════════ -->
+<section id="sec-qr" class="sec">
+  <div class="hero">
+    <h2>Generador de Código QR</h2>
+    <p>QR Code Generator como PGdelCamp. Genera códigos para pagos, catálogo y productos.</p>
+  </div>
+  <div class="grid2">
+    <div class="box">
+      <h3>Generar QR</h3>
+      <div class="field"><label>Tipo de QR</label>
+        <select id="qrType" onchange="updateQrFields()">
+          <option value="pago">Enlace de pago LAFISE</option>
+          <option value="catalogo">Catálogo digital</option>
+          <option value="producto">Producto individual</option>
+          <option value="whatsapp">WhatsApp directo</option>
+          <option value="custom">URL personalizada</option>
+        </select>
+      </div>
+      <div id="qrFields">
+        <div class="field"><label>Monto C$</label><input id="qrAmount" type="number" step="0.01" placeholder="Monto para pago"></div>
+        <div class="field"><label>Referencia</label><input id="qrRef" placeholder="Número de recibo"></div>
+      </div>
+      <button class="btn gold" onclick="generateQR()" style="margin-top:8px">Generar QR</button>
+      <div class="qr-output" id="qrOutput" style="display:none">
+        <div id="qrCode"></div>
+        <div class="qr-info">
+          <b id="qrLabel"></b><br>
+          <span id="qrUrl" style="font-size:9px;word-break:break-all"></span>
+        </div>
+      </div>
+    </div>
+    <div class="box">
+      <h3>QRs generados</h3>
       <div class="table">
         <table>
-          <thead>
-            <tr><th>Producto</th><th>Costo</th><th>Precio</th><th>Margen</th><th>Stock</th><th>Acción</th></tr>
-          </thead>
-          <tbody id="prodBody"></tbody>
+          <thead><tr><th>Tipo</th><th>Fecha</th><th>Enlace</th><th>Acción</th></tr></thead>
+          <tbody id="qrHistoryBody"></tbody>
         </table>
       </div>
     </div>
-  </section>
-  <!-- TRANSACCIONES -->
-  <section id="sec-trans" class="sec">
-    <div class="box">
-      <h3>Registro Único de Transacciones</h3>
-      <div class="table">
-        <table>
-          <thead>
-            <tr><th>Fecha</th><th>Cliente / Código</th><th>Tipo</th><th>Recibo</th><th>Monto</th><th>Estado</th><th>Acciones</th></tr>
-          </thead>
-          <tbody id="transBody"></tbody>
-        </table>
-      </div>
+  </div>
+</section>
+
+<!-- ═══════════ RECIBOS ═══════════ -->
+<section id="sec-recibos" class="sec">
+  <div class="hero">
+    <h2>Recibos Personalizados</h2>
+    <p>Personalized Receipts como PGdelCamp. Genera recibos digitales e impresos.</p>
+  </div>
+  <div class="box">
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <input id="receiptFind" class="search" placeholder="Buscar por número de recibo" style="flex:1">
+      <button class="btn" onclick="findAndShowReceipt()">Buscar</button>
+      <button class="btn gold" onclick="showAllReceipts()">Ver todos</button>
     </div>
-  </section>
-  <!-- ESTADÍSTICAS -->
-  <section id="sec-estad" class="sec">
-    <div class="hero">
-      <h2>Estadísticas</h2>
-      <p>Vista analítica del negocio.</p>
+    <div class="table">
+      <table>
+        <thead><tr><th>N° Recibo</th><th>Fecha</th><th>Cliente</th><th>Tipo</th><th>Monto</th><th>Modalidad</th><th>Acción</th></tr></thead>
+        <tbody id="allReceiptsBody"></tbody>
+      </table>
     </div>
-    <div class="grid2">
-      <div class="box"><h3>Ventas</h3><div class="chart"><canvas id="income2"></canvas></div></div>
-      <div class="box"><h3>Inventario</h3><div class="chart"><canvas id="stock2"></canvas></div></div>
-    </div>
-  </section>
-  <!-- CUPONES -->
-  <section id="sec-cupones" class="sec">
-    <div class="box">
-      <h3>Cupones</h3>
-      <form id="coupon" class="form">
-        <div class="field"><label>Código</label><input id="cc" required></div>
-        <div class="field"><label>Descuento %</label><input id="cd" type="number" min="1" max="100" required></div>
-        <div><button class="btn gold">Crear cupón</button></div>
-      </form>
-    </div>
-    <div class="box">
-      <div class="table">
-        <table>
-          <thead><tr><th>Código</th><th>%</th><th>Estado</th></tr></thead>
-          <tbody id="couponBody"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-  <!-- KAI -->
-  <section id="sec-kai" class="sec">
-    <div class="box">
-      <h3>Kai</h3>
-      <div id="kai" style="height:300px;overflow:auto;background:#f5f8f6;padding:10px;border-radius:8px">Puedo consultar cartera, ventas, clientes e inventario.</div>
-      <form id="kaif" style="display:flex;gap:8px;margin-top:8px">
-        <input id="ki" style="flex:1;padding:9px" required placeholder="¿Cuánto debo cobrar?">
-        <button class="btn gold">Enviar</button>
-      </form>
-    </div>
-  </section>
+  </div>
+</section>
+
 </main>
 
-<!-- MODAL PAGO -->
+<!-- ═══════ MODAL PAGO ═══════ -->
 <div id="payModal" class="modal">
   <div class="modalbox" style="max-width:480px">
     <div style="display:flex;justify-content:space-between;align-items:center">
@@ -296,7 +739,7 @@ td{padding:9px;border-bottom:1px solid var(--b);vertical-align:top}
   </div>
 </div>
 
-<!-- MODAL ESTADO DE CUENTA -->
+<!-- ═══════ MODAL ESTADO DE CUENTA ═══════ -->
 <div id="clientModal" class="modal">
   <div class="modalbox">
     <div style="display:flex;justify-content:space-between;align-items:center">
@@ -314,7 +757,7 @@ td{padding:9px;border-bottom:1px solid var(--b);vertical-align:top}
   </div>
 </div>
 
-<!-- MODAL RECIBO -->
+<!-- ═══════ MODAL RECIBO ═══════ -->
 <div id="receiptModal" class="modal">
   <div class="modalbox">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
@@ -322,7 +765,23 @@ td{padding:9px;border-bottom:1px solid var(--b);vertical-align:top}
       <button class="btn" style="background:#777" onclick="closeReceipt()">Cerrar</button>
     </div>
     <div class="receipt" id="receiptBody"></div>
-    <button class="btn gold" style="display:block;margin:12px auto 0" onclick="printReceipt()">Imprimir / PDF</button>
+    <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+      <button class="btn gold" onclick="printReceipt()">🖨️ Imprimir</button>
+      <button class="btn blue" onclick="downloadReceiptPDF()">📥 Descargar PDF</button>
+      <button class="btn green" onclick="shareReceiptWhatsApp()">📱 WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MODAL NEW BUYERS ═══════ -->
+<div id="newBuyersModal" class="modal">
+  <div class="modalbox" style="max-width:700px">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h3>🆕 Compradores Nuevos (New Buyers)</h3>
+      <button class="btn" style="background:#777" onclick="closeNewBuyers()">Cerrar</button>
+    </div>
+    <p style="font-size:10px;color:var(--m);margin-bottom:12px">Clientes que compraron por primera vez recientemente. Contáctalos directamente por WhatsApp.</p>
+    <div id="newBuyersList"></div>
   </div>
 </div>
 
@@ -331,73 +790,92 @@ import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-ap
 import{getDatabase,ref,onValue,set,update,remove,get}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
 const cfg={
-  apiKey:'AIzaSyBfPmfE6axd_W0Z80b0L-Jbjy6q7l9_NTk',
-  authDomain:'productos-globales-campo.firebaseapp.com',
-  databaseURL:'https://productos-globales-campo-default-rtdb.firebaseio.com',
-  projectId:'productos-globales-campo',
-  storageBucket:'productos-globales-campo.firebasestorage.app',
-  messagingSenderId:'938958452862',
-  appId:'1:938958452862:web:3b618567dae9aa01b7c02f',
-  measurementId:'G-MKD9T10DP3'
+apiKey:'AIzaSyBfPmfE6axd_W0Z80b0L-Jbjy6q7l9_NTk',
+authDomain:'productos-globales-campo.firebaseapp.com',
+databaseURL:'https://productos-globales-campo-default-rtdb.firebaseio.com',
+projectId:'productos-globales-campo',
+storageBucket:'productos-globales-campo.firebasestorage.app',
+messagingSenderId:'938958452862',
+appId:'1:938958452862:web:3b618567dae9aa01b7c02f',
+measurementId:'G-MKD9T10DP3'
 };
 const db=getDatabase(initializeApp(cfg));
 
-let P={},C={},X={},T={},CP={},R={},charts={};
+let P={},C={},X={},T={},CP={},R={},EX={},SUP={},SELL={},charts={},posCart=[];
 
 const $=id=>document.getElementById(id),
-      M=n=>'C$ '+Number(n||0).toLocaleString('es-NI',{minimumFractionDigits:2,maximumFractionDigits:2}),
-      D=s=>s?new Date(s).toLocaleString('es-NI'):'\u2014',
-      E=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[x]));
+M=n=>'C$ '+Number(n||0).toLocaleString('es-NI',{minimumFractionDigits:2,maximumFractionDigits:2}),
+Ms=n=>Number(n||0).toLocaleString('es-NI',{minimumFractionDigits:2,maximumFractionDigits:2}),
+D=s=>s?new Date(s).toLocaleString('es-NI'):'—',
+E=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[x]));
 
-/* Status display helpers */
+/* Status helpers */
 const STATUS_OPTS=['pendiente','en_transito','pagada','finalizado'];
 const STATUS_LABEL={'pendiente':'Pendiente','en_transito':'En Tránsito','pagada':'Pagada','finalizado':'Finalizado'};
 const STATUS_CSS={'pendiente':'pending','en_transito':'transit','pagada':'paid','finalizado':'finished'};
-function statusBadgeClass(s){
-  s=normalizeStatus(s);
-  return STATUS_CSS[s]||'pending';
-}
+
 function normalizeStatus(s){
   if(!s)return'pendiente';
   let sl=String(s).toLowerCase().replace(/\s+/g,'_').replace(/á/g,'a').replace(/é/g,'e').replace(/í/g,'i').replace(/ó/g,'o').replace(/ú/g,'u');
   if(sl==='pagada'||sl==='pagado'||sl==='aplicado')return'pagada';
-  if(sl==='en_transito'||sl==='en_transito'||sl==='transito')return'en_transito';
+  if(sl==='en_transito'||sl==='transito')return'en_transito';
   if(sl==='finalizado')return'finalizado';
   return'pendiente';
 }
 
-/* \u2500\u2500 Listeners de Firebase \u2500\u2500 */
-onValue(ref(db,'productos'),s=>{P=s.val()||{};renderProd();dash()});
+/* ── Firebase Listeners ── */
+onValue(ref(db,'productos'),s=>{P=s.val()||{};renderProd();renderPosQuick();dash()});
 onValue(ref(db,'clientes'),s=>{C=s.val()||{};renderClients();dash()});
 onValue(ref(db,'cuentas_por_cobrar'),s=>{X=s.val()||{};renderCxc();renderClients();dash()});
 onValue(ref(db,'transacciones'),s=>{T=s.val()||{};renderTrans();renderSales();dash()});
 onValue(ref(db,'compras_registro'),s=>{R=s.val()||{};renderClients();renderTrans();renderSales()});
 onValue(ref(db,'cupones'),s=>{CP=s.val()||{};renderCoupons()});
+onValue(ref(db,'gastos'),s=>{EX=s.val()||{};renderExpenses();dash();renderCashFlow()});
+onValue(ref(db,'proveedores'),s=>{SUP=s.val()||{};renderSuppliers();updateSupplierSelect();dash()});
+onValue(ref(db,'vendedores'),s=>{SELL=s.val()||{};renderSellers();dash()});
+onValue(ref(db,'pagos'),s=>{/* payment records */dash()});
+onValue(ref(db,'ordenes_online'),s=>{renderOrders(s.val()||{})});
 
-/* \u2500\u2500 Navegación por pestañas \u2500\u2500 */
+/* ── Navigation ── */
 window.tab=(id,el)=>{
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
   $('sec-'+id).classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   el.classList.add('active');
-  $('title').textContent={inicio:'Inicio',cxc:'Cuentas por Cobrar',ventas:'Ventas',clientes:'Clientes',productos:'Inventario',trans:'Transacciones',estad:'Estadísticas',cupones:'Cupones',kai:'Kai'}[id];
+  $('title').textContent={inicio:'Inicio',pos:'Punto de Venta',cxc:'Cuentas por Cobrar',ventas:'Ventas',clientes:'Clientes',productos:'Inventario',catalogo:'Catálogo / Órdenes',trans:'Transacciones',flujo:'Flujo de Caja',gastos:'Gastos',proveedores:'Proveedores',estad:'Estadísticas',kai:'Asistente Kai',vendedores:'Vendedores',cupones:'Cupones',qr:'Código QR',recibos:'Recibos'}[id]||id;
 };
 
-/* \u2500\u2500 Dashboard / KPIs \u2500\u2500 */
+/* ── Dashboard / KPIs ── */
 let dashTimer=null;
 function dash(){
   let ventas=Object.values(T).filter(x=>String(x.tipo||'').toLowerCase().includes('venta')).reduce((a,x)=>a+Number(x.monto||0),0),
-      saldo=Object.values(X).reduce((a,x)=>a+Number(x.saldo_pendiente||0),0),
-      stock=Object.values(P).reduce((a,x)=>a+Number(x.stock||0),0);
+  saldo=Object.values(X).reduce((a,x)=>a+Number(x.saldo_pendiente||0),0),
+  stock=Object.values(P).reduce((a,x)=>a+Number(x.stock||0),0),
+  gastosMes=Object.values(EX).filter(x=>{let d=new Date(x.fecha||'');return d.getMonth()===new Date().getMonth()&&d.getFullYear()===new Date().getFullYear()}).reduce((a,x)=>a+Number(x.monto||0),0),
+  ingresosMes=Object.values(T).filter(x=>{let d=new Date(x.fecha||'');return d.getMonth()===new Date().getMonth()&&d.getFullYear()===new Date().getFullYear()&&String(x.tipo||'').toLowerCase().includes('venta')}).reduce((a,x)=>a+Number(x.monto||0),0),
+  cxpTotal=Object.values(SUP).reduce((a,s)=>a+Number(s.cuentas_por_pagar||0),0);
   $('k1').textContent=M(ventas);
   $('k2').textContent=M(saldo);
   $('k3').textContent=Object.keys(C).length;
   $('k4').textContent=stock+' uds';
-  clearTimeout(dashTimer);
-  dashTimer=setTimeout(chartsDraw,120);
+  $('k5').textContent=M(ingresosMes-gastosMes);
+  $('k5').style.color=(ingresosMes-gastosMes)>=0?'var(--success)':'var(--danger)';
+  $('k6').textContent=M(gastosMes);
+  /* Cash flow KPIs */
+  $('cf1').textContent=M(ingresosMes);
+  $('cf2').textContent=M(gastosMes);
+  $('cf3').textContent=M(ingresosMes-gastosMes);
+  $('cf3').style.color=(ingresosMes-gastosMes)>=0?'var(--success)':'var(--danger)';
+  $('cf4').textContent=M(cxpTotal);
+  $('cf5').textContent=M(saldo);
+  $('cf6').textContent=M(ingresosMes-gastosMes+saldo-cxpTotal);
+  let pct=ingresosMes>0?Math.min(100,((ingresosMes-gastosMes)/ingresosMes)*100):50;
+  $('cfBar').style.width=Math.abs(pct)+'%';
+  $('cfBar').parentElement.className='cf-bar '+((ingresosMes-gastosMes)>=0?'cf-positive':'cf-negative');
+  clearTimeout(dashTimer);dashTimer=setTimeout(chartsDraw,120);
 }
 
-/* \u2500\u2500 Cuentas por Cobrar \u2500\u2500 */
+/* ── Cuentas por Cobrar ── */
 function renderCxc(){
   let q=($('q')?.value||'').toLowerCase(),b=$('cxcBody');
   if(!b)return;
@@ -407,47 +885,44 @@ function renderCxc(){
   b.innerHTML=a.map(x=>{
     let st=normalizeStatus(x.estado);
     return`<tr>
-    <td>${D(x.fecha)}</td>
-    <td><b>${E(x.nombre_cliente)}</b><br><span class="muted">${E(x.whatsapp_cliente)}</span></td>
-    <td>${E(x.numero_recibo||'')}</td>
-    <td class="money">${M(x.monto_original)}</td>
-    <td>${M(x.monto_pagado)}</td>
-    <td class="money">${M(x.saldo_pendiente)}</td>
-    <td><select class="status-select ${STATUS_CSS[st]}" onchange="updateCxcStatus('${x.id}',this.value)">
-      ${STATUS_OPTS.map(o=>`<option value="${o}" ${st===o?'selected':''}>${STATUS_LABEL[o]}</option>`).join('')}
-    </select></td>
-    <td class="actions">
-      <button class="btn green" onclick="openPay('${x.id}')">Pago</button>
-      <button class="btn blue" onclick="reprintById('${x.id}')">Recibo</button>
-    </td>
-  </tr>`;
+      <td>${D(x.fecha)}</td>
+      <td><b>${E(x.nombre_cliente)}</b><br><span class="muted">${E(x.whatsapp_cliente)}</span></td>
+      <td>${E(x.numero_recibo||'')}</td>
+      <td class="money">${M(x.monto_original)}</td>
+      <td>${M(x.monto_pagado)}</td>
+      <td class="money">${M(x.saldo_pendiente)}</td>
+      <td><select class="status-select ${STATUS_CSS[st]}" onchange="updateCxcStatus('${x.id}',this.value)">
+        ${STATUS_OPTS.map(o=>`<option value="${o}" ${st===o?'selected':''}>${STATUS_LABEL[o]}</option>`).join('')}
+      </select></td>
+      <td class="actions">
+        <button class="btn green btn-sm" onclick="openPay('${x.id}')">Pago</button>
+        <button class="btn blue btn-sm" onclick="reprintById('${x.id}')">Recibo</button>
+        <button class="btn purple btn-sm" onclick="sendWhatsAppReminder('${x.id}')">WA</button>
+      </td>
+    </tr>`;
   }).join('')||'<tr><td colspan="8">No hay cuentas por cobrar.</td></tr>';
 }
 window.renderCxc=renderCxc;
 
-/* \u2500\u2500 Update CxC status \u2500\u2500 */
+/* Update CxC status */
 window.updateCxcStatus=async(id,newStatus)=>{
-  let x=X[id];
-  if(!x)return;
-  let u={};
+  let x=X[id];if(!x)return;let u={};
   u['cuentas_por_cobrar/'+id+'/estado']=newStatus;
-  /* Also update matching transaccion estado if same id exists */
-  if(T[id]){
-    u['transacciones/'+id+'/estado']=newStatus;
-  }
-  /* Also update matching compras_registro if same id exists */
-  if(R[id]){
-    u['compras_registro/'+id+'/estado']=newStatus;
-  }
-  /* Also update matching client compra if found */
+  if(T[id])u['transacciones/'+id+'/estado']=newStatus;
+  if(R[id])u['compras_registro/'+id+'/estado']=newStatus;
   let tel=x.whatsapp_cliente||'';
-  if(tel&&C[tel]&&C[tel].compras&&C[tel].compras[id]){
-    u['clientes/'+tel+'/compras/'+id+'/estado']=newStatus;
-  }
+  if(tel&&C[tel]&&C[tel].compras&&C[tel].compras[id])u['clientes/'+tel+'/compras/'+id+'/estado']=newStatus;
   await update(ref(db),u);
 };
 
-/* \u2500\u2500 Modal de pago \u2500\u2500 */
+/* WhatsApp reminder for CxC */
+window.sendWhatsAppReminder=id=>{
+  let x=X[id];if(!x)return;
+  let tel=x.whatsapp_cliente||'',msg=`Hola ${x.nombre_cliente||''}, te recordamos que tienes un saldo pendiente de ${M(x.saldo_pendiente)} (Recibo: ${x.numero_recibo||''}). Puedes pagar via LAFISE Digital al Alias 5797 3097. ¡Gracias!`;
+  window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`,'_blank');
+};
+
+/* ── Payment Modal ── */
 window.openPay=id=>{
   let x=X[id];if(!x)return;
   $('payId').value=id;
@@ -463,10 +938,8 @@ $('pay').addEventListener('submit',async e=>{
   let id=$('payId').value,x=X[id],m=Number($('payAmount').value);
   if(!x||m<=0||m>Number(x.saldo_pendiente)+.001)return alert('Monto inválido.');
   let saldo=Math.max(0,Number(x.saldo_pendiente)-m),
-      pagado=Number(x.monto_pagado||0)+m,
-      pid='pago_'+Date.now(),
-      now=new Date().toISOString(),
-      u={};
+  pagado=Number(x.monto_pagado||0)+m,
+  pid='pago_'+Date.now(),now=new Date().toISOString(),u={};
   u['cuentas_por_cobrar/'+id+'/monto_pagado']=pagado;
   u['cuentas_por_cobrar/'+id+'/saldo_pendiente']=saldo;
   u['cuentas_por_cobrar/'+id+'/estado']=saldo<.005?'pagada':'pendiente';
@@ -478,470 +951,602 @@ $('pay').addEventListener('submit',async e=>{
   alert('Pago aplicado. Saldo: '+M(saldo));
 });
 
-/* \u2500\u2500 Clientes \u2500\u2500 */
+/* ── Clients ── */
 function getClientPurchases(tel){
-  let out=[];
-  let c=C[tel]||{};
+  let out=[],c=C[tel]||{};
   Object.values(c.compras||{}).forEach(x=>out.push({...x,whatsapp_cliente:tel}));
   Object.values(R).filter(x=>x.whatsapp_cliente===tel&&!out.some(y=>y.id===x.id)).forEach(x=>out.push(x));
   Object.values(T).filter(x=>x.whatsapp===tel&&String(x.tipo||'').toLowerCase().includes('venta')&&!out.some(y=>y.id===x.id)).forEach(x=>out.push(x));
   return out.sort((a,b)=>new Date(b.fecha||0)-new Date(a.fecha||0));
 }
-
-function clientBalance(tel){
-  return Object.values(X).filter(x=>x.whatsapp_cliente===tel).reduce((s,x)=>s+Number(x.saldo_pendiente||0),0);
-}
+function clientBalance(tel){return Object.values(X).filter(x=>x.whatsapp_cliente===tel).reduce((s,x)=>s+Number(x.saldo_pendiente||0),0);}
 
 function renderClients(){
   let b=$('clientsBody'),q=($('clientSearch')?.value||'').toLowerCase();
   if(!b)return;
   b.innerHTML=Object.entries(C).filter(([tel,c])=>
     `${tel} ${c.nombre||''}`.toLowerCase().includes(q)
-  ).sort((a,b)=>String(a[0]).localeCompare(String(b[0]))).map(([tel,c])=>{
-    let n=+c.total_compras||0;
+  ).map(([tel,c])=>{
+    let bal=clientBalance(tel);
     return`<tr>
       <td><b>${E(tel)}</b></td>
-      <td>${E(c.nombre||'Cliente General')}</td>
-      <td>${n}</td>
-      <td class="money">${M(c.monto_total)}</td>
-      <td class="money">${M(clientBalance(tel))}</td>
+      <td>${E(c.nombre||'')}</td>
+      <td>${c.total_compras||0}</td>
+      <td class="money">${M(c.monto_total||0)}</td>
+      <td class="money">${M(bal)}</td>
       <td>${D(c.ultima_compra)}</td>
       <td class="actions">
-        <button class="btn blue" onclick="openStatement('${tel}')">Estado de cuenta</button>
+        <button class="btn blue btn-sm" onclick="openClient('${tel}')">Estado de cuenta</button>
+        <button class="btn green btn-sm" onclick="window.open('https://wa.me/${tel}','_blank')">WhatsApp</button>
       </td>
     </tr>`;
-  }).join('')||'<tr><td colspan="7">Sin clientes registrados.</td></tr>';
+  }).join('')||'<tr><td colspan="7">Sin clientes.</td></tr>';
 }
 window.renderClients=renderClients;
 
-/* \u2500\u2500 Receipt items helper (shared) \u2500\u2500 */
-function receiptItems(x){
-  if(x?.items)return Object.values(x.items).map(i=>({nombre:i.nombre||i.n||'',cantidad:i.cantidad||i.q||1,precio:Number(i.precio??i.price??0)}));
-  return[];
-}
-
-/* \u2500\u2500 Estado de cuenta (mejorado) \u2500\u2500 */
-let _currentStatementTel='';
-window.openStatement=tel=>{
-  _currentStatementTel=tel;
-  let c=C[tel]||{},p=getClientPurchases(tel),saldo=clientBalance(tel),total=Number(c.monto_total||0);
-  /* Calculate totals for statement */
-  let totalRecibos=0,totalPagado=0,totalSaldo=0;
-  p.forEach(x=>{
-    let t=Number(x.total??x.monto??0),
-        paid=Number(x.monto_pagado||0),
-        pending=Number(x.saldo_pendiente||0);
-    totalRecibos+=t;
-    totalPagado+=paid;
-    totalSaldo+=pending;
-  });
-
-  $('clientModalTitle').textContent='Estado de cuenta \u00b7 '+tel;
+/* Open client account statement */
+window.openClient=tel=>{
+  let c=C[tel]||{};
+  $('clientModalTitle').textContent='Estado de cuenta — '+E(c.nombre||tel);
+  let purchases=getClientPurchases(tel),bal=clientBalance(tel),
+  totalPagado=purchases.reduce((s,x)=>s+Number(x.monto_pagado||0),0),
+  totalCompras=purchases.reduce((s,x)=>s+Number(x.total||x.monto||0),0);
   $('clientStatement').innerHTML=`
     <div class="statement-head">
-      <div class="statement-grid">
-        <div class="stat"><b>Código cliente</b><strong>${E(tel)}</strong></div>
-        <div class="stat"><b>Cliente</b><strong>${E(c.nombre||'Cliente General')}</strong></div>
-        <div class="stat"><b>Compras</b><strong>${+c.total_compras||0}</strong></div>
-        <div class="stat"><b>Saldo crédito</b><strong>${M(saldo)}</strong></div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><b>${E(c.nombre||'Cliente')}</b><br><span class="muted">Código: ${E(tel)}</span></div>
+        <div style="text-align:right"><b>Saldo crédito:</b> <span class="money">${M(bal)}</span></div>
       </div>
-      <p class="muted" style="margin-bottom:0">Total acumulado de compras: <b>${M(total)}</b></p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
-      <div class="stat"><b>Total recibos</b><strong>${M(totalRecibos)}</strong></div>
+    <div class="statement-grid">
+      <div class="stat"><b>Total compras</b><strong>${purchases.length}</strong></div>
+      <div class="stat"><b>Monto total</b><strong>${M(totalCompras)}</strong></div>
       <div class="stat"><b>Total pagado</b><strong>${M(totalPagado)}</strong></div>
-      <div class="stat"><b>Total saldo pendiente</b><strong>${M(totalSaldo)}</strong></div>
+      <div class="stat"><b>Saldo pendiente</b><strong>${M(bal)}</strong></div>
     </div>
-    <div class="table"><table>
-      <thead><tr>
-        <th>Fecha</th><th>Recibo</th><th>Tipo</th><th>Detalle</th><th>Total</th><th>Pagado</th><th>Saldo</th><th>Estado</th><th>Acciones</th>
-      </tr></thead>
-      <tbody>${p.map(x=>{
-        let pending=Number(x.saldo_pendiente||0),paid=Number(x.monto_pagado||0),
-            status=normalizeStatus(x.estado||(pending>0?'pendiente':'pagada')),
-            items=receiptItems(x),
-            xTotal=Number(x.total??x.monto??0),
-            modo=String(x.tipo||'').toLowerCase().includes('crédito')||String(x.tipo||'').toLowerCase().includes('credito')?'CRÉDITO':'CONTADO',
-            hasItems=items.length>0;
-        let detailHtml='';
-        if(hasItems){
-          detailHtml=items.map(i=>`<span style="display:inline-block;margin:1px 4px 1px 0;padding:1px 6px;background:#f0f4f0;border-radius:4px;font-size:9px">${i.cantidad}x ${E(i.nombre)} <b>${M(i.cantidad*i.precio)}</b></span>`).join('');
-        } else {
-          detailHtml='<span class="muted" style="font-size:9px">Detalle no disponible</span>';
-        }
-        /* Build status select with inline change handler */
-        let selId='st_'+x.id;
-        let selHtml=`<select class="status-select ${STATUS_CSS[status]}" id="${selId}" onchange="updatePurchaseStatus('${tel}','${x.id}',this.value)">
-          ${STATUS_OPTS.map(o=>`<option value="${o}" ${status===o?'selected':''}>${STATUS_LABEL[o]}</option>`).join('')}
-        </select>`;
-        return`<tr>
-          <td>${D(x.fecha)}</td>
-          <td><b>${E(x.numero_recibo||'\u2014')}</b><br><span class="muted" style="font-size:8px">${modo}</span></td>
-          <td>${E(x.tipo||'')}</td>
-          <td style="max-width:260px">${detailHtml}</td>
-          <td class="money">${M(xTotal)}</td>
-          <td>${M(paid)}</td>
-          <td class="money">${M(pending)}</td>
-          <td>${selHtml}</td>
-          <td class="actions">
-            <button class="btn blue" onclick="reprint('${x.id}')">Reimprimir</button>
-            ${pending>0?`<button class="btn green" onclick="openPayByPurchase('${x.id}','${tel}')">Pago</button>`:''}
-          </td>
-        </tr>`;
-      }).join('')||'<tr><td colspan="9">No hay compras registradas.</td></tr>'}</tbody>
-      <tfoot><tr style="border-top:2px solid var(--p)">
-        <td colspan="4" style="text-align:right;font-weight:800">TOTALES</td>
-        <td class="money">${M(totalRecibos)}</td>
-        <td class="money">${M(totalPagado)}</td>
-        <td class="money">${M(totalSaldo)}</td>
-        <td colspan="2"></td>
-      </tr></tfoot>
-    </table></div>
-    <div style="margin-top:12px;text-align:center">
-      <button class="btn gold" onclick="printStatement()" style="font-size:11px;padding:10px 20px">Imprimir Estado de Cuenta</button>
+    <div class="table" style="margin-top:12px">
+      <table>
+        <thead><tr><th>Fecha</th><th>Recibo</th><th>Tipo</th><th>Total</th><th>Pagado</th><th>Saldo</th><th>Estado</th></tr></thead>
+        <tbody>${purchases.map(p=>{
+          let st=normalizeStatus(p.estado);
+          return`<tr><td>${D(p.fecha)}</td><td>${E(p.numero_recibo||'')}</td><td>${E(p.tipo||'')}</td><td class="money">${M(p.total||p.monto||0)}</td><td>${M(p.monto_pagado||0)}</td><td class="money">${M(p.saldo_pendiente||0)}</td><td><span class="badge ${STATUS_CSS[st]||'pending'}">${STATUS_LABEL[st]||E(p.estado||'')}</span></td></tr>`;
+        }).join('')}</tbody>
+      </table>
     </div>`;
   $('clientModal').style.display='block';
 };
 window.closeClient=()=>$('clientModal').style.display='none';
 
-/* \u2500\u2500 Update purchase status (from Estado de Cuenta) \u2500\u2500 */
-window.updatePurchaseStatus=async(tel,purchaseId,newStatus)=>{
-  let u={};
-  /* Update cuentas_por_cobrar if exists */
-  if(X[purchaseId]){
-    u['cuentas_por_cobrar/'+purchaseId+'/estado']=newStatus;
-  }
-  /* Update transacciones if exists */
-  if(T[purchaseId]){
-    u['transacciones/'+purchaseId+'/estado']=newStatus;
-  }
-  /* Update compras_registro if exists */
-  if(R[purchaseId]){
-    u['compras_registro/'+purchaseId+'/estado']=newStatus;
-  }
-  /* Update client compras if exists */
-  if(tel&&C[tel]&&C[tel].compras&&C[tel].compras[purchaseId]){
-    u['clientes/'+tel+'/compras/'+purchaseId+'/estado']=newStatus;
-  }
-  if(Object.keys(u).length===0)return alert('No se encontró el registro para actualizar.');
-  await update(ref(db),u);
-};
-
-/* \u2500\u2500 Open pay modal from a specific purchase (estado de cuenta) \u2500\u2500 */
-window.openPayByPurchase=(purchaseId,tel)=>{
-  let x=X[purchaseId];
-  if(!x){
-    /* Try to find matching CxC by client and purchase */
-    x=Object.values(X).find(v=>v.id===purchaseId&&v.whatsapp_cliente===tel);
-  }
-  if(!x)return alert('No se encontró cuenta por cobrar para este recibo. Registre el pago desde Cuentas por Cobrar.');
-  openPay(x.id);
-};
-
-/* \u2500\u2500 Print statement \u2500\u2500 */
+/* Print statement */
 window.printStatement=()=>{
-  let tel=_currentStatementTel,
-      c=C[tel]||{},
-      p=getClientPurchases(tel),
-      saldo=clientBalance(tel),
-      total=Number(c.monto_total||0),
-      totalRecibos=0,totalPagado=0,totalSaldo=0;
-  p.forEach(x=>{
-    let t=Number(x.total??x.monto??0),
-        paid=Number(x.monto_pagado||0),
-        pending=Number(x.saldo_pendiente||0);
-    totalRecibos+=t;
-    totalPagado+=paid;
-    totalSaldo+=pending;
-  });
   let w=window.open('','_blank','width=800,height=900');
-  w.document.write('<html><head><title>Estado de Cuenta - PG del Campo</title>');
-  w.document.write('<style>');
-  w.document.write('body{font-family:"Plus Jakarta Sans",Arial,sans-serif;padding:30px;max-width:750px;margin:auto;color:#26332b;font-size:11px}');
-  w.document.write('h1{color:#1b382b;font-size:18px;margin:0}h2{color:#1b382b;font-size:14px;margin:5px 0}');
-  w.document.write('hr{border:0;border-top:1px solid #e1e7e3;margin:12px 0}');
-  w.document.write('.info{display:flex;gap:20px;margin:10px 0}.info div{flex:1}');
-  w.document.write('.sums{display:flex;gap:15px;margin:12px 0}.sums div{flex:1;background:#f7f9f8;border:1px solid #e1e7e3;border-radius:6px;padding:8px;text-align:center}');
-  w.document.write('.sums b{display:block;font-size:9px;color:#68776c}.sums strong{font-size:14px;color:#1b382b}');
-  w.document.write('table{width:100%;border-collapse:collapse;font-size:10px;margin-top:10px}');
-  w.document.write('th{background:#f7f9f8;color:#1b382b;padding:8px;text-align:left;font-size:9px;border-bottom:2px solid #1b382b}');
-  w.document.write('td{padding:7px;border-bottom:1px solid #e1e7e3;vertical-align:top}');
-  w.document.write('.money{font-weight:800;color:#1b382b}');
-  w.document.write('.items{font-size:9px;color:#68776c}');
-  w.document.write('.badge{display:inline-block;border-radius:8px;padding:2px 6px;font-size:8px;font-weight:800}');
-  w.document.write('.pending{background:#fff1c7;color:#765500}.paid{background:#dcf5e5;color:#146a35}.transit{background:#e0effa;color:#17577f}.finished{background:#d1e7dd;color:#0a3622}');
-  w.document.write('tfoot td{border-top:2px solid #1b382b;font-weight:800}');
-  w.document.write('.footer{text-align:center;margin-top:20px;font-size:9px;color:#68776c}');
-  w.document.write('</style></head><body>');
-  w.document.write('<h1>PRODUCTOS GLOBALES DEL CAMPO</h1>');
-  w.document.write('<div style="font-size:10px">RUC 0452907730000U · Cuota Fija · Jinotepe, Carazo, Nicaragua</div>');
-  w.document.write('<hr>');
-  w.document.write('<h2>ESTADO DE CUENTA</h2>');
-  w.document.write('<div class="info"><div><b>Cliente:</b> '+E(c.nombre||'Cliente General')+'</div><div><b>Código:</b> '+E(tel)+'</div><div><b>Fecha:</b> '+new Date().toLocaleDateString('es-NI')+'</div></div>');
-  w.document.write('<div class="sums">');
-  w.document.write('<div><b>Total recibos</b><strong>'+M(totalRecibos)+'</strong></div>');
-  w.document.write('<div><b>Total pagado</b><strong>'+M(totalPagado)+'</strong></div>');
-  w.document.write('<div><b>Saldo pendiente</b><strong>'+M(totalSaldo)+'</strong></div>');
-  w.document.write('</div>');
-  w.document.write('<table><thead><tr><th>Fecha</th><th>Recibo</th><th>Tipo</th><th>Detalle</th><th>Total</th><th>Pagado</th><th>Saldo</th><th>Estado</th></tr></thead><tbody>');
-  p.forEach(x=>{
-    let pending=Number(x.saldo_pendiente||0),paid=Number(x.monto_pagado||0),
-        status=normalizeStatus(x.estado||(pending>0?'pendiente':'pagada')),
-        items=receiptItems(x),
-        xTotal=Number(x.total??x.monto??0);
-    let itemsStr=items.length?items.map(i=>i.cantidad+'x '+i.nombre+' ('+M(i.cantidad*i.precio)+')').join(', '):'\u2014';
-    let badgeClass=STATUS_CSS[status]||'pending';
-    w.document.write('<tr><td>'+D(x.fecha)+'</td><td><b>'+E(x.numero_recibo||'\u2014')+'</b></td><td>'+E(x.tipo||'')+'</td><td class="items">'+itemsStr+'</td><td class="money">'+M(xTotal)+'</td><td>'+M(paid)+'</td><td class="money">'+M(pending)+'</td><td><span class="badge '+badgeClass+'">'+STATUS_LABEL[status]+'</span></td></tr>');
+  w.document.write('<html><head><title>Estado de Cuenta — PG del Campo</title><style>body{font-family:Arial,sans-serif;padding:25px;max-width:700px;margin:auto}table{width:100%;border-collapse:collapse;font-size:11px}th,td{padding:6px;border-bottom:1px solid #ddd;text-align:left}th{background:#f5f5f5}.money{font-weight:bold}h2{color:#1b382b}</style></head><body>'+$('clientStatement').innerHTML+'</body></html>');
+  w.document.close();w.focus();w.print();
+};
+
+/* ── New Buyers ── */
+window.showNewBuyers=()=>{
+  let now=new Date(),weekAgo=new Date(now-7*86400000);
+  let buyers=Object.entries(C).filter(([tel,c])=>{
+    let d=new Date(c.ultima_compra||0);
+    return d>=weekAgo&&(+c.total_compras||0)<=1;
+  }).map(([tel,c])=>({tel,nombre:c.nombre||'Cliente',fecha:c.ultima_compra||'',compras:c.total_compras||0,monto:c.monto_total||0}));
+  $('newBuyersList').innerHTML=buyers.length?
+    buyers.map(b=>`<div class="seller-card" style="margin-bottom:8px">
+      <div class="seller-avatar">🆕</div>
+      <div class="seller-info"><b>${E(b.nombre)}</b><span>${E(b.tel)} · ${b.compras} compra · ${M(b.monto)} · ${D(b.fecha)}</span></div>
+      <button class="btn green btn-sm" onclick="window.open('https://wa.me/${b.tel}','_blank')">WhatsApp</button>
+    </div>`).join(''):
+    '<p style="color:var(--m);font-size:11px">No hay compradores nuevos esta semana.</p>';
+  $('newBuyersModal').style.display='block';
+};
+window.closeNewBuyers=()=>$('newBuyersModal').style.display='none';
+
+/* ── POS ── */
+window.searchPosProducts=()=>{
+  let q=$('posProductSearch').value.toLowerCase();
+  let results=Object.entries(P).filter(([id,p])=>(p.nombre||'').toLowerCase().includes(q)).slice(0,10);
+  $('posProductList').innerHTML=results.map(([id,p])=>
+    `<div style="display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-bottom:1px solid var(--b);cursor:pointer" onclick="addToCart('${id}')">
+      <span>${E(p.nombre)} <span class="muted" style="font-size:9px">${M(p.precio)}</span></span>
+      <button class="btn btn-sm green">+ Agregar</button>
+    </div>`
+  ).join('')||'<div style="padding:8px;color:var(--m);font-size:10px">Sin resultados</div>';
+};
+
+window.addToCart=prodId=>{
+  let existing=posCart.find(c=>c.id===prodId);
+  if(existing){existing.cantidad++;}
+  else{let p=P[prodId];posCart.push({id:prodId,nombre:p.nombre||'',precio:+p.precio||0,cantidad:1});}
+  renderCart();
+};
+
+window.removeFromCart=idx=>{posCart.splice(idx,1);renderCart();};
+window.updateCartQty=(idx,qty)=>{posCart[idx].cantidad=Math.max(1,+qty);renderCart();};
+
+function renderCart(){
+  let total=0;
+  $('posCartBody').innerHTML=posCart.map((item,i)=>{
+    let sub=item.cantidad*item.precio;total+=sub;
+    return`<tr><td>${E(item.nombre)}</td><td>${M(item.precio)}</td><td><input type="number" value="${item.cantidad}" min="1" style="width:50px;padding:4px" onchange="updateCartQty(${i},this.value)"></td><td class="money">${M(sub)}</td><td><button class="btn btn-sm danger" onclick="removeFromCart(${i})">✕</button></td></tr>`;
+  }).join('')||'<tr><td colspan="5" style="color:var(--m)">Carrito vacío</td></tr>';
+  $('posTotal').textContent=M(total);
+}
+
+/* POS Quick products */
+function renderPosQuick(){
+  $('posQuick').innerHTML=Object.entries(P).slice(0,20).map(([id,p])=>
+    `<div style="background:#f7f9f8;border:1px solid var(--b);border-radius:8px;padding:8px;cursor:pointer;text-align:center" onclick="addToCart('${id}')">
+      <div style="font-size:10px;font-weight:800;color:var(--p)">${E(p.nombre)}</div>
+      <div class="money" style="font-size:11px">${M(p.precio)}</div>
+      <div style="font-size:8px;color:var(--m)">Stock: ${p.stock||0}</div>
+    </div>`
+  ).join('')||'<div style="color:var(--m);font-size:10px">Sin productos</div>';
+}
+
+/* POS Submit */
+$('posForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  if(!posCart.length)return alert('Agrega productos al carrito.');
+  let total=posCart.reduce((s,i)=>s+i.cantidad*i.precio,0),
+  client=$('posClient').value.trim()||'General',
+  mode=$('posMode').value,
+  couponCode=$('posCoupon').value.trim().toUpperCase(),
+  discount=0;
+  if(couponCode&&CP[couponCode]&&CP[couponCode].activo!==false){
+    let cp=CP[couponCode];
+    discount=cp.tipo==='monto'?+cp.descuento:(total*(+cp.descuento||0)/100);
+  }
+  let finalTotal=total-discount,
+  id='venta_'+Date.now(),now=new Date().toISOString(),
+  num='POS-'+Date.now(),
+  items={};
+  posCart.forEach((item,i)=>{items['item_'+i]={nombre:item.nombre,cantidad:item.cantidad,precio:item.precio,subtotal:item.cantidad*item.precio}});
+  let u={};
+  u['transacciones/'+id]={id,fecha:now,cliente:client,whatsapp:client!=='General'?client:'',tipo:mode==='credito'?'Venta a crédito':'Venta contado',monto:finalTotal,estado:mode==='credito'?'pendiente':'pagada',numero_recibo:num,metodo_pago:$('posPayMethod').value,items,descuento:discount,cupon:couponCode||''};
+  if(mode==='credito'){
+    u['cuentas_por_cobrar/'+id]={id,fecha:now,whatsapp_cliente:client,nombre_cliente:client,monto_original:finalTotal,monto_pagado:0,saldo_pendiente:finalTotal,estado:'pendiente',tipo:'Venta a crédito',numero_recibo:num,items,descuento:discount};
+    if(client!=='General'&&C[client]){
+      u['clientes/'+client+'/saldo_credito']=(+C[client].saldo_credito||0)+finalTotal;
+    }
+  }
+  if(client!=='General'){
+    let old=C[client]||{};
+    u['clientes/'+client+'/nombre']=client;u['clientes/'+client+'/total_compras']=(+old.total_compras||0)+1;u['clientes/'+client+'/monto_total']=(+old.monto_total||0)+finalTotal;u['clientes/'+client+'/ultima_compra']=now;u['clientes/'+client+'/ultima_compra_id']=id;
+    u['clientes/'+client+'/compras/'+id]={id,fecha:now,numero_recibo:num,tipo:mode==='credito'?'Venta a crédito':'Venta contado',estado:mode==='credito'?'pendiente':'pagada',total:finalTotal,monto_pagado:mode==='credito'?0:finalTotal,saldo_pendiente:mode==='credito'?finalTotal:0,items};
+  }
+  /* Update stock */
+  posCart.forEach(item=>{
+    if(P[item.id]){
+      let newStock=Math.max(0,(+P[item.id].stock||0)-item.cantidad);
+      u['productos/'+item.id+'/stock']=newStock;
+    }
   });
-  w.document.write('</tbody><tfoot><tr><td colspan="4" style="text-align:right">TOTALES</td><td class="money">'+M(totalRecibos)+'</td><td class="money">'+M(totalPagado)+'</td><td class="money">'+M(totalSaldo)+'</td><td></td></tr></tfoot></table>');
-  w.document.write('<hr>');
-  w.document.write('<div class="footer">');
-  w.document.write('<b>Datos de pago:</b> Transferencia / LAFISE Digital<br>');
-  w.document.write('<b>Titular:</b> Fernando Martínez (Representante Legal PG del Campo)<br>');
-  w.document.write('<b>Cuenta N°:</b> 140051265<br>');
-  w.document.write('<b>Alias ACH/Móvil LAFISE:</b> 5797 3097<br>');
-  w.document.write('</div>');
-  w.document.write('<hr>');
-  w.document.write('<div style="text-align:center;font-size:9px;color:#68776c">*BS*D<br>Todo lo Bueno viene de Dios, con su ayuda todo es posible realizar</div>');
-  w.document.write('</body></html>');
-  w.document.close();
-  w.focus();
-  w.print();
-};
+  await update(ref(db),u);
+  posCart=[];renderCart();
+  $('posForm').reset();
+  alert('Venta '+num+' registrada por '+M(finalTotal)+(discount?' (Descuento: '+M(discount)+')':''));
+});
 
-/* \u2500\u2500 Reimpresión de recibos \u2500\u2500 */
-function findTransaction(id){
-  return T[id]||R[id]||Object.values(C).flatMap(c=>Object.values(c.compras||{})).find(x=>x.id===id)||null;
-}
-
-window.reprint=id=>{
-  let x=findTransaction(id);
-  if(!x)return alert('No se encontró la transacción.');
-  renderReceipt(x);
-};
-
-window.reprintById=id=>{
-  let x=X[id]||findTransaction(id);
-  if(!x)return alert('No se encontró el recibo.');
-  renderReceipt(x);
-};
-
-window.reprintByReceipt=()=>{
-  let n=$('receiptSearch').value.trim();
-  if(!n)return alert('Escribe el número de recibo.');
-  let x=Object.values(T).find(v=>String(v.numero_recibo||'')===n)
-    ||Object.values(R).find(v=>String(v.numero_recibo||'')===n)
-    ||Object.values(C).flatMap(c=>Object.values(c.compras||{})).find(v=>String(v.numero_recibo||'')===n)
-    ||Object.values(X).find(v=>String(v.numero_recibo||'')===n);
-  if(!x)return alert('No existe una transacción con ese número de recibo.');
-  renderReceipt(x);
-};
-
-function renderReceipt(x){
-  let items=receiptItems(x),
-      subtotal=Number(x.subtotal||0),
-      desc=Number(x.monto_descuento??x.descuento??0),
-      envio=Number(x.envio||0),
-      total=Number(x.total??x.monto_original??x.monto??0),
-      modo=String(x.tipo||'').toLowerCase().includes('crédito')||String(x.tipo||'').toLowerCase().includes('credito')?'CRÉDITO':'CONTADO',
-      pagado=Number(x.monto_pagado||0),
-      saldo=Number(x.saldo_pendiente??(modo==='CRÉDITO'?total-pagado:0));
-  if(!subtotal&&items.length)subtotal=items.reduce((s,i)=>s+i.cantidad*i.precio,0);
-  $('receiptBody').innerHTML=`
-    <div style="text-align:center">
-      <h2 style="color:var(--p);margin:0">PRODUCTOS GLOBALES DEL CAMPO</h2>
-      <div>RUC 0452907730000U · Cuota Fija<br>Jinotepe, Carazo, Nicaragua</div>
-    </div>
-    <hr>
-    <b>RECIBO:</b> ${E(x.numero_recibo||'\u2014')}<br>
-    <b>FECHA:</b> ${D(x.fecha)}<br>
-    <b>CLIENTE:</b> ${E(x.nombre_cliente||x.cliente||'Cliente General')}<br>
-    <b>CÓDIGO:</b> ${E(x.whatsapp_cliente||x.whatsapp||'')}<br>
-    <b>MODALIDAD:</b> ${modo}
-    ${x.metodo_pago&&x.metodo_pago!=='N/A'?`<br><b>MÉTODO:</b> ${E(x.metodo_pago==='lafise'?'Transferencia / QR LAFISE Bancentro':'Pago Contra Entrega / Efectivo / Transferencia')}`:''}
-    <hr>
-    <b>DETALLE</b>
-    ${items.map(i=>`<div style="display:flex;justify-content:space-between;margin:4px 0"><span>${i.cantidad}x ${E(i.nombre)}</span><span>${M(i.cantidad*i.precio)}</span></div>`).join('')||'<div>Detalle no disponible en el registro.</div>'}
-    <hr>
-    <div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>${M(subtotal)}</span></div>
-    <div style="display:flex;justify-content:space-between"><span>Descuento</span><span>-${M(desc)}</span></div>
-    <div style="display:flex;justify-content:space-between"><span>Envío</span><span>${envio?M(envio):'C$ 0.00 / A convenir'}</span></div>
-    <div style="display:flex;justify-content:space-between;font-weight:bold;border-top:2px solid var(--p);padding-top:6px;margin-top:6px">
-      <span>${modo==='CRÉDITO'?'SALDO A CRÉDITO':'TOTAL'}</span><span>${M(total)}</span>
-    </div>
-    ${modo==='CRÉDITO'?`<p style="background:#fff7df;padding:8px;text-align:center"><b>ORIGINAL:</b> ${M(total)} · <b>PAGADO:</b> ${M(pagado)} · <b>SALDO:</b> ${M(saldo)}</p>`:`<p style="background:#e8f6ed;padding:8px;text-align:center"><b>ESTADO: PAGADO</b></p>`}
-    <hr>
-    <div style="background:#f0f4ff;padding:10px;border-radius:6px">
-      <b style="color:var(--p)"> DATOS DE PAGO</b><br><br>
-      <a href="https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${total.toFixed(2)}&REFERENCE=${E(x.numero_recibo||'')}" target="_blank" rel="noopener" style="display:inline-block;background:#005691;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:11px;font-weight:bold;margin-bottom:8px">🔗 Pagar con LAFISE Digital</a><br>
-      <b>Método de Pago:</b> Transferencia / LAFISE Digital<br>
-      <b>Titular:</b> Fernando Martínez (Representante Legal PG del Campo)<br>
-      <b>Cuenta N°:</b> 140051265<br>
-      <b>Alias ACH/Móvil LAFISE:</b> 5797 3097<br><br>
-      Toca el botón de pago o realiza tu pago desde la app LAFISE Digital usando el Alias ACH/Móvil o el número de cuenta, con el monto exacto de C$ ${total.toFixed(2)}
-    </div>
-    <hr>
-    <div style="text-align:center;font-size:9px;color:var(--m)">*BS*D<br>Todo lo Bueno viene de Dios, con su ayuda todo es posible realizar</div>
-  `;
-  $('receiptModal').style.display='block';
-}
-
-window.closeReceipt=()=>$('receiptModal').style.display='none';
-
-window.printReceipt=()=>{
-  let w=window.open('','_blank','width=700,height=900');
-  w.document.write('<html><head><title>Reimpresión PG del Campo</title><style>body{font-family:monospace;padding:25px;max-width:520px;margin:auto}hr{border:0;border-top:1px dashed #999}h2{text-align:center}</style></head><body>'+$('receiptBody').innerHTML+'</body></html>');
-  w.document.close();
-  w.focus();
-  w.print();
-};
-
-/* \u2500\u2500 Transacciones \u2500\u2500 */
-function renderTrans(){
-  let b=$('transBody'),
-      a=Object.values(T).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,100);
-  b.innerHTML=a.map(x=>{
-    let st=normalizeStatus(x.estado);
-    return`<tr>
-    <td>${D(x.fecha)}</td>
-    <td>${E(x.cliente)}<br><span class="muted">${E(x.whatsapp)}</span></td>
-    <td>${E(x.tipo)}</td>
-    <td><b>${E(x.numero_recibo||'\u2014')}</b></td>
-    <td class="money">${M(x.monto)}</td>
-    <td><span class="badge ${STATUS_CSS[st]||'pending'}">${STATUS_LABEL[st]||E(x.estado||'')}</span></td>
-    <td><button class="btn blue" onclick="reprint('${x.id}')">Recibo</button></td>
-  </tr>`;
-  }).join('')||'<tr><td colspan="7">Sin transacciones.</td></tr>';
-}
-
-/* \u2500\u2500 Ventas \u2500\u2500 */
+/* ── Sales ── */
 function renderSales(){
-  let b=$('salesBody'),
-      a=Object.values(T).filter(x=>String(x.tipo||'').toLowerCase().includes('venta')).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,50);
+  let b=$('salesBody');
+  let a=Object.values(T).filter(x=>String(x.tipo||'').toLowerCase().includes('venta')).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,50);
   b.innerHTML=a.map(x=>`<tr>
-    <td>${D(x.fecha)}</td>
-    <td>${E(x.cliente)}</td>
-    <td>${E(x.tipo)}</td>
-    <td>${E(x.numero_recibo||'\u2014')}</td>
-    <td class="money">${M(x.monto)}</td>
-    <td><button class="btn blue" onclick="reprint('${x.id}')">Recibo</button></td>
+    <td>${D(x.fecha)}</td><td>${E(x.cliente)}</td><td>${E(x.tipo)}</td><td>${E(x.numero_recibo||'—')}</td><td class="money">${M(x.monto)}</td>
+    <td class="actions"><button class="btn blue btn-sm" onclick="reprint('${x.id}')">Recibo</button></td>
   </tr>`).join('')||'<tr><td colspan="6">Sin ventas.</td></tr>';
 }
 
-/* \u2500\u2500 Registrar venta directa a crédito \u2500\u2500 */
+/* Direct credit sale */
 $('sale').addEventListener('submit',async e=>{
   e.preventDefault();
-  let tel=$('vt').value.trim(),
-      name=$('vn').value.trim()||'Cliente General',
-      m=+$('vm').value,
-      id='venta_'+Date.now(),
-      now=new Date().toISOString(),
-      old=C[tel]||{},
-      num='DIRECTA-'+Date.now(),
-      u={};
-  u['clientes/'+tel+'/nombre']=name||old.nombre||'';u['clientes/'+tel+'/total_compras']=(+old.total_compras||0)+1;u['clientes/'+tel+'/monto_total']=(+old.monto_total||0)+m;u['clientes/'+tel+'/ultima_compra']=now;u['clientes/'+tel+'/ultima_compra_id']=id;
+  let tel=$('vt').value.trim(),name=$('vn').value.trim()||'Cliente General',m=+$('vm').value,
+  id='venta_'+Date.now(),now=new Date().toISOString(),num='DIRECTA-'+Date.now(),u={};
+  u['clientes/'+tel+'/nombre']=name;u['clientes/'+tel+'/total_compras']=(+C[tel]?.total_compras||0)+1;u['clientes/'+tel+'/monto_total']=(+C[tel]?.monto_total||0)+m;u['clientes/'+tel+'/ultima_compra']=now;u['clientes/'+tel+'/ultima_compra_id']=id;
   u['clientes/'+tel+'/compras/'+id]={id,fecha:now,numero_recibo:num,tipo:'Venta a crédito',estado:'pendiente',total:m,monto_pagado:0,saldo_pendiente:m,items:{}};
   u['cuentas_por_cobrar/'+id]={id,fecha:now,whatsapp_cliente:tel,nombre_cliente:name,numero_recibo:num,monto_original:m,monto_pagado:0,saldo_pendiente:m,estado:'pendiente',tipo:'Venta a crédito',items:{}};
   u['compras_registro/'+id]={id,fecha:now,whatsapp_cliente:tel,nombre_cliente:name,numero_recibo:num,tipo:'credito',estado:'pendiente',total:m,monto_revertir:m,items:{}};
   u['transacciones/'+id]={id,fecha:now,cliente:name,whatsapp:tel,tipo:'Venta a crédito',monto:m,monto_pagado:0,saldo_pendiente:m,estado:'pendiente',numero_recibo:num};
-  await update(ref(db),u);
-  e.target.reset();
-  alert('Venta a crédito '+num+' registrada.');
+  await update(ref(db),u);e.target.reset();alert('Venta a crédito '+num+' registrada.');
 });
 
-/* \u2500\u2500 Inventario \u2500\u2500 */
+/* ── Transactions ── */
+function renderTrans(){
+  let b=$('transBody'),a=Object.values(T).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,100);
+  b.innerHTML=a.map(x=>{
+    let st=normalizeStatus(x.estado);
+    return`<tr><td>${D(x.fecha)}</td><td>${E(x.cliente)}<br><span class="muted">${E(x.whatsapp)}</span></td><td>${E(x.tipo)}</td><td><b>${E(x.numero_recibo||'—')}</b></td><td class="money">${M(x.monto)}</td><td><span class="badge ${STATUS_CSS[st]||'pending'}">${STATUS_LABEL[st]||E(x.estado||'')}</span></td><td><button class="btn blue btn-sm" onclick="reprint('${x.id}')">Recibo</button></td></tr>`;
+  }).join('')||'<tr><td colspan="7">Sin transacciones.</td></tr>';
+}
+
+/* ── Inventory ── */
 function renderProd(){
   let b=$('prodBody');
   b.innerHTML=Object.entries(P).map(([id,p])=>{
     let s=+p.stock||0,c=+p.costo||0,v=+p.precio||0;
     return`<tr>
-      <td>${p.imagen?`<img src="${p.imagen}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;vertical-align:middle;margin-right:6px" onerror="this.style.display='none'">`:''}<b>${E(p.nombre)}</b><br>${E(id)}</td>
-      <td>${M(c)}</td>
-      <td>${M(v)}</td>
-      <td>${M(v-c)}</td>
+      <td>${p.imagen?`<img src="${p.imagen}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;vertical-align:middle;margin-right:6px" onerror="this.style.display='none'">`:''}<b>${E(p.nombre)}</b><br>${E(id)}${p.categoria?' · <span class="muted">'+E(p.categoria)+'</span>':''}</td>
+      <td>${M(c)}</td><td>${M(v)}</td><td>${M(v-c)}</td>
       <td><span class="badge ${s<=0?'out':s<=10?'low':'paid'}">${s}</span></td>
-      <td><button class="btn blue" onclick="editProd('${id}')">Editar</button> <button class="btn danger" onclick="delProd('${id}')">Borrar</button></td>
+      <td>${E(p.categoria||'—')}</td>
+      <td class="actions">
+        <button class="btn blue btn-sm" onclick="editProd('${id}')">Editar</button>
+        <button class="btn danger btn-sm" onclick="delProd('${id}')">Borrar</button>
+      </td>
     </tr>`;
-  }).join('')||'<tr><td colspan="6">Sin productos.</td></tr>';
+  }).join('')||'<tr><td colspan="7">Sin productos.</td></tr>';
 }
-window.editProd=id=>{
-  let p=P[id];
-  $('pid').value=id;
-  $('pn').value=p.nombre||'';
-  $('pi').value=p.imagen||'';
-  $('pd').value=p.desc||'';
-  $('pc').value=p.costo||0;
-  $('pp').value=p.precio||0;
-  $('ps').value=p.stock||0;
-};
+
+window.editProd=id=>{let p=P[id];$('pid').value=id;$('pn').value=p.nombre||'';$('pi').value=p.imagen||'';$('pd').value=p.desc||'';$('pc').value=p.costo||0;$('pp').value=p.precio||0;$('ps').value=p.stock||0;$('pcat').value=p.categoria||'';$('psku').value=p.sku||'';};
 window.resetProd=()=>{$('prod').reset();$('pid').value=''};
 window.delProd=async id=>{if(confirm('¿Eliminar producto?'))await remove(ref(db,'productos/'+id))};
+
+window.addVariation=()=>{
+  let list=$('variationList');
+  let div=document.createElement('div');div.className='variation-row';
+  div.innerHTML='<input placeholder="Nombre variación"><input type="number" placeholder="Precio" step="0.01"><input type="number" placeholder="Stock">';
+  list.appendChild(div);
+};
+
 $('prod').addEventListener('submit',async e=>{
   e.preventDefault();
   let id=$('pid').value||'prod_'+Date.now(),
-      p={nombre:$('pn').value.trim(),imagen:$('pi').value.trim(),desc:$('pd').value.trim(),costo:+$('pc').value||0,precio:+$('pp').value||0,stock:+$('ps').value||0};
-  await set(ref(db,'productos/'+id),p);
-  resetProd();
+  p={nombre:$('pn').value.trim(),imagen:$('pi').value.trim(),desc:$('pd').value.trim(),costo:+$('pc').value||0,precio:+$('pp').value||0,stock:+$('ps').value||0,categoria:$('pcat').value.trim(),sku:$('psku').value.trim(),
+  /* PGdelCamp: variations */
+  variaciones:getVariations(),
+  fecha_actualizacion:new Date().toISOString()};
+  await set(ref(db,'productos/'+id),p);resetProd();
 });
 
-/* \u2500\u2500 Cupones \u2500\u2500 */
+function getVariations(){
+  let rows=document.querySelectorAll('.variation-row'),vars=[];
+  rows.forEach(r=>{let inputs=r.querySelectorAll('input');if(inputs[0].value.trim())vars.push({nombre:inputs[0].value.trim(),precio:+inputs[1].value||0,stock:+inputs[2].value||0});});
+  return vars;
+}
+
+/* ── Catalog / Online Orders ── */
+function renderOrders(orders){
+  let b=$('ordersBody');
+  let a=Object.values(orders).sort((a,b)=>new Date(b.fecha)-new Date(a.fecha)).slice(0,30);
+  b.innerHTML=a.map(x=>{
+    let st=normalizeStatus(x.estado);
+    return`<tr><td>${D(x.fecha)}</td><td>${E(x.cliente||'')}</td><td><span class="badge ${x.canal==='whatsapp'?'success':'info'}">${E(x.canal||'web')}</span></td><td class="money">${M(x.total||0)}</td><td><span class="badge ${STATUS_CSS[st]||'pending'}">${STATUS_LABEL[st]||E(x.estado||'')}</span></td></tr>`;
+  }).join('')||'<tr><td colspan="5">Sin órdenes online.</td></tr>';
+}
+
+window.generateCatalogLink=()=>{
+  let link=window.location.origin+window.location.pathname.replace('panel','catalogo')+'?shop=pgdelcampo';
+  $('catalogUrl').textContent=link;$('catalogLink').style.display='block';
+  renderCatalogPreview();
+};
+window.copyCatalogLink=()=>{navigator.clipboard?.writeText($('catalogUrl').textContent);alert('Enlace copiado.');};
+window.shareWhatsApp=()=>{
+  let link=$('catalogUrl').textContent||'tu-tienda.kyte.app';
+  let msg='¡Mira nuestro catálogo digital! 🛒\n'+link+'\n\nProductos Globales del Campo — Jinotepe, Carazo';
+  window.open('https://wa.me/?text='+encodeURIComponent(msg),'_blank');
+};
+
+function renderCatalogPreview(){
+  $('catalogPreview').innerHTML=Object.entries(P).slice(0,12).map(([id,p])=>
+    `<div style="background:#fff;border:1px solid var(--b);border-radius:10px;padding:8px;text-align:center">
+      ${p.imagen?`<img src="${p.imagen}" style="width:60px;height:60px;object-fit:cover;border-radius:8px;margin-bottom:4px" onerror="this.style.display='none'">`:'<div style="width:60px;height:60px;background:var(--b);border-radius:8px;margin:0 auto 4px"></div>'}
+      <div style="font-size:9px;font-weight:800;color:var(--p)">${E(p.nombre)}</div>
+      <div class="money" style="font-size:10px">${M(p.precio)}</div>
+    </div>`
+  ).join('')||'<div style="color:var(--m);font-size:10px">Sin productos</div>';
+}
+
+window.sendWhatsAppOrder=()=>{
+  let tel=$('waNumber').value.trim(),msg=$('waMsg').value.trim()||'Hola, te contacto de PG del Campo. ¿Podrías confirmar mi pedido?';
+  if(!tel)return alert('Ingresa un número.');
+  window.open(`https://wa.me/${tel}?text=${encodeURIComponent(msg)}`,'_blank');
+};
+
+/* ── Cash Flow Charts ── */
+function renderCashFlow(){chartsDraw();}
+
+/* ── Expenses ── */
+function renderExpenses(){
+  let b=$('expenseBody');
+  let a=Object.entries(EX).sort((a,b)=>new Date(b[1].fecha||0)-new Date(a[1].fecha||0)).slice(0,60);
+  b.innerHTML=a.map(([id,x])=>`<tr>
+    <td>${D(x.fecha)}</td><td>${E(x.descripcion)}</td><td><span class="badge ${x.categoria==='salarios'?'paid':x.categoria==='inventario'?'transit':'pending'}">${E(x.categoria||'otro')}</span></td><td class="money">${M(x.monto)}</td><td>${x.recurrente&&x.recurrente!=='no'?'<span class="badge transit">'+E(x.recurrente)+'</span>':'—'}</td>
+    <td><button class="btn danger btn-sm" onclick="delExpense('${id}')">Borrar</button></td>
+  </tr>`).join('')||'<tr><td colspan="6">Sin gastos registrados.</td></tr>';
+}
+
+window.delExpense=async id=>{if(confirm('¿Eliminar gasto?'))await remove(ref(db,'gastos/'+id))};
+
+$('expenseForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  let id='gasto_'+Date.now(),now=new Date().toISOString(),
+  exp={id,descripcion:$('expDesc').value.trim(),monto:+$('expAmount').value,categoria:$('expCat').value,proveedor:$('expSupplier').value||'',recurrente:$('expRecurring').value,fecha:$('expDate').value||now};
+  await set(ref(db,'gastos/'+id),exp);e.target.reset();
+});
+
+/* ── Suppliers ── */
+function renderSuppliers(){
+  let b=$('supplierBody');
+  b.innerHTML=Object.entries(SUP).map(([id,s])=>`<tr>
+    <td><b>${E(s.nombre)}</b></td><td>${E(s.telefono||'')}</td><td>${E(s.categoria||'')}</td><td class="money">${M(s.cuentas_por_pagar||0)}</td>
+    <td class="actions">
+      <button class="btn blue btn-sm" onclick="editSupplier('${id}')">Editar</button>
+      <button class="btn danger btn-sm" onclick="delSupplier('${id}')">Borrar</button>
+    </td>
+  </tr>`).join('')||'<tr><td colspan="5">Sin proveedores.</td></tr>';
+}
+
+function updateSupplierSelect(){
+  let sel=$('expSupplier');
+  sel.innerHTML='<option value="">— Sin proveedor —</option>'+Object.entries(SUP).map(([id,s])=>`<option value="${id}">${E(s.nombre)}</option>`).join('');
+}
+
+window.editSupplier=id=>{let s=SUP[id];$('supId').value=id;$('supName').value=s.nombre||'';$('supPhone').value=s.telefono||'';$('supEmail').value=s.email||'';$('supAddress').value=s.direccion||'';$('supCategory').value=s.categoria||'';$('supNotes').value=s.notas||'';};
+window.resetSupplier=()=>{$('supplierForm').reset();$('supId').value=''};
+window.delSupplier=async id=>{if(confirm('¿Eliminar proveedor?'))await remove(ref(db,'proveedores/'+id))};
+
+$('supplierForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  let id=$('supId').value||'sup_'+Date.now(),
+  s={nombre:$('supName').value.trim(),telefono:$('supPhone').value.trim(),email:$('supEmail').value.trim(),direccion:$('supAddress').value.trim(),categoria:$('supCategory').value.trim(),notas:$('supNotes').value.trim(),cuentas_por_pagar:0,fecha:new Date().toISOString()};
+  await set(ref(db,'proveedores/'+id),s);resetSupplier();
+});
+
+/* ── Sellers ── */
+function renderSellers(){
+  let b=$('sellerList');
+  b.innerHTML=Object.entries(SELL).map(([id,s])=>
+    `<div class="seller-card" style="margin-bottom:8px">
+      <div class="seller-avatar">${(s.nombre||'?')[0].toUpperCase()}</div>
+      <div class="seller-info"><b>${E(s.nombre||'')}</b><span>${E(s.telefono||'')} · ${E(s.rol||'vendedor')}</span></div>
+      <div class="actions">
+        <button class="btn blue btn-sm" onclick="editSeller('${id}')">Editar</button>
+        <button class="btn danger btn-sm" onclick="delSeller('${id}')">Borrar</button>
+      </div>
+    </div>`
+  ).join('')||'<p style="color:var(--m);font-size:11px">Sin vendedores.</p>';
+
+  /* Seller stats */
+  let sb=$('sellerStatsBody');
+  if(sb){
+    sb.innerHTML=Object.entries(SELL).map(([id,s])=>{
+      let sellerSales=Object.values(T).filter(x=>x.vendedor===id),
+      total=sellerSales.reduce((a,x)=>a+Number(x.monto||0),0),
+      credits=sellerSales.filter(x=>normalizeStatus(x.estado)==='pendiente').length;
+      return`<tr><td>${E(s.nombre||'')}</td><td>${sellerSales.length}</td><td class="money">${M(total)}</td><td>${credits}</td><td>${sellerSales.length?D(sellerSales[sellerSales.length-1].fecha):'—'}</td></tr>`;
+    }).join('')||'<tr><td colspan="5">Sin vendedores.</td></tr>';
+  }
+}
+
+window.editSeller=id=>{let s=SELL[id];$('sellerEditId').value=id;$('sellerName').value=s.nombre||'';$('sellerPhone').value=s.telefono||'';$('sellerRole').value=s.rol||'vendedor';$('sellerPin').value=s.pin||'';};
+window.delSeller=async id=>{if(confirm('¿Eliminar vendedor?'))await remove(ref(db,'vendedores/'+id))};
+
+$('sellerForm').addEventListener('submit',async e=>{
+  e.preventDefault();
+  let id=$('sellerEditId').value||'seller_'+Date.now(),
+  s={nombre:$('sellerName').value.trim(),telefono:$('sellerPhone').value.trim(),rol:$('sellerRole').value,pin:$('sellerPin').value||'',activo:true,fecha:new Date().toISOString()};
+  await set(ref(db,'vendedores/'+id),s);$('sellerForm').reset();$('sellerEditId').value='';
+});
+
+/* ── Coupons ── */
 $('coupon').addEventListener('submit',async e=>{
   e.preventDefault();
   let code=$('cc').value.trim().toUpperCase();
-  await set(ref(db,'cupones/'+code),{descuento:+$('cd').value,activo:true,fecha:new Date().toISOString()});
+  await set(ref(db,'cupones/'+code),{descuento:+$('cd').value,tipo:$('ct').value,activo:true,fecha:new Date().toISOString()});
   e.target.reset();
 });
+
 function renderCoupons(){
   $('couponBody').innerHTML=Object.entries(CP).map(([k,v])=>`<tr>
-    <td>${E(k)}</td>
-    <td>${+v.descuento||0}%</td>
-    <td>${v.activo===false?'Inactivo':'Activo'}</td>
-  </tr>`).join('')||'<tr><td colspan="3">Sin cupones.</td></tr>';
+    <td>${E(k)}</td><td>${v.tipo==='monto'?M(v.descuento):(+v.descuento||0)+'%'}</td><td>${E(v.tipo||'porcentaje')}</td><td><span class="badge ${v.activo===false?'inactive-badge':'active-badge'}">${v.activo===false?'Inactivo':'Activo'}</span></td>
+    <td><button class="btn ${v.activo===false?'green':'danger'} btn-sm" onclick="toggleCoupon('${k}')">${v.activo===false?'Activar':'Desactivar'}</button></td>
+  </tr>`).join('')||'<tr><td colspan="5">Sin cupones.</td></tr>';
+}
+window.toggleCoupon=async k=>{await update(ref(db,'cupones/'+k),{activo:CP[k]?.activo===false?true:false})};
+
+/* ── QR Generator ── */
+window.updateQrFields=()=>{
+  let type=$('qrType').value;
+  let fields={pago:'<div class="field"><label>Monto C$</label><input id="qrAmount" type="number" step="0.01" placeholder="Monto para pago"></div><div class="field"><label>Referencia</label><input id="qrRef" placeholder="Número de recibo"></div>',
+  catalogo:'<div class="field"><label>Enlace catálogo</label><input id="qrCustomUrl" value="https://pgdelcampo.kyte.app/catalogo" placeholder="URL catálogo"></div>',
+  producto:'<div class="field"><label>ID Producto</label><input id="qrProductId" placeholder="prod_xxx"></div>',
+  whatsapp:'<div class="field"><label>Número WhatsApp</label><input id="qrWhatsapp" placeholder="505XXXXXXXX"></div>',
+  custom:'<div class="field"><label>URL</label><input id="qrCustomUrl" placeholder="https://..."></div>'};
+  $('qrFields').innerHTML=fields[type]||'';
+};
+
+window.generateQR=()=>{
+  let type=$('qrType').value,url='';
+  if(type==='pago'){let amount=$('qrAmount')?.value||0,ref=$('qrRef')?.value||'';url=`https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${amount}&REFERENCE=${ref}`;}
+  else if(type==='catalogo'){url=$('qrCustomUrl')?.value||'https://pgdelcampo.kyte.app';}
+  else if(type==='producto'){let pid=$('qrProductId')?.value||'';url=`https://pgdelcampo.kyte.app/producto/${pid}`;}
+  else if(type==='whatsapp'){let wa=$('qrWhatsapp')?.value||'505';url=`https://wa.me/${wa}`;}
+  else{url=$('qrCustomUrl')?.value||'https://pgdelcampo.kyte.app';}
+
+  $('qrCode').innerHTML='';
+  new QRCode($('qrCode'),{text:url,width:128,height:128,colorDark:'#1b382b',colorLight:'#ffffff'});
+  $('qrLabel').textContent='QR — '+type;
+  $('qrUrl').textContent=url;
+  $('qrOutput').style.display='flex';
+
+  /* Save to history */
+  let hid='qr_'+Date.now();
+  set(ref(db,'qr_historial/'+hid),{tipo:type,url,fecha:new Date().toISOString()});
+};
+
+/* ── Receipts Section ── */
+window.findAndShowReceipt=()=>{
+  let n=$('receiptFind').value.trim();
+  if(!n)return alert('Escribe un número de recibo.');
+  let x=Object.values(T).find(v=>String(v.numero_recibo||'')===n)||Object.values(R).find(v=>String(v.numero_recibo||'')===n)||Object.values(X).find(v=>String(v.numero_recibo||'')===n);
+  if(!x)return alert('No encontrado.');
+  renderReceipt(x);
+};
+
+window.showAllReceipts=()=>{
+  let b=$('allReceiptsBody');
+  let all=[...Object.values(T),...Object.values(R)].sort((a,b)=>new Date(b.fecha||0)-new Date(a.fecha||0)).slice(0,50);
+  b.innerHTML=all.map(x=>`<tr><td><b>${E(x.numero_recibo||'—')}</b></td><td>${D(x.fecha)}</td><td>${E(x.cliente||x.nombre_cliente||'')}</td><td>${E(x.tipo||'')}</td><td class="money">${M(x.monto||x.total||0)}</td><td>${String(x.tipo||'').toLowerCase().includes('crédito')||String(x.tipo||'').toLowerCase().includes('credito')?'<span class="badge pending">Crédito</span>':'<span class="badge paid">Contado</span>'}</td><td><button class="btn blue btn-sm" onclick="reprint('${x.id}')">Ver recibo</button></td></tr>`).join('')||'<tr><td colspan="7">Sin recibos.</td></tr>';
+};
+
+/* ── Receipt rendering ── */
+function receiptItems(x){
+  let items=[];
+  if(x.items&&typeof x.items==='object')Object.values(x.items).forEach(i=>items.push({nombre:i.nombre||'',cantidad:+i.cantidad||1,precio:+i.precio||0}));
+  if(!items.length)items.push({nombre:x.tipo||'Venta',cantidad:1,precio:+(x.total||x.monto||0)});
+  return items;
 }
 
-/* \u2500\u2500 Gráficos \u2500\u2500 */
+function findTransaction(id){return T[id]||R[id]||Object.values(C).flatMap(c=>Object.values(c.compras||{})).find(x=>x.id===id)||null;}
+
+window.reprint=id=>{let x=findTransaction(id);if(!x)return alert('No se encontró.');renderReceipt(x);};
+window.reprintById=id=>{let x=X[id]||findTransaction(id);if(!x)return alert('No encontrado.');renderReceipt(x);};
+window.reprintByReceipt=()=>{
+  let n=$('receiptSearch').value.trim();if(!n)return alert('Escribe el número de recibo.');
+  let x=Object.values(T).find(v=>String(v.numero_recibo||'')===n)||Object.values(R).find(v=>String(v.numero_recibo||'')===n)||Object.values(C).flatMap(c=>Object.values(c.compras||{})).find(v=>String(v.numero_recibo||'')===n)||Object.values(X).find(v=>String(v.numero_recibo||'')===n);
+  if(!x)return alert('No existe.');renderReceipt(x);
+};
+
+function renderReceipt(x){
+  let items=receiptItems(x),subtotal=Number(x.subtotal||0),desc=Number(x.monto_descuento??x.descuento??0),envio=Number(x.envio||0),total=Number(x.total??x.monto_original??x.monto??0),
+  modo=String(x.tipo||'').toLowerCase().includes('crédito')||String(x.tipo||'').toLowerCase().includes('credito')?'CRÉDITO':'CONTADO',
+  pagado=Number(x.monto_pagado||0),saldo=Number(x.saldo_pendiente??(modo==='CRÉDITO'?total-pagado:0));
+  if(!subtotal&&items.length)subtotal=items.reduce((s,i)=>s+i.cantidad*i.precio,0);
+  $('receiptBody').innerHTML=`
+  <div style="text-align:center">
+    <h2 style="color:var(--p);margin:0">PRODUCTOS GLOBALES DEL CAMPO</h2>
+    <div>RUC 0452907730000U · Cuota Fija<br>Jinotepe, Carazo, Nicaragua</div>
+  </div>
+  <hr>
+  <b>RECIBO:</b> ${E(x.numero_recibo||'—')}<br>
+  <b>FECHA:</b> ${D(x.fecha)}<br>
+  <b>CLIENTE:</b> ${E(x.nombre_cliente||x.cliente||'Cliente General')}<br>
+  <b>CÓDIGO:</b> ${E(x.whatsapp_cliente||x.whatsapp||'')}<br>
+  <b>MODALIDAD:</b> ${modo}
+  ${x.metodo_pago&&x.metodo_pago!=='N/A'?`<br><b>MÉTODO:</b> ${E(x.metodo_pago==='lafise'?'Transferencia / QR LAFISE Bancentro':'Pago Contra Entrega / Efectivo / Transferencia')}`:''}
+  <hr>
+  <b>DETALLE</b>
+  ${items.map(i=>`<div style="display:flex;justify-content:space-between;margin:4px 0"><span>${i.cantidad}x ${E(i.nombre)}</span><span>${M(i.cantidad*i.precio)}</span></div>`).join('')||'<div>Detalle no disponible.</div>'}
+  <hr>
+  <div style="display:flex;justify-content:space-between"><span>Subtotal</span><span>${M(subtotal)}</span></div>
+  <div style="display:flex;justify-content:space-between"><span>Descuento</span><span>-${M(desc)}</span></div>
+  <div style="display:flex;justify-content:space-between"><span>Envío</span><span>${envio?M(envio):'C$ 0.00 / A convenir'}</span></div>
+  <div style="display:flex;justify-content:space-between;font-weight:bold;border-top:2px solid var(--p);padding-top:6px;margin-top:6px">
+    <span>${modo==='CRÉDITO'?'SALDO A CRÉDITO':'TOTAL'}</span><span>${M(total)}</span>
+  </div>
+  ${modo==='CRÉDITO'?`<p style="background:#fff7df;padding:8px;text-align:center"><b>ORIGINAL:</b> ${M(total)} · <b>PAGADO:</b> ${M(pagado)} · <b>SALDO:</b> ${M(saldo)}</p>`:`<p style="background:#e8f6ed;padding:8px;text-align:center"><b>ESTADO: PAGADO</b></p>`}
+  <hr>
+  <div style="background:#f0f4ff;padding:10px;border-radius:6px">
+    <b style="color:var(--p)">DATOS DE PAGO</b><br><br>
+    <a href="https://digital.lafise.com/?BANK=BLNI&ACCOUNT_NUMBER=140051265&AMOUNT=${total.toFixed(2)}&REFERENCE=${E(x.numero_recibo||'')}" target="_blank" rel="noopener" style="display:inline-block;background:#005691;color:#fff;padding:8px 16px;border-radius:6px;text-decoration:none;font-size:11px;font-weight:bold;margin-bottom:8px">Pagar con LAFISE Digital</a><br>
+    <b>Método de Pago:</b> Transferencia / LAFISE Digital<br>
+    <b>Titular:</b> Fernando Martínez (Representante Legal PG del Campo)<br>
+    <b>Cuenta N°:</b> 140051265<br>
+    <b>Alias ACH/Móvil LAFISE:</b> 5797 3097<br><br>
+    Toca el botón de pago o realiza tu pago desde la app LAFISE Digital usando el Alias ACH/Móvil o el número de cuenta, con el monto exacto de C$ ${total.toFixed(2)}
+  </div>
+  <hr>
+  <div style="text-align:center;font-size:9px;color:var(--m)">*BS*D<br>Todo lo Bueno viene de Dios, con su ayuda todo es posible realizar</div>`;
+  $('receiptModal').style.display='block';
+}
+
+window.closeReceipt=()=>$('receiptModal').style.display='none';
+window.printReceipt=()=>{
+  let w=window.open('','_blank','width=700,height=900');
+  w.document.write('<html><head><title>Recibo PG del Campo</title><style>body{font-family:monospace;padding:25px;max-width:520px;margin:auto}hr{border:0;border-top:1px dashed #999}h2{text-align:center}</style></head><body>'+$('receiptBody').innerHTML+'</body></html>');
+  w.document.close();w.focus();w.print();
+};
+window.downloadReceiptPDF=()=>{window.print();};
+window.shareReceiptWhatsApp=()=>{
+  let text=$('receiptBody').innerText;
+  window.open('https://wa.me/?text='+encodeURIComponent(text.substring(0,1000)),'_blank');
+};
+
+/* ── Charts ── */
 function months(){
-  let a=[],v=[];
+  let a=[],v=[],exp=[];
   for(let i=5;i>=0;i--){
     let d=new Date(new Date().getFullYear(),new Date().getMonth()-i,1),
-        k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+    k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
     a.push(d.toLocaleDateString('es-NI',{month:'short'}));
     v.push(Object.values(T).filter(x=>String(x.tipo||'').toLowerCase().includes('venta')&&(x.fecha||'').slice(0,7)===k).reduce((s,x)=>s+Number(x.monto||0),0));
+    exp.push(Object.values(EX).filter(x=>(x.fecha||'').slice(0,7)===k).reduce((s,x)=>s+Number(x.monto||0),0));
   }
-  return{a,v};
-}
-function chartsDraw(){
-  let m=months(),
-      saldo=Object.values(X).reduce((s,x)=>s+Number(x.saldo_pendiente||0),0),
-      pagado=Object.values(X).reduce((s,x)=>s+Number(x.monto_pagado||0),0),
-      labs=Object.values(P).slice(0,12).map(x=>x.nombre||''),
-      st=Object.values(P).slice(0,12).map(x=>+x.stock||0),
-      freq=[0,0,0,0];
-  Object.values(C).forEach(x=>{let n=+x.total_compras||0;freq[n===0?0:n<=3?1:n<=9?2:3]++});
-  Object.keys(charts).forEach(k=>charts[k]?.destroy());
-  charts.income=new Chart($('income'),{type:'line',data:{labels:m.a,datasets:[{label:'C$',data:m.v,tension:.3}]},options:{responsive:true,maintainAspectRatio:false}});
-  charts.cxc=new Chart($('cxcChart'),{type:'doughnut',data:{labels:['Pendiente','Pagado'],datasets:[{data:[saldo,pagado]}]},options:{responsive:true,maintainAspectRatio:false}});
-  charts.stock=new Chart($('stockChart'),{type:'bar',data:{labels:['Inventario'],datasets:[{label:'Unidades',data:[st.reduce((a,b)=>a+b,0)]}]},options:{responsive:true,maintainAspectRatio:false}});
-  charts.client=new Chart($('clientChart'),{type:'doughnut',data:{labels:['0','1\u20133','4\u20139','10+'],datasets:[{data:freq}]},options:{responsive:true,maintainAspectRatio:false}});
-  charts.income2=new Chart($('income2'),{type:'line',data:{labels:m.a,datasets:[{label:'C$',data:m.v,tension:.3}]},options:{responsive:true,maintainAspectRatio:false}});
-  charts.stock2=new Chart($('stock2'),{type:'bar',data:{labels:labs,datasets:[{label:'Unidades',data:st}]},options:{responsive:true,maintainAspectRatio:false}});
+  return{a,v,exp};
 }
 
-/* \u2500\u2500 Kai (asistente) \u2500\u2500 */
+function chartsDraw(){
+  let m=months(),
+  saldo=Object.values(X).reduce((s,x)=>s+Number(x.saldo_pendiente||0),0),
+  pagado=Object.values(X).reduce((s,x)=>s+Number(x.monto_pagado||0),0),
+  labs=Object.values(P).slice(0,12).map(x=>x.nombre||''),
+  st=Object.values(P).slice(0,12).map(x=>+x.stock||0),
+  freq=[0,0,0,0];
+  Object.values(C).forEach(x=>{let n=+x.total_compras||0;freq[n===0?0:n<=3?1:n<=9?2:3]++});
+
+  let expCats={};
+  Object.values(EX).forEach(x=>{let c=x.categoria||'otro';expCats[c]=(expCats[c]||0)+Number(x.monto||0)});
+
+  let sellerNames=Object.values(SELL).map(s=>s.nombre||'?'),
+  sellerTotals=Object.values(SELL).map(s=>Object.values(T).filter(x=>x.vendedor===(s.id||'')).reduce((a,x)=>a+Number(x.monto||0),0));
+
+  Object.keys(charts).forEach(k=>charts[k]?.destroy());
+
+  const greenColor='#1b382b';
+  const goldColor='#c8963e';
+
+  charts.income=new Chart($('income'),{type:'line',data:{labels:m.a,datasets:[{label:'Ventas C$',data:m.v,tension:.3,borderColor:greenColor,backgroundColor:'rgba(27,56,43,0.1)',fill:true}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.cxc=new Chart($('cxcChart'),{type:'doughnut',data:{labels:['Pendiente','Pagado'],datasets:[{data:[saldo,pagado],backgroundColor:[goldColor,greenColor]}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.stock=new Chart($('stockChart'),{type:'bar',data:{labels:['Inventario'],datasets:[{label:'Unidades',data:[st.reduce((a,b)=>a+b,0)],backgroundColor:greenColor}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.client=new Chart($('clientChart'),{type:'doughnut',data:{labels:['0','1–3','4–9','10+'],datasets:[{data:freq,backgroundColor:[goldColor,greenColor,'#8eb057','#d1e7dd']}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.cashFlow=new Chart($('cashFlowChart'),{type:'bar',data:{labels:m.a,datasets:[{label:'Ingresos',data:m.v,backgroundColor:greenColor},{label:'Gastos',data:m.exp,backgroundColor:goldColor}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:false},y:{stacked:false}}}});
+  charts.expense=new Chart($('expenseChart'),{type:'line',data:{labels:m.a,datasets:[{label:'Ingresos',data:m.v,borderColor:greenColor,tension:.3},{label:'Gastos',data:m.exp,borderColor:goldColor,tension:.3}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.income2=new Chart($('income2'),{type:'line',data:{labels:m.a,datasets:[{label:'C$',data:m.v,tension:.3,borderColor:greenColor}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.stock2=new Chart($('stock2'),{type:'bar',data:{labels:labs,datasets:[{label:'Unidades',data:st,backgroundColor:greenColor}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.expByCat=new Chart($('expByCat'),{type:'doughnut',data:{labels:Object.keys(expCats),datasets:[{data:Object.values(expCats),backgroundColor:[greenColor,goldColor,'#8eb057','#d1e7dd','#68776c','#e1e7e3','#c8963e','#1b382b']}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.salesBySeller=new Chart($('salesBySeller'),{type:'bar',data:{labels:sellerNames.length?sellerNames:['Sin vendedores'],datasets:[{label:'Ventas C$',data:sellerTotals.length?sellerTotals:[0],backgroundColor:greenColor}]},options:{responsive:true,maintainAspectRatio:false}});
+  charts.cfBreakdown=new Chart($('cfBreakdown'),{type:'doughnut',data:{labels:['Ventas','Gastos','Saldo'],datasets:[{data:[m.v.reduce((a,b)=>a+b,0),m.exp.reduce((a,b)=>a+b,0),Math.max(0,m.v.reduce((a,b)=>a+b,0)-m.exp.reduce((a,b)=>a+b,0))],backgroundColor:[greenColor,goldColor,'#8eb057']}]},options:{responsive:true,maintainAspectRatio:false}});
+}
+
+/* ── Kai / Smart Assistant ── */
+function kaiRespond(q){
+  q=q.toLowerCase();
+  let ventas=Object.values(T).filter(x=>String(x.tipo||'').toLowerCase().includes('venta')).reduce((a,x)=>a+Number(x.monto||0),0),
+  saldo=Object.values(X).reduce((a,x)=>a+Number(x.saldo_pendiente||0),0),
+  stock=Object.values(P).reduce((a,x)=>a+Number(x.stock||0),0),
+  gastos=Object.values(EX).reduce((a,x)=>a+Number(x.monto||0),0),
+  neto=ventas-gastos,
+  lowStock=Object.entries(P).filter(([id,p])=>(+p.stock||0)<=10).map(([id,p])=>p.nombre||id),
+  cxp=Object.values(SUP).reduce((a,s)=>a+Number(s.cuentas_por_pagar||0),0),
+  topProducts=Object.entries(P).sort((a,b)=>(+b[1].stock||0)-(+a[1].stock||0)).slice(0,5).map(([id,p])=>p.nombre);
+
+  if(q.includes('cobrar')||q.includes('cartera')||q.includes('crédito'))return`💰 Saldo pendiente total: ${M(saldo)}. ${Object.values(X).filter(x=>normalizeStatus(x.estado)==='pendiente').length} cuentas pendientes.`;
+  if(q.includes('stock')||q.includes('inventario'))return`📦 Productos: ${Object.keys(P).length} · Unidades: ${stock}${lowStock.length?'. ⚠️ Bajo stock: '+lowStock.join(', '):''}`;
+  if(q.includes('cliente')||q.includes('compradores'))return`👥 Clientes: ${Object.keys(C).length}. Saldo crédito total: ${M(saldo)}.`;
+  if(q.includes('gasto')||q.includes('egreso'))return`📊 Gastos registrados: ${M(gastos)}. ${Object.keys(EX).length} registros de gastos.`;
+  if(q.includes('flujo')||q.includes('caja')||q.includes('neto'))return`💵 Ingresos: ${M(ventas)} · Gastos: ${M(gastos)} · Flujo neto: ${M(neto)} ${neto>=0?'✅ Positivo':'🔴 Negativo'}`;
+  if(q.includes('proveedor')||q.includes('pagar'))return`🏭 Proveedores: ${Object.keys(SUP).length}. Cuentas por pagar: ${M(cxp)}.`;
+  if(q.includes('vendedor')||q.includes('vende'))return`🧑‍💼 Vendedores: ${Object.keys(SELL).length}.`;
+  if(q.includes('bajo stock')||q.includes('reabastec')||q.includes('repos'))return`⚠️ Productos con bajo stock (≤10 uds): ${lowStock.length?lowStock.join(', '):'Ninguno con stock bajo.'}`;
+  if(q.includes('producto')||q.includes('top')||q.includes('mejor'))return`🏆 Top 5 productos por stock: ${topProducts.join(', ')}`;
+  if(q.includes('cupón')||q.includes('descuento'))return`🏷️ Cupones: ${Object.keys(CP).length}. Activos: ${Object.values(CP).filter(c=>c.activo!==false).length}.`;
+  return`📈 Resumen: Ventas ${M(ventas)} · Cartera ${M(saldo)} · Gastos ${M(gastos)} · Neto ${M(neto)} · Stock ${stock} uds · ${Object.keys(C).length} clientes · ${Object.keys(SELL).length} vendedores`;
+}
+
 $('kaif').addEventListener('submit',e=>{
   e.preventDefault();
-  let q=$('ki').value.toLowerCase(),
-      r=q.includes('cobrar')||q.includes('cartera')||q.includes('crédito')
-        ?'Saldo pendiente: '+M(Object.values(X).reduce((s,x)=>s+Number(x.saldo_pendiente||0),0))
-        :q.includes('stock')||q.includes('inventario')
-        ?'Productos: '+Object.keys(P).length+' · Unidades: '+Object.values(P).reduce((s,x)=>s+Number(x.stock||0),0)
-        :q.includes('cliente')
-        ?'Clientes: '+Object.keys(C).length
-        :'Ventas registradas: '+M(Object.values(T).filter(x=>String(x.tipo||'').toLowerCase().includes('venta')).reduce((s,x)=>s+Number(x.monto||0),0));
-  $('kai').innerHTML+=`<p><b>Usuario:</b> ${E(q)}</p><p>${E(r)}</p>`;
+  let q=$('ki').value.trim();
+  if(!q)return;
+  let r=kaiRespond(q);
+  $('kai').innerHTML+=`<div class="kai-msg user"><div class="bubble">${E(q)}</div></div>`;
+  $('kai').innerHTML+=`<div class="kai-msg assistant"><div class="bubble">${r}</div></div>`;
   $('ki').value='';
   $('kai').scrollTop=$('kai').scrollHeight;
 });
+
+/* Initial Kai greeting */
+$('kai').innerHTML='<div class="kai-msg assistant"><div class="bubble">🤖 Hola, soy <b>Kai</b>, tu asistente inteligente. Puedo consultar cartera, ventas, clientes, inventario, flujo de caja, gastos, proveedores y más. ¡Pregúntame!</div></div>';
 
 dash();
 </script>
